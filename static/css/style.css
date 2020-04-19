@@ -111,8 +111,10 @@ main table th, main table td
 	padding: 10px 0;
 }
 
-main #add-button
+main a#add-button
 {
+	cursor: pointer;
+	text-decoration: none;
 	display: flex;
 	align-items: center;
 	position: fixed;
