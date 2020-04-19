@@ -87,6 +87,30 @@ main h1
 	font-size: 1.75rem;
 }
 
+main table
+{
+	margin: 0 auto;
+	width: 96%;
+	text-align: center;
+	border-spacing: 0px 1px;
+}
+
+main table tr:first-child
+{
+	background-color: #9e34f7;
+}
+
+main table tr:not(:first-child)
+{
+	background-color: #f8bf4c;
+	color: #1d1d1d;
+}
+
+main table th, main table td
+{
+	padding: 10px 0;
+}
+
 footer
 {
 	display: flex;
