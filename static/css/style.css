@@ -156,9 +156,21 @@ main #add-button p
 	padding-left: 10px;
 }
 
+#carpool-add-form input:not(:last-child)
+{
+	-webkit-transition: all .35s ease-in-out;
+}
+
+#carpool-add-form input:hover:not(:last-child)
+{
+	-webkit-transform: scale(1.02);
+	-webkit-transition: all .35s ease-in-out;
+}
+
 #carpool-add-form input.button
 {
 	background-color: #9e34f7;
+	-webkit-transition: background-color 0.3s ease;
 	margin-bottom: auto;
 	/*width: 25%;*/
 	height: 50px;
@@ -166,6 +178,13 @@ main #add-button p
 	text-transform: uppercase;
 	padding: 0;
 	color: #fff;
+}
+
+#carpool-add-form input.button:hover
+{
+	text-decoration: none;
+	cursor: pointer;
+	/*background-color: A définir;*/
 }
 
 #carpool-add-form input::-webkit-input-placeholder
