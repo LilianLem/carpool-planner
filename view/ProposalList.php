@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 	<head>
 		<title>Trajets proposés - Carpool Planner</title>
 		<link rel="stylesheet" href="static/css/style.css"/>
@@ -11,11 +11,11 @@
 	<body>
 		<header>
 			<div id="nav-mobile-open">
-				<img src="static/img/icons/mobile-menu.png" />
+				<img src="static/img/icons/mobile-menu.png" alt="Menu mobile" />
 			</div>
 
 			<div id="logo">
-				<img src="static/img/logo.png" />
+				<img src="static/img/logo.png" alt="Logo du site Carpool Planner" />
 			</div>
 		</header>
 

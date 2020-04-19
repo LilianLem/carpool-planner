@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html>
+<html lang="fr">
 	<head>
 		<title>Proposer un trajet - Carpool Planner</title>
 		<link rel="stylesheet" href="static/css/style.css"/>
@@ -11,11 +11,11 @@
 	<body>
 		<header>
 			<div id="nav-mobile-open">
-				<img src="static/img/icons/mobile-menu.png" />
+				<img src="static/img/icons/mobile-menu.png" alt="Menu mobile" />
 			</div>
 
 			<div id="logo">
-				<img src="static/img/logo.png" />
+				<img src="static/img/logo.png" alt="Logo du site Carpool Planner" />
 			</div>
 		</header>
 
@@ -30,13 +30,13 @@
 				<input type="text" name="city" id="city" placeholder="Rouen" required="required" maxlength="32" />
 
 				<label for="date">Date de départ</label>
-				<input type="date" name="date" id="date" required="required" pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}" />
+				<input type="date" name="date" id="date" required="required" /> <!--pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}"-->
 
 				<label for="time">Heure de départ</label>
 				<input type="time" name="time" id="time" required="required" step="900" />
 
 				<label for="date">Date de retour</label>
-				<input type="date" name="return-date" id="return-date" required="required" pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}" />
+				<input type="date" name="return-date" id="return-date" required="required" /> <!--pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}"-->
 
 				<label for="time">Heure de retour</label>
 				<input type="time" name="return-time" id="return-time" required="required" step="900" />
