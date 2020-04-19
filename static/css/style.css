@@ -133,6 +133,50 @@ main #add-button p
 	bottom: 2px;
 }
 
+/* Page formulaire ajout trajet */
+
+#carpool-add-form
+{
+	margin: 0 auto;
+	width: 85%;
+}
+
+#carpool-add-form label
+{
+	margin-bottom: 5px;
+}
+
+#carpool-add-form input
+{
+	display: block;
+	margin: 5px auto 15px;
+	/*width: 60%;*/
+	height: 50px;
+	font-size: 1.25rem;
+	padding-left: 10px;
+}
+
+#carpool-add-form input.button
+{
+	background-color: #9e34f7;
+	margin-bottom: auto;
+	/*width: 25%;*/
+	height: 50px;
+	border: 0;
+	text-transform: uppercase;
+	padding: 0;
+	color: #fff;
+}
+
+/* Media query mobile à venir V */
+
+.button, #carpool-add-form input
+{
+	width: 100% /*!important*/;
+}
+
+/* --- */
+
 footer
 {
 	display: flex;
