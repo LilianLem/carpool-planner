@@ -168,6 +168,12 @@ main #add-button p
 	color: #fff;
 }
 
+#carpool-add-form input::-webkit-input-placeholder
+{
+	font-size: 1.25rem;
+	color: gray;
+}
+
 /* Media query mobile à venir V */
 
 .button, #carpool-add-form input
