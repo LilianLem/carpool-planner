@@ -8,3 +8,8 @@ function displayProposalList()
 
 	require('view/proposalList.php');
 }
+
+function displayProposalAddForm()
+{
+	require('view/proposalAdd.php');
+}

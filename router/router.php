@@ -6,6 +6,7 @@ try {
 	{
 		if($_GET['action'] == 'addProposal')
 		{
+			displayProposalAddForm();
 		}
 
 		else
