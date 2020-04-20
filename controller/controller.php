@@ -152,6 +152,9 @@ function checkProposalAdd()
 			
 			$newProposal['latitude'] = $latitude;
 			$newProposal['longitude'] = $longitude;
+
+			$proposalManager = new ProposalManager();
+			$proposalManager->insertNewProposal($newProposal);
 		}
 	}
 
