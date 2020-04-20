@@ -9,7 +9,7 @@ function displayProposalList()
 	require('view/proposalList.php');
 }
 
-function displayProposalAddForm()
+function displayProposalAddForm($errors = '')
 {
 	require('view/proposalAdd.php');
 }
@@ -94,13 +94,22 @@ function checkProposalAdd()
 			}
 		}
 
+		if(!empty($errors))
+		{
+			displayProposalAddForm($errors);
+		}
+		else
+		{
 
+		}
 	}
 
 	else
 	{
+		displayProposalAddForm("- Vous n'avez pas renseigné tous les champs obligatoires\n");
 	}
 }
+
 function checkDateFormat($date)
 {
     if (strtotime($date) === false)
