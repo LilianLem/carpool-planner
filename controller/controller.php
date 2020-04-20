@@ -23,6 +23,15 @@ function checkProposalAdd()
 		{
 			$errors .= "- Le format du pseudo Discord est incorrect. Exemple correct : Pierre#1234\n";
 		}
+		else
+		{
+			$discordUsername_array = explode('#', $_POST['discord-username']);
+
+			if(!ctype_digit($discordUsername_array[1]))
+			{
+				$errors .= "- Le format du pseudo Discord est incorrect. Exemple correct : Pierre#1234\n";
+			}
+		}
 
 		if(strlen($_POST['discord-username']) > 32)
 		{
