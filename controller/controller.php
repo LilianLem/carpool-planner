@@ -42,6 +42,11 @@ function checkProposalAdd()
 			$errors .= "- La date de départ renseignée est incorrecte\n";
 		}
 
+		if(!checkTime($_POST['time']))
+		{
+			$errors .= "- L'heure de départ renseignée est incorrecte\n";
+		}
+
 		if(isset($_POST['return-date']))
 		{
 			if(!empty($_POST['return-date']))
@@ -51,6 +56,25 @@ function checkProposalAdd()
 					$errors .= "- La date de retour renseignée est incorrecte\n";
 				}
 
+				if(!isset($_POST['return-time']))
+				{
+					$errors .= "- Une date de retour est renseignée mais pas une heure de retour\n";
+				}
+				else
+				{
+					if(empty($_POST['return-time']))
+					{
+						$errors .= "- Une date de retour est renseignée mais pas une heure de retour\n";
+					}
+
+					else
+					{
+						if(!checkTime($_POST['return-time']))
+						{
+							$errors .= "- L'heure de retour renseignée est incorrecte\n";
+						}
+					}
+				}
 			}
 		}
 
