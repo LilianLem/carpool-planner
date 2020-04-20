@@ -78,4 +78,27 @@ function checkDateFormat($date)
     return checkdate($month, $day, $year);
 }
 
+function checkTime($time)
+{
+    $time_array = explode(':', $time);
+    if(count($time_array) != 2)
+    {
+    	return false;
+    }
+
+    if(!ctype_digit($time_array[0]) OR !ctype_digit($time_array[1]))
+    {
+    	return false;
+    }
+
+    if($time_array[0] < 0 OR $time_array[0] > 23 OR $time_array[1] < 0 OR $time_array[1] > 59)
+    {
+    	return false;
+    }
+    else
+    {
+    	return true;
+    }
+}
+
 }
