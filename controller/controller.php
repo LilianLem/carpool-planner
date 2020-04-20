@@ -37,6 +37,23 @@ function checkProposalAdd()
 		{
 			$errors .= "- Le nom de ville renseigné est trop long (supérieur à 45 caractères)\n";
 		}
+		if(!checkDateFormat($_POST['date']))
+		{
+			$errors .= "- La date de départ renseignée est incorrecte\n";
+		}
+
+		if(isset($_POST['return-date']))
+		{
+			if(!empty($_POST['return-date']))
+			{
+				if(!checkDateFormat($_POST['return-date']))
+				{
+					$errors .= "- La date de retour renseignée est incorrecte\n";
+				}
+
+			}
+		}
+
 
 	}
 
