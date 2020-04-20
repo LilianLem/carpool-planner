@@ -71,6 +71,16 @@ function checkProposalAdd()
 
 		if($checkCity == 3)
 		{
+			$apiManager = new ApiManager();
+			$cityRawData = $apiManager->checkCity(strip_tags($_POST['city']),strip_tags($_POST['department']));
+
+			if(!$cityRawData)
+			{
+				$errors .= "- La ville n'a pas été trouvée dans la base de l'INSEE\n";
+			}
+			else
+			{
+			}
 		}
 
 		if(!checkDateFormat($_POST['date']))
