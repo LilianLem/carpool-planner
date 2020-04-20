@@ -28,6 +28,16 @@ function checkProposalAdd()
 			$errors .= "- Le pseudo Discord renseigné est trop long (supérieur à 32 caractères)\n";
 		}
 
+		if(!ctype_alpha(utf8_decode(str_replace(array(' ','-'), '', $_POST['city']))))
+		{
+			$errors .= "- Le format de la ville est incorrect. Exemples corrects : Rouen, Clermont-Ferrand\n";
+		}
+
+		if(strlen($_POST['city']) > 45)
+		{
+			$errors .= "- Le nom de ville renseigné est trop long (supérieur à 45 caractères)\n";
+		}
+
 	}
 
 	else
