@@ -44,4 +44,21 @@ function checkProposalAdd()
 	{
 	}
 }
+function checkDateFormat($date)
+{
+    if (strtotime($date) === false)
+    { 
+        return false;
+    }
+
+    $date_array = explode('-', $date);
+    if(count($date_array) != 3)
+    {
+    	return false;
+    }
+
+    list($year, $month, $day) = explode('-', $date); 
+    return checkdate($month, $day, $year);
+}
+
 }
