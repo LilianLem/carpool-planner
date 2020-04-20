@@ -80,6 +80,12 @@ function checkProposalAdd()
 			}
 			else
 			{
+				$cityData = json_decode($cityRawData);
+
+				$city = $cityData[0]->nom;
+				$department = $cityData[0]->codeDepartement;
+				$latitude = $cityData[0]->centre->coordinates[1];
+				$longitude = $cityData[0]->centre->coordinates[0];
 			}
 		}
 
