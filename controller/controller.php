@@ -139,6 +139,17 @@ function checkProposalAdd()
 			$newProposal['ville'] = $city.' ('.$department.')';
 			$newProposal['discord_username'] = strip_tags($_POST['discord-username']);
 
+			$newProposal['date_depart'] = formatDateTimeForDb($_POST['date'],$_POST['time']);
+
+			if(!empty($_POST['return-date']))
+			{
+				$newProposal['date_retour'] = formatDateTimeForDb($_POST['return-date'],$_POST['return-time']);
+			}
+			else
+			{
+				$newProposal['date_retour'] = '';
+			}
+			
 			$newProposal['latitude'] = $latitude;
 			$newProposal['longitude'] = $longitude;
 		}
