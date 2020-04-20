@@ -136,7 +136,11 @@ function checkProposalAdd()
 		}
 		else
 		{
+			$newProposal['ville'] = $city.' ('.$department.')';
+			$newProposal['discord_username'] = strip_tags($_POST['discord-username']);
 
+			$newProposal['latitude'] = $latitude;
+			$newProposal['longitude'] = $longitude;
 		}
 	}
 
