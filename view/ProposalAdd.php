@@ -24,7 +24,7 @@
 
 			<form id="carpool-add-form" method="post" action="index.php?action=newProposal">
 				<label for="discord-username">Pseudo Discord</label>
-				<input type="text" name="discord-username" id="discord-username" placeholder="Pseudo Discord#1234" required="required" maxlength="32" />
+				<input type="text" name="discord-username" id="discord-username" placeholder="Ex : Pierre#1234" required="required" maxlength="32" />
 
 				<label for="city">Ville de départ</label>
 				<input type="text" name="city" id="city" placeholder="Ex : Rouen / Clermont-Ferrand" required="required" maxlength="45" />
