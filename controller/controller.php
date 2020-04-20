@@ -38,6 +38,11 @@ function checkProposalAdd()
 			$errors .= "- Le pseudo Discord renseigné est trop long (supérieur à 32 caractères)\n";
 		}
 
+		if((!ctype_digit($_POST['department']) OR strlen($_POST['department']) > 2) AND (!strcasecmp($_POST['department'], '2a') AND !strcasecmp($_POST['department'], '2b')))
+		{
+			$errors .= "- Le numéro de département est incorrect. Exemples corrects : 01, 1, 34\n";
+		}
+
 		if(!ctype_alpha(utf8_decode(str_replace(array(' ','-'), '', $_POST['city']))))
 		{
 			$errors .= "- Le format de la ville est incorrect. Exemples corrects : Rouen, Clermont-Ferrand\n";
