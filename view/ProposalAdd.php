@@ -35,11 +35,11 @@
 				<label for="time">Heure de départ</label>
 				<input type="time" name="time" id="time" required="required" step="900" />
 
-				<label for="date">Date de retour</label>
-				<input type="date" name="return-date" id="return-date" required="required" /> <!--pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}"-->
+				<label for="date">Date de retour <span class="i">(facultatif)</span></label>
+				<input type="date" name="return-date" id="return-date" /> <!--pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}"-->
 
-				<label for="time">Heure de retour</label>
-				<input type="time" name="return-time" id="return-time" required="required" step="900" />
+				<label for="time">Heure de retour <span class="i">(facultatif)</span></label>
+				<input type="time" name="return-time" id="return-time" step="900" />
 
 				<input class="button" type="submit" value="Ajouter" />
 			</form>
