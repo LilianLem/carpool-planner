@@ -207,6 +207,6 @@ function checkTime($time)
 function formatDateTimeForDb($date,$time)
 {
 	$date_array = explode('-', $date);
-	$day_alpha = strftime("%A",strtotime($date));
+	$day_alpha = ucfirst(strftime("%A",strtotime($date)));
 	return $day_alpha.' '.$date_array[2].'/'.$date_array[1].' '.str_replace(':', 'h', $time);
 }
