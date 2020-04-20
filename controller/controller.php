@@ -22,6 +22,12 @@ function checkProposalAdd()
 		{
 			$errors .= "- Le format du pseudo Discord est incorrect. Exemple correct : Pierre#1234\n";
 		}
+
+		if(strlen($_POST['discord-username']) > 32)
+		{
+			$errors .= "- Le pseudo Discord renseigné est trop long (supérieur à 32 caractères)\n";
+		}
+
 	}
 
 	else
