@@ -9,12 +9,18 @@ try {
 			displayProposalAddForm();
 		}
 
+		elseif($_GET['action'] == 'newProposal')
+		{
+			checkProposalAdd();
+		}
+
 		else
 		{
 			// Par défaut si l'action n'est pas reconnue
 			displayProposalList();
 		}
 	}
+
 	else
 	{
 		// Par défaut si aucune action n'est définie
