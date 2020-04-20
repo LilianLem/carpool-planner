@@ -1,5 +1,6 @@
 <?php
 require_once('model/ProposalManager.php');
+require_once('model/ApiManager.php');
 
 function displayProposalList()
 {
@@ -18,6 +19,8 @@ function checkProposalAdd()
 {
 	setlocale(LC_ALL, 'fr_FR.utf8','fra');
 	$errors = '';
+	$checkCity = 0;
+
 	if(isset($_POST['discord-username']) AND isset($_POST['city']) AND isset($_POST['department']) AND isset($_POST['date']) AND isset($_POST['time']))
 	{
 		if(!stristr($_POST['discord-username'], '#'))
@@ -43,16 +46,33 @@ function checkProposalAdd()
 		{
 			$errors .= "- Le numéro de département est incorrect. Exemples corrects : 01, 1, 34\n";
 		}
+		else
+		{
+			$checkCity++;
+		}
 
 		if(!ctype_alpha(utf8_decode(str_replace(array(' ','-'), '', $_POST['city']))))
 		{
 			$errors .= "- Le format de la ville est incorrect. Exemples corrects : Rouen, Clermont-Ferrand\n";
+		}
+		else
+		{
+			$checkCity++;
 		}
 
 		if(strlen($_POST['city']) > 45)
 		{
 			$errors .= "- Le nom de ville renseigné est trop long (supérieur à 45 caractères)\n";
 		}
+		else
+		{
+			$checkCity++;
+		}
+
+		if($checkCity == 3)
+		{
+		}
+
 		if(!checkDateFormat($_POST['date']))
 		{
 			$errors .= "- La date de départ renseignée est incorrecte\n";
