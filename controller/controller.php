@@ -17,6 +17,7 @@ function displayProposalAddForm()
 function checkProposalAdd()
 {
 	setlocale(LC_ALL, 'fr_FR.utf8','fra');
+	$errors = '';
 	if(isset($_POST['discord-username']) AND isset($_POST['city']) AND isset($_POST['department']) AND isset($_POST['date']) AND isset($_POST['time']))
 	{
 		if(!stristr($_POST['discord-username'], '#'))
