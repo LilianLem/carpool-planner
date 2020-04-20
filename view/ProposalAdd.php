@@ -22,7 +22,7 @@
 		<main>
 			<h1>Ajouter un trajet</h1>
 
-			<form id="carpool-add-form" method="post" action="#">
+			<form id="carpool-add-form" method="post" action="index.php?action=newProposal">
 				<label for="discord-username">Pseudo Discord</label>
 				<input type="text" name="discord-username" id="discord-username" placeholder="Pseudo Discord#1234" required="required" maxlength="32" />
 
