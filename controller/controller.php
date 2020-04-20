@@ -155,6 +155,8 @@ function checkProposalAdd()
 
 			$proposalManager = new ProposalManager();
 			$proposalManager->insertNewProposal($newProposal);
+
+			displayProposalList();
 		}
 	}
 
