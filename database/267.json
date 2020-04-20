@@ -1,0 +1,12 @@
+{
+    "__created_at": 1587372222,
+    "__updated_at": 1587372222,
+    "data": {
+        "ville": "Sète (34)",
+        "discord_username": "Test2#1415",
+        "date_depart": "jeudi 11/06 23h00",
+        "date_retour": "dimanche 14/06 23h00",
+        "latitude": 43.3856,
+        "longitude": 3.6624
+    }
+}
