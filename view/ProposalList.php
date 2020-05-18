@@ -33,9 +33,9 @@
 				foreach($proposals as $proposal)
 				{ ?>
 				<tr>
-					<td><?=$proposal['ville']?></td>
-					<td><?=$proposal['date_depart'] ?? 'RETOUR UNIQUEMENT'?></td>
-					<td><?=$proposal['discord_username']?></td>
+					<td><?=$proposal['start_city']?></td>
+					<td><?=$proposal['start_date']?></td>
+					<td><?=$proposal['username']?></td>
 				</tr>
 				<?php } ?>
 			</table>
