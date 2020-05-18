@@ -20,6 +20,22 @@ class ProposalManager extends DatabaseManager
 
 		$newProposal = $db->get($db->count());
 
+	private function checkUser($username,$db)
+	{
+		$user_raw = $db->prepare('SELECT id FROM user WHERE username = ?');
+		$user_raw->execute(array($username));
+		$user = $user_raw->fetch();
+		if(empty($user))
+		{
+			return 0;
+		}
+		else
+		{
+			return $user['id'];
+		}
+	}
+
+
 		$newProposal->ville = $proposalData['ville'];
 		$newProposal->discord_username = $proposalData['discord_username'];
 		$newProposal->date_depart = $proposalData['date_depart'];
