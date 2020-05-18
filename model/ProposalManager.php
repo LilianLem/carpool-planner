@@ -17,8 +17,20 @@ class ProposalManager extends DatabaseManager
 	public function insertNewProposal($proposalData)
 	{
 		$db = $this->dbConnect();
+	private function insertNewUser($username,$db)
+	{
+		$randomMailId = $this->generateRandomMailId($db);
+		$fakeMail = $randomMailId.'@fakeDiscordEmail.com';
 
 		$newProposal = $db->get($db->count());
+		$transferUser = $db->prepare('INSERT INTO user(username, email, password, role, notify_email, notify_discord, last_login, registered, activated) VALUES(:username, :email, "$2y$10$Qa3JJ/.59hKnApYbzudSD.fvd8mcbBz.TQF167KoTE/Tc5/4mZkqa", 1, 0, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0)');
+		$transferUser->execute(array(
+			'username' => $username,
+			'email' => $fakeMail
+		));
+
+		return $db->lastInsertId();
+	}
 
 	private function checkUser($username,$db)
 	{
