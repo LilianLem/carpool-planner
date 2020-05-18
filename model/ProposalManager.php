@@ -5,9 +5,11 @@ class ProposalManager extends DatabaseManager
 {
 	public function getAllProposals()
 	{
-		$db = $this->dbConnect();
+		$db = $this->dbSqlConnect();
 
-		$proposals = $db->where('discord_username','NOT','NULL')->results();
+		$proposals_raw = $db->prepare('SELECT p.start_city, p.start_date, u.username FROM proposal p INNER JOIN user u ON p.user_id = u.id');
+		$proposals_raw->execute();
+		$proposals = $proposals_raw->fetchAll();
 
 		return $proposals;
 	}
