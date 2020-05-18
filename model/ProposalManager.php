@@ -35,6 +35,11 @@ class ProposalManager extends DatabaseManager
 		}
 	}
 
+	private function generateRandomMailId($db)
+	{
+		while(1 == 1)
+		{
+			$random = rand(1000000,1999999);
 
 		$newProposal->ville = $proposalData['ville'];
 		$newProposal->discord_username = $proposalData['discord_username'];
@@ -42,6 +47,14 @@ class ProposalManager extends DatabaseManager
 		$newProposal->date_retour = $proposalData['date_retour'];
 		$newProposal->latitude = $proposalData['latitude'];
 		$newProposal->longitude = $proposalData['longitude'];
+			$user_raw = $db->prepare('SELECT id FROM user WHERE email = ?');
+			$user_raw->execute(array($random.'@fakeDiscordEmail.com'));
+			$user = $user_raw->fetch();
+			if(empty($user))
+			{
+				break;
+			}
+		}
 
 		$newProposal->save();
 	}
