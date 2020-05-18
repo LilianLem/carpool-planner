@@ -4,8 +4,8 @@
     "data": {
         "ville": "Paris (75)",
         "discord_username": "Kolex#5748",
-        "date_depart": "Samedi 29/06 vers 8h (départ de Rennes à 4h)",
-        "date_retour": "Samedi 29/06 ou Dimanche 30/06",
+        "date_depart": "29/06 vers 8h",
+        "date_retour": "29/06",
         "latitude": 48.8458832,
         "longitude": 2.3173744
     }

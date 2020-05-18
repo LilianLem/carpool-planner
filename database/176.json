@@ -2,10 +2,10 @@
     "__created_at": 1587073627,
     "__updated_at": 1587073710,
     "data": {
-        "ville": "Tassin-la-Demi-Lune / Lyon (69)",
+        "ville": "Tassin-la-Demi-Lune (69)",
         "discord_username": "TheFrenchGunner#1227",
-        "date_depart": "Samedi 29/06 7h",
-        "date_retour": "Dimanche 30/06 13h/14h",
+        "date_depart": "29/06 7h",
+        "date_retour": "30/06 13h/14h",
         "latitude": 45.764024,
         "longitude": 4.7814915
     }

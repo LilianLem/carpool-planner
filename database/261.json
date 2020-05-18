@@ -4,8 +4,8 @@
     "data": {
         "ville": "Paris (75)",
         "discord_username": "Bellatriks#2337",
-        "date_depart": "Vendredi 28/06 10h (départ de Laval)",
-        "date_retour": "Dimanche 30/06 10h",
+        "date_depart": "28/06 10h",
+        "date_retour": "30/06 10h",
         "latitude": 48.8689228,
         "longitude": 2.326816
     }

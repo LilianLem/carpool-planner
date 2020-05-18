@@ -2,10 +2,10 @@
     "__created_at": 1587073627,
     "__updated_at": 1587073710,
     "data": {
-        "ville": "Massy / Palaiseau (91)",
+        "ville": "Massy (91)",
         "discord_username": "Emil'yanne ^^#0056",
-        "date_depart": "Vendredi 28/06",
-        "date_retour": "Dimanche 30/06",
+        "date_depart": "28/06",
+        "date_retour": "30/06",
         "latitude": 48.724904,
         "longitude": 2.256614
     }

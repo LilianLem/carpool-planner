@@ -2,10 +2,10 @@
     "__created_at": 1587073626,
     "__updated_at": 1587073710,
     "data": {
-        "ville": "Corbeil-Essonnes (91) / Evry (91)",
+        "ville": "Corbeil-Essonnes (91)",
         "discord_username": "Warystid#7384",
-        "date_depart": "Samedi 29/06 8h/9h",
-        "date_retour": "Dimanche 30/06 8h/10h",
+        "date_depart": "29/06 8h/9h",
+        "date_retour": "30/06 8h/10h",
         "latitude": 48.6174099,
         "longitude": 2.4540339
     }

@@ -2,10 +2,10 @@
     "__created_at": 1587073627,
     "__updated_at": 1587073710,
     "data": {
-        "ville": "Oullins / Lyon (69)",
+        "ville": "Oullins (69)",
         "discord_username": "Crowyl#6577",
-        "date_depart": "Samedi 29/06 10h",
-        "date_retour": "Dimanche 30/06 après-midi",
+        "date_depart": "29/06 10h",
+        "date_retour": "30/06 après-midi",
         "latitude": 45.7165746,
         "longitude": 4.8134605
     }
