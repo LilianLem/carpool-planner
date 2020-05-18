@@ -48,6 +48,7 @@ function checkProposalAdd()
 		}
 		else
 		{
+			$_POST['department'] = strtoupper($_POST['department']);
 			$checkCity++;
 		}
 
