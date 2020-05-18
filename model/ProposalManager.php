@@ -16,13 +16,30 @@ class ProposalManager extends DatabaseManager
 
 	public function insertNewProposal($proposalData)
 	{
-		$db = $this->dbConnect();
+		$db = $this->dbSqlConnect();
+
+		$userId = $this->checkUser($proposalData['discord_username'],$db);
+		if(empty($userId))
+		{
+			$userId = $this->insertNewUser($proposalData['discord_username'],$db);
+		}
+
+		$newProposal = $db->prepare('INSERT INTO proposal(`user_id`, `start_city`, `start_lat`, `start_lng`, `start_date`, `available_seats`, `max_seats`, `return`, `return_city`, `return_lat`, `return_lng`, `return_date`, `return_available_seats`, `return_max_seats`, `detour_radius`, `description`, `smoking_allowed`, `free`, `created`, `last_edited`, `status`) VALUES(:userId, :city, :lat, :lng, :startDate, 4, 4, 1, :city, :lat, :lng, :returnDate, 4, 4, 10, "Pas de description", 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1)');
+		$newProposal->execute(array(
+			'userId' => $userId,
+			'city' => $proposalData['ville'],
+			'lat' => $proposalData['latitude'],
+			'lng' => $proposalData['longitude'],
+			'startDate' => $proposalData['date_depart'],
+			'returnDate' => $proposalData['date_retour']
+		));
+	}
+
 	private function insertNewUser($username,$db)
 	{
 		$randomMailId = $this->generateRandomMailId($db);
 		$fakeMail = $randomMailId.'@fakeDiscordEmail.com';
 
-		$newProposal = $db->get($db->count());
 		$transferUser = $db->prepare('INSERT INTO user(username, email, password, role, notify_email, notify_discord, last_login, registered, activated) VALUES(:username, :email, "$2y$10$Qa3JJ/.59hKnApYbzudSD.fvd8mcbBz.TQF167KoTE/Tc5/4mZkqa", 1, 0, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0)');
 		$transferUser->execute(array(
 			'username' => $username,
@@ -53,12 +70,6 @@ class ProposalManager extends DatabaseManager
 		{
 			$random = rand(1000000,1999999);
 
-		$newProposal->ville = $proposalData['ville'];
-		$newProposal->discord_username = $proposalData['discord_username'];
-		$newProposal->date_depart = $proposalData['date_depart'];
-		$newProposal->date_retour = $proposalData['date_retour'];
-		$newProposal->latitude = $proposalData['latitude'];
-		$newProposal->longitude = $proposalData['longitude'];
 			$user_raw = $db->prepare('SELECT id FROM user WHERE email = ?');
 			$user_raw->execute(array($random.'@fakeDiscordEmail.com'));
 			$user = $user_raw->fetch();
@@ -68,6 +79,6 @@ class ProposalManager extends DatabaseManager
 			}
 		}
 
-		$newProposal->save();
+		return $random;
 	}
 }
