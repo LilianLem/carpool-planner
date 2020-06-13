@@ -5,7 +5,7 @@ class ProposalManager extends DatabaseManager
 {
 	public function getAllProposals()
 	{
-		$db = $this->dbSqlConnect();
+		$db = $this->dbConnect();
 
 		$proposals_raw = $db->prepare('SELECT p.start_city, p.start_date, u.username FROM proposal p INNER JOIN user u ON p.user_id = u.id');
 		$proposals_raw->execute();
@@ -16,7 +16,7 @@ class ProposalManager extends DatabaseManager
 
 	public function insertNewProposal($proposalData)
 	{
-		$db = $this->dbSqlConnect();
+		$db = $this->dbConnect();
 
 		$userId = $this->checkUser($proposalData['discord_username'],$db);
 		if(empty($userId))
