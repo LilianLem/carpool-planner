@@ -21,7 +21,7 @@ class ProposalManager extends DatabaseManager
 		$userId = $this->checkUser($proposalData['discord_username'],$db);
 		if(empty($userId))
 		{
-			$userId = $this->insertNewUser($proposalData['discord_username'],$db);
+			$userId = $this->insertNewUser($proposalData['discord_username'],$proposalData['email'],$db);
 		}
 
 		$newProposal = $db->prepare('INSERT INTO proposal(`user_id`, `start_city`, `start_lat`, `start_lng`, `start_date`, `available_seats`, `max_seats`, `return`, `return_city`, `return_lat`, `return_lng`, `return_date`, `return_available_seats`, `return_max_seats`, `detour_radius`, `description`, `smoking_allowed`, `free`, `created`, `last_edited`, `status`) VALUES(:userId, :city, :lat, :lng, :startDate, 4, 4, 1, :city, :lat, :lng, :returnDate, 4, 4, 10, "Pas de description", 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1)');
@@ -35,15 +35,12 @@ class ProposalManager extends DatabaseManager
 		));
 	}
 
-	private function insertNewUser($username,$db)
+	private function insertNewUser($username,$email,$db)
 	{
-		$randomMailId = $this->generateRandomMailId($db);
-		$fakeMail = $randomMailId.'@fakeDiscordEmail.com';
-
 		$transferUser = $db->prepare('INSERT INTO user(username, email, password, role, notify_email, notify_discord, last_login, registered, activated) VALUES(:username, :email, "$2y$10$Qa3JJ/.59hKnApYbzudSD.fvd8mcbBz.TQF167KoTE/Tc5/4mZkqa", 1, 0, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0)');
 		$transferUser->execute(array(
 			'username' => $username,
-			'email' => $fakeMail
+			'email' => $email
 		));
 
 		return $db->lastInsertId();
@@ -62,23 +59,5 @@ class ProposalManager extends DatabaseManager
 		{
 			return $user['id'];
 		}
-	}
-
-	private function generateRandomMailId($db)
-	{
-		while(1 == 1)
-		{
-			$random = rand(1000000,1999999);
-
-			$user_raw = $db->prepare('SELECT id FROM user WHERE email = ?');
-			$user_raw->execute(array($random.'@fakeDiscordEmail.com'));
-			$user = $user_raw->fetch();
-			if(empty($user))
-			{
-				break;
-			}
-		}
-
-		return $random;
 	}
 }

@@ -26,6 +26,9 @@
 				<label for="discord-username">Pseudo Discord</label>
 				<input type="text" name="discord-username" id="discord-username" placeholder="Ex : Pierre#1234" required="required" maxlength="32" />
 
+                <label for="email">E-mail</label>
+                <input type="email" name="email" id="email" placeholder="Ex : pierre.dupont@gmail.com" required="required" minlength="6" maxlength="128" />
+
 				<label for="city">Ville de départ</label>
 				<input type="text" name="city" id="city" placeholder="Ex : Rouen / Clermont-Ferrand" required="required" maxlength="45" />
 
