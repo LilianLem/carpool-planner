@@ -19,7 +19,6 @@
 			</div>
 		</header>
 
-		<main>
 			<h1>Trajets proposés</h1>
 		<main id="proposal-list">
 
