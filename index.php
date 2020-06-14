@@ -1,4 +1,4 @@
-<?php
+<?php session_start();
 try {
 	// if(isset($_GET['action']))
 	// {

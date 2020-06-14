@@ -288,6 +288,69 @@ function checkRegistration()
     }
 }
 
+function displayLoginForm($errors = '', $prefilledEmail = '')
+{
+    require('view/AccountLogin.php');
+}
+
+function checkLogin()
+{
+    $errors = '';
+
+    if(isset($_POST['email']) AND isset($_POST['password']))
+    {
+        if(strlen($_POST['email']) > 128)
+        {
+            $errors .= "- L'adresse mail renseignée est trop longue (supérieure à 128 caractères)\\n";
+        }
+
+        if(strlen($_POST['password']) > 128)
+        {
+            $errors .= "- Le mot de passe renseigné est trop long (supérieur à 128 caractères)\\n";
+        }
+
+        preg_match("/[A-Za-zÀ-ÖØ-öø-ÿ\d!@#\$£€%^&*()\\[\]{}\-_+=~`|:;\"'<>,.\/? ]+/", $_POST['password'], $checkedPassword);
+        if($checkedPassword[0] != $_POST['password'])
+        {
+            $errors .= "- Le mot de passe comporte un caractère non autorisé. Si ce message persiste, contactez-nous à l'adresse assistance@fakeEmailAddress.com\\n";
+        }
+
+        // Mail à préremplir si une erreur survient et que l'application retourne sur la page de connexion
+        $prefilledEmail = strip_tags($_POST['email']);
+
+        if(!empty($errors))
+        {
+            displayLoginForm($errors, $prefilledEmail);
+        }
+        else
+        {
+            $credentials['password'] = strip_tags($_POST['password']);
+            $credentials['email'] = strip_tags($_POST['email']);
+
+            $userManager = new UserManager();
+            $checkCredentials = $userManager->checkUserToLogin($credentials);
+
+            if(empty($checkCredentials))
+            {
+                $errors .= "- Les identifiants renseignés sont incorrects\\n";
+                displayLoginForm($errors, $prefilledEmail);
+            }
+            else
+            {
+                $_SESSION['userId'] = $checkCredentials['id'];
+                $_SESSION['username'] = $checkCredentials['username']; // INITIALISER LA SESSION SUR LES VIEWS
+                displayProposalList(); // À changer pour faire arriver sur la page d'où l'utilisateur vient
+            }
+        }
+    }
+    else
+    {
+        $prefilledEmail = isset($_POST['email']) ? strip_tags($_POST['email']) : '';
+
+        displayLoginForm("- Vous n'avez pas renseigné tous les champs obligatoires\\n", $prefilledEmail);
+    }
+}
+
 function checkDateFormat($date)
 {
     if (strtotime($date) === false)

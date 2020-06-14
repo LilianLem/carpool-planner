@@ -7,7 +7,7 @@ class UserManager extends DatabaseManager
 	{
         $db = $this->dbConnect();
 
-        $userId = $this->checkUser($userData);
+        $userId = $this->checkUserToRegister($userData);
         if(!empty($userId))
         {
             return 'existingUser';
@@ -23,7 +23,7 @@ class UserManager extends DatabaseManager
 		return $db->lastInsertId();
 	}
 
-	public function checkUser($userData)
+	public function checkUserToRegister($userData)
 	{
         $db = $this->dbConnect();
 
@@ -42,4 +42,31 @@ class UserManager extends DatabaseManager
 			return $user['id'];
 		}
 	}
+
+    public function checkUserToLogin($credentials)
+    {
+        $db = $this->dbConnect();
+
+        $user_raw = $db->prepare('SELECT id, username, password FROM user WHERE email = ? LIMIT 1');
+        $user_raw->execute(array($credentials['email']));
+        $user = $user_raw->fetch();
+
+        if(empty($user))
+        {
+            return [];
+        }
+        else
+        {
+            $passwordCheck = password_verify($credentials['password'], $user['password']);
+
+            if($passwordCheck)
+            {
+                return ['id' => $user['id'], 'username' => $user['username']];
+            }
+            else
+            {
+                return [];
+            }
+        }
+    }
 }

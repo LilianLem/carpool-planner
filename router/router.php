@@ -24,6 +24,16 @@ try {
             checkRegistration();
         }
 
+        elseif($_GET['action'] == 'login')
+        {
+            displayLoginForm();
+        }
+
+        elseif($_GET['action'] == 'loggingIn')
+        {
+            checkLogin();
+        }
+
 		else
 		{
 			// Par défaut si l'action n'est pas reconnue
