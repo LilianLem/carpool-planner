@@ -26,7 +26,7 @@ function checkProposalAdd()
 	{
 		if(!stristr($_POST['discord-username'], '#'))
 		{
-			$errors .= "- Le format du pseudo Discord est incorrect. Exemple correct : Pierre#1234\n";
+			$errors .= "- Le format du pseudo Discord est incorrect. Exemple correct : Pierre#1234\\n";
 		}
 		else
 		{
@@ -34,32 +34,32 @@ function checkProposalAdd()
 
 			if(!ctype_digit($discordUsername_array[1]) OR empty($discordUsername_array[0]) OR strlen($discordUsername_array[1]) < 4)
 			{
-				$errors .= "- Le format du pseudo Discord est incorrect. Exemple correct : Pierre#1234\n";
+				$errors .= "- Le format du pseudo Discord est incorrect. Exemple correct : Pierre#1234\\n";
 			}
 		}
 
 		if(strlen($_POST['discord-username']) > 32)
 		{
-			$errors .= "- Le pseudo Discord renseigné est trop long (supérieur à 32 caractères)\n";
+			$errors .= "- Le pseudo Discord renseigné est trop long (supérieur à 32 caractères)\\n";
 		}
 
         if(strlen($_POST['email']) < 6)
         {
-            $errors .= "- L'adresse mail renseignée est trop courte (inférieure à 6 caractères)\n";
+            $errors .= "- L'adresse mail renseignée est trop courte (inférieure à 6 caractères)\\n";
         }
         elseif(strlen($_POST['email']) > 128)
         {
-            $errors .= "- L'adresse mail renseignée est trop longue (supérieure à 128 caractères)\n";
+            $errors .= "- L'adresse mail renseignée est trop longue (supérieure à 128 caractères)\\n";
         }
 
         if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
         {
-            $errors .= "- Le format de l'adresse mail est incorrect. Exemple correct : pierre.dupont@gmail.com\n";
+            $errors .= "- Le format de l'adresse mail est incorrect. Exemple correct : pierre.dupont@gmail.com\\n";
         }
 
 		if((!ctype_digit($_POST['department']) OR strlen($_POST['department']) > 2) AND (!strcasecmp($_POST['department'], '2a') AND !strcasecmp($_POST['department'], '2b')))
 		{
-			$errors .= "- Le numéro de département est incorrect. Exemples corrects : 01, 1, 34\n";
+			$errors .= "- Le numéro de département est incorrect. Exemples corrects : 01, 1, 34\\n";
 		}
 		else
 		{
@@ -69,7 +69,7 @@ function checkProposalAdd()
 
 		if(!ctype_alpha(utf8_decode(str_replace(array(' ','-'), '', $_POST['city']))))
 		{
-			$errors .= "- Le format de la ville est incorrect. Exemples corrects : Rouen, Clermont-Ferrand\n";
+			$errors .= "- Le format de la ville est incorrect. Exemples corrects : Rouen, Clermont-Ferrand\\n";
 		}
 		else
 		{
@@ -78,7 +78,7 @@ function checkProposalAdd()
 
 		if(strlen($_POST['city']) > 45)
 		{
-			$errors .= "- Le nom de ville renseigné est trop long (supérieur à 45 caractères)\n";
+			$errors .= "- Le nom de ville renseigné est trop long (supérieur à 45 caractères)\\n";
 		}
 		else
 		{
@@ -92,7 +92,7 @@ function checkProposalAdd()
 
 			if(!$cityRawData)
 			{
-				$errors .= "- La ville n'a pas été trouvée dans la base de l'INSEE\n";
+				$errors .= "- La ville n'a pas été trouvée dans la base de l'INSEE\\n";
 			}
 			else
 			{
@@ -107,12 +107,12 @@ function checkProposalAdd()
 
 		if(!checkDateFormat($_POST['date']))
 		{
-			$errors .= "- La date de départ renseignée est incorrecte\n";
+			$errors .= "- La date de départ renseignée est incorrecte\\n";
 		}
 
 		if(!checkTime($_POST['time']))
 		{
-			$errors .= "- L'heure de départ renseignée est incorrecte\n";
+			$errors .= "- L'heure de départ renseignée est incorrecte\\n";
 		}
 
 		if(isset($_POST['return-date']))
@@ -121,25 +121,25 @@ function checkProposalAdd()
 			{
 				if(!checkDateFormat($_POST['return-date']))
 				{
-					$errors .= "- La date de retour renseignée est incorrecte\n";
+					$errors .= "- La date de retour renseignée est incorrecte\\n";
 				}
 
 				if(!isset($_POST['return-time']))
 				{
-					$errors .= "- Une date de retour est renseignée mais pas une heure de retour\n";
+					$errors .= "- Une date de retour est renseignée mais pas une heure de retour\\n";
 				}
 				else
 				{
 					if(empty($_POST['return-time']))
 					{
-						$errors .= "- Une date de retour est renseignée mais pas une heure de retour\n";
+						$errors .= "- Une date de retour est renseignée mais pas une heure de retour\\n";
 					}
 
 					else
 					{
 						if(!checkTime($_POST['return-time']))
 						{
-							$errors .= "- L'heure de retour renseignée est incorrecte\n";
+							$errors .= "- L'heure de retour renseignée est incorrecte\\n";
 						}
 					}
 				}
@@ -179,7 +179,7 @@ function checkProposalAdd()
 
 	else
 	{
-		displayProposalAddForm("- Vous n'avez pas renseigné tous les champs obligatoires\n");
+		displayProposalAddForm("- Vous n'avez pas renseigné tous les champs obligatoires\\n");
 	}
 }
 
