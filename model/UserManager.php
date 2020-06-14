@@ -23,7 +23,7 @@ class UserManager extends DatabaseManager
 		return $db->lastInsertId();
 	}
 
-	public function checkUserToRegister($userData)
+	private function checkUserToRegister($userData)
 	{
         $db = $this->dbConnect();
 
