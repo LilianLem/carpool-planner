@@ -7,12 +7,12 @@ function displayProposalList()
 	$proposalManager = new ProposalManager();
 	$proposals = $proposalManager->getAllProposals();
 
-	require('view/proposalList.php');
+	require('view/ProposalList.php');
 }
 
 function displayProposalAddForm($errors = '')
 {
-	require('view/proposalAdd.php');
+	require('view/ProposalAdd.php');
 }
 
 function displayRegisterForm($errors = '')
