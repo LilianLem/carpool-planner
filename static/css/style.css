@@ -142,18 +142,18 @@ main #add-button p
 
 /* Page formulaire ajout trajet */
 
-#carpool-add-form
+.basic-form
 {
 	margin: 0 auto;
 	width: 85%;
 }
 
-#carpool-add-form label
+.basic-form label
 {
 	margin-bottom: 5px;
 }
 
-#carpool-add-form input
+.basic-form input
 {
 	display: block;
 	margin: 5px auto 15px;
@@ -163,18 +163,18 @@ main #add-button p
 	padding-left: 10px;
 }
 
-#carpool-add-form input:not(:last-child)
+.basic-form input:not(:last-child)
 {
 	-webkit-transition: all .35s ease-in-out;
 }
 
-#carpool-add-form input:hover:not(:last-child)
+.basic-form input:hover:not(:last-child)
 {
 	-webkit-transform: scale(1.02);
 	-webkit-transition: all .35s ease-in-out;
 }
 
-#carpool-add-form input.button
+.basic-form input.button
 {
 	background-color: #9e34f7;
 	-webkit-transition: background-color 0.3s ease;
@@ -187,14 +187,14 @@ main #add-button p
 	color: #fff;
 }
 
-#carpool-add-form input.button:hover
+.basic-form input.button:hover
 {
 	text-decoration: none;
 	cursor: pointer;
 	/*background-color: A définir;*/
 }
 
-#carpool-add-form input::-webkit-input-placeholder
+.basic-form input::-webkit-input-placeholder
 {
 	font-size: 1.25rem;
 	color: gray;
@@ -202,7 +202,7 @@ main #add-button p
 
 /* Media query mobile à venir V */
 
-.button, #carpool-add-form input
+.button, .basic-form input
 {
 	width: 100% /*!important*/;
 }

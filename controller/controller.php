@@ -15,6 +15,11 @@ function displayProposalAddForm($errors = '')
 	require('view/proposalAdd.php');
 }
 
+function displayRegisterForm($errors = '')
+{
+    require('view/AccountRegister.php');
+}
+
 function checkProposalAdd()
 {
 	setlocale(LC_ALL, 'fr_FR.utf8','fra');

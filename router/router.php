@@ -14,6 +14,11 @@ try {
 			checkProposalAdd();
 		}
 
+        elseif($_GET['action'] == 'register')
+        {
+            displayRegisterForm();
+        }
+
 		else
 		{
 			// Par défaut si l'action n'est pas reconnue
