@@ -19,6 +19,11 @@ try {
             displayRegisterForm();
         }
 
+        elseif($_GET['action'] == 'registration')
+        {
+            checkRegistration();
+        }
+
 		else
 		{
 			// Par défaut si l'action n'est pas reconnue
