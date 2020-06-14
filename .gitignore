@@ -1,6 +1,6 @@
+database/
 vendor/
 wireframes/
-database-create-with-data-180520.sql
 
 # Fichier de test à supprimer plus tard
 session-destroy.php
