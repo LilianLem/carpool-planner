@@ -92,7 +92,9 @@ main h1
 	font-size: 1.75rem;
 }
 
-main table
+/* Page liste des propositions */
+
+#proposal-list table
 {
 	margin: 0 auto;
 	width: 96%;
@@ -100,23 +102,24 @@ main table
 	border-spacing: 0px 1px;
 }
 
-main table tr:first-child
+#proposal-list table tr:first-child
 {
 	background-color: #9e34f7;
 }
 
-main table tr:not(:first-child)
+#proposal-list table tr:not(:first-child)
 {
 	background-color: #f8bf4c;
 	color: #1d1d1d;
+	cursor: pointer;
 }
 
-main table th, main table td
+#proposal-list table th, #proposal-list table td
 {
 	padding: 10px 0;
 }
 
-main a#add-button
+#proposal-list a#add-button
 {
 	cursor: pointer;
 	text-decoration: none;
@@ -131,7 +134,7 @@ main a#add-button
 	border-radius: 1000px;
 }
 
-main #add-button p
+#proposal-list #add-button p
 {
 	font-size: 2.5rem;
 	text-align: center;
