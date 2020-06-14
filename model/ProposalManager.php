@@ -18,15 +18,9 @@ class ProposalManager extends DatabaseManager
 	{
 		$db = $this->dbConnect();
 
-		$userId = $this->checkUser($proposalData['discord_username'],$db);
-		if(empty($userId))
-		{
-			$userId = $this->insertNewUser($proposalData['discord_username'],$proposalData['email'],$db);
-		}
-
 		$newProposal = $db->prepare('INSERT INTO proposal(`user_id`, `start_city`, `start_lat`, `start_lng`, `start_date`, `available_seats`, `max_seats`, `return`, `return_city`, `return_lat`, `return_lng`, `return_date`, `return_available_seats`, `return_max_seats`, `detour_radius`, `description`, `smoking_allowed`, `free`, `created`, `last_edited`, `status`) VALUES(:userId, :city, :lat, :lng, :startDate, 4, 4, 1, :city, :lat, :lng, :returnDate, 4, 4, 10, "Pas de description", 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1)');
 		$newProposal->execute(array(
-			'userId' => $userId,
+			'userId' => $_SESSION['userId'],
 			'city' => $proposalData['ville'],
 			'lat' => $proposalData['latitude'],
 			'lng' => $proposalData['longitude'],

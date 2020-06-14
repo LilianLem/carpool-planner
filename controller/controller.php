@@ -13,7 +13,15 @@ function displayProposalList()
 
 function displayProposalAddForm($errors = '')
 {
-	require('view/ProposalAdd.php');
+	if(isset($_SESSION['userId']))
+	{
+		require('view/ProposalAdd.php');
+	}
+	else
+	{
+		displayRegisterForm();
+		return;
+	}
 }
 
 function checkProposalAdd()
@@ -22,41 +30,8 @@ function checkProposalAdd()
 	$errors = '';
 	$checkCity = 0;
 
-	if(isset($_POST['discord-username']) AND isset($_POST['email']) AND isset($_POST['city']) AND isset($_POST['department']) AND isset($_POST['date']) AND isset($_POST['time']))
+	if(isset($_POST['city']) AND isset($_POST['department']) AND isset($_POST['date']) AND isset($_POST['time']))
 	{
-		if(!stristr($_POST['discord-username'], '#'))
-		{
-			$errors .= "- Le format du pseudo Discord est incorrect. Exemple correct : Pierre#1234\\n";
-		}
-		else
-		{
-			$discordUsername_array = explode('#', $_POST['discord-username']);
-
-			if(!ctype_digit($discordUsername_array[1]) OR empty($discordUsername_array[0]) OR strlen($discordUsername_array[1]) < 4)
-			{
-				$errors .= "- Le format du pseudo Discord est incorrect. Exemple correct : Pierre#1234\\n";
-			}
-		}
-
-		if(strlen($_POST['discord-username']) > 32)
-		{
-			$errors .= "- Le pseudo Discord renseigné est trop long (supérieur à 32 caractères)\\n";
-		}
-
-        if(strlen($_POST['email']) < 6)
-        {
-            $errors .= "- L'adresse mail renseignée est trop courte (inférieure à 6 caractères)\\n";
-        }
-        elseif(strlen($_POST['email']) > 128)
-        {
-            $errors .= "- L'adresse mail renseignée est trop longue (supérieure à 128 caractères)\\n";
-        }
-
-        if(!filter_var($_POST['email'], FILTER_VALIDATE_EMAIL))
-        {
-            $errors .= "- Le format de l'adresse mail est incorrect. Exemple correct : pierre.dupont@gmail.com\\n";
-        }
-
 		if((!ctype_digit($_POST['department']) OR strlen($_POST['department']) > 2) AND (!strcasecmp($_POST['department'], '2a') AND !strcasecmp($_POST['department'], '2b')))
 		{
 			$errors .= "- Le numéro de département est incorrect. Exemples corrects : 01, 1, 34\\n";
@@ -153,9 +128,6 @@ function checkProposalAdd()
 		else
 		{
 			$newProposal['ville'] = $city.' ('.$department.')';
-			$newProposal['discord_username'] = strip_tags($_POST['discord-username']);
-			$newProposal['email'] = strip_tags($_POST['email']);
-
 			$newProposal['date_depart'] = formatDateTimeForDb($_POST['date'],$_POST['time']);
 
 			if(!empty($_POST['return-date']))

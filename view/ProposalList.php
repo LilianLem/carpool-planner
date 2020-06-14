@@ -40,7 +40,7 @@
 				<?php } ?>
 			</table>
 
-			<a id="add-button" href="index.php?action=addProposal"><p>+</p></a>
+			<a id="add-button" href="index.php?action=<?= isset($_SESSION['userId']) ? 'addProposal' : 'register'; ?>"><p>+</p></a>
 		</main>
 
 		<footer>
