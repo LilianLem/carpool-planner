@@ -20,7 +20,7 @@
 		</header>
 
 		<main id="proposal-details">
-			<h1>Trajet #<?=$proposal['user_id']?></h1>
+			<h1>Trajet #<?=$proposal['id']?></h1>
 
 			<table>
 				<tr>
