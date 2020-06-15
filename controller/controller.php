@@ -136,7 +136,7 @@ function checkProposalAdd()
 			}
 			else
 			{
-				$newProposal['date_retour'] = '';
+				$newProposal['date_retour'] = NULL;
 			}
 			
 			$newProposal['latitude'] = $latitude;
@@ -375,7 +375,7 @@ function displayProposalDetails()
 function checkDateFormat($date)
 {
     if (strtotime($date) === false)
-    { 
+    {
         return false;
     }
 
