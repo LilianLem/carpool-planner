@@ -26,10 +26,11 @@ function displayProposalAddForm($errors = '')
 
 function checkProposalFormData()
 {
+	$proposal = [];
 	$errors = '';
 	$checkCity = 0;
 
-	if((!ctype_digit($_POST['department']) OR strlen($_POST['department']) > 2) AND (!strcasecmp($_POST['department'], '2a') AND !strcasecmp($_POST['department'], '2b')))
+	if(strlen($_POST['department']) > 2 OR (!ctype_digit($_POST['department']) AND strtolower($_POST['department']) != '2a' AND strtolower($_POST['department']) != '2b'))
 	{
 		$errors .= "- Le numéro de département est incorrect. Exemples corrects : 01, 1, 34\\n";
 	}
