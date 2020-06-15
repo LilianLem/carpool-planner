@@ -4,51 +4,50 @@ try {
 
 	if(isset($_GET['action']))
 	{
-		if($_GET['action'] == 'addProposal')
+		switch($_GET['action'])
 		{
-			displayProposalAddForm();
-		}
-
-		elseif($_GET['action'] == 'showProposal' AND isset($_GET['id']))
-		{
-			displayProposalDetails();
-		}
-
-		elseif($_GET['action'] == 'newProposal')
-		{
-			checkProposalAdd();
-		}
-
-        elseif($_GET['action'] == 'register')
-        {
-            displayRegisterForm();
-        }
-
-        elseif($_GET['action'] == 'registration')
-        {
-            checkRegistration();
-        }
-
-        elseif($_GET['action'] == 'login')
-        {
-            displayLoginForm();
-        }
-
-        elseif($_GET['action'] == 'loggingIn')
-        {
-            checkLogin();
-        }
-
-		else
-		{
-			// Par défaut si l'action n'est pas reconnue
-			displayProposalList();
+			case 'addProposal':
+				displayProposalAddForm();
+				break;
+			case 'showProposal':
+				if(isset($_GET['id']))
+				{
+					displayProposalDetails();
+				}
+				else
+				{
+					$goDefault = 1;
+				}
+				break;
+			case 'newProposal':
+				checkProposalAdd();
+				break;
+			case 'register':
+				displayRegisterForm();
+				break;
+			case 'registration':
+				checkRegistration();
+				break;
+			case 'login':
+				displayLoginForm();
+				break;
+			case 'loggingIn':
+				checkLogin();
+				break;
+			default:
+				$goDefault = 1;
+				break;
 		}
 	}
 
 	else
 	{
-		// Par défaut si aucune action n'est définie
+		$goDefault = 1;
+	}
+
+	if(isset($goDefault))
+	{
+		// Par défaut si l'action n'est pas reconnue
 		displayProposalList();
 	}
 }
