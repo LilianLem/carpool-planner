@@ -130,7 +130,7 @@ function checkProposalAdd()
 			$newProposal['ville'] = $city.' ('.$department.')';
 			$newProposal['date_depart'] = formatDateTimeForDb($_POST['date'],$_POST['time']);
 
-			if(!empty($_POST['return-date']))
+			if(!empty($_POST['return-date']) AND !empty($_POST['return-time']))
 			{
 				$newProposal['retour'] = true;
 				$newProposal['date_retour'] = formatDateTimeForDb($_POST['return-date'],$_POST['return-time']);

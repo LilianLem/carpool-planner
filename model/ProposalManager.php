@@ -54,7 +54,7 @@ class ProposalManager extends DatabaseManager
 
 	private function checkUser($username,$db)
 	{
-		$user_raw = $db->prepare('SELECT id FROM user WHERE username = ?');
+		$user_raw = $db->prepare('SELECT id FROM user WHERE username = ? LIMIT 1');
 		$user_raw->execute(array($username));
 		$user = $user_raw->fetch();
 		if(empty($user))
