@@ -12,10 +12,10 @@ function displayProposalList($errors = '')
 	$platformDateFormat = getPlatformFormat();
 	$dateFormat = "%A ".$platformDateFormat['day']."/%m à ".$platformDateFormat['hour'].":%M";
 
-	foreach($proposals as &$proposal)
+	foreach($proposals as &$element)
 	{
-		$startDate = strtotime($proposal['start_date']);
-		$proposal['start_date'] = ucfirst(strftime($dateFormat, $startDate));
+		$startDate = strtotime($element['start_date']);
+		$element['start_date'] = ucfirst(strftime($dateFormat, $startDate));
 	}
 
 	require('view/ProposalList.php');
