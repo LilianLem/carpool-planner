@@ -83,7 +83,7 @@
                 </tr>
 			</table>
 
-			<?php if(isset($_SESSION['userId'])){ if($proposal['user_id'] == $_SESSION['userId']) { ?><a id="edit-button" href="index.php?action=editProposal"><p>M</p></a><?php }} ?> <!-- Picto de crayon à mettre ici -->
+			<?php if(isset($_SESSION['userId'])){ if($proposal['user_id'] == $_SESSION['userId']) { ?><a title="Modifier mon trajet" id="edit-button" class="basic-thumb-button" href="index.php?action=editProposal"><img src="static/img/icons/pencil.png" alt="Crayon" width="35px"></a><?php }} ?> <!-- Picto de crayon à mettre ici -->
 		</main>
 
 		<footer>

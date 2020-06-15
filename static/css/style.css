@@ -92,9 +92,7 @@ main h1
 	font-size: 1.75rem;
 }
 
-/* Page liste des propositions */
-
-#proposal-list table
+main table
 {
 	margin: 0 auto;
 	width: 96%;
@@ -102,24 +100,12 @@ main h1
 	border-spacing: 0px 1px;
 }
 
-#proposal-list table tr:first-child
-{
-	background-color: #9e34f7;
-}
-
-#proposal-list table tr:not(:first-child)
-{
-	background-color: #f8bf4c;
-	color: #1d1d1d;
-	cursor: pointer;
-}
-
-#proposal-list table th, #proposal-list table td
+main table th, main table td
 {
 	padding: 10px 0;
 }
 
-#proposal-list a#add-button
+a.basic-thumb-button
 {
 	cursor: pointer;
 	text-decoration: none;
@@ -132,6 +118,20 @@ main h1
 	height: 70px;
 	background-color: #9e34f7;
 	border-radius: 1000px;
+}
+
+/* Page liste des propositions */
+
+#proposal-list table tr:first-child
+{
+	background-color: #9e34f7;
+}
+
+#proposal-list table tr:not(:first-child)
+{
+	background-color: #f8bf4c;
+	color: #1d1d1d;
+	cursor: pointer;
 }
 
 #proposal-list #add-button p
@@ -169,6 +169,12 @@ main h1
 #proposal-details table th, #proposal-details table td
 {
 	padding: 10px 0;
+}
+
+#proposal-details #edit-button
+{
+	display: flex;
+	justify-content: center;
 }
 
 /* Page formulaire ajout trajet */
