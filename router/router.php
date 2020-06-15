@@ -1,6 +1,7 @@
 <?php
 try {
-	require('controller/controller.php');
+	require('controller/ProposalController.php');
+	require('controller/UserController.php');
 
 	if(isset($_GET['action']))
 	{
