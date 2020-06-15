@@ -132,10 +132,12 @@ function checkProposalAdd()
 
 			if(!empty($_POST['return-date']))
 			{
+				$newProposal['retour'] = true;
 				$newProposal['date_retour'] = formatDateTimeForDb($_POST['return-date'],$_POST['return-time']);
 			}
 			else
 			{
+				$newProposal['retour'] = false;
 				$newProposal['date_retour'] = NULL;
 			}
 			
