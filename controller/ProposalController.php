@@ -185,14 +185,7 @@ function displayProposalDetails()
 			$proposal['user_id'] = str_pad($proposal['user_id'], 3, "0", STR_PAD_LEFT);
 
 			setlocale(LC_ALL, 'fr_FR.utf8','fra');
-			if(strtoupper(substr(PHP_OS, 0, 3)) == 'WIN')
-			{
-				$monthDateFormat = '%#d';
-			}
-			else
-			{
-				$monthDateFormat = '%e';
-			}
+			$monthDateFormat = getMonthFormat();
 			$dateFormat = "%A $monthDateFormat %b à %H:%M";
 
 			$startDate = strtotime($proposal['start_date']);

@@ -45,3 +45,15 @@ function formatDateTimeForDb($date,$time)
 	$day_alpha = ucfirst(strftime("%A",strtotime($date)));
 	return $date.' '.$time.':00';
 }
+
+function getMonthFormat()
+{
+	if(strtoupper(substr(PHP_OS, 0, 3)) == 'WIN')
+	{
+		return '%#d';
+	}
+	else
+	{
+		return '%e';
+	}
+}
