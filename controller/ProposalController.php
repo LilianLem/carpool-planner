@@ -208,7 +208,7 @@ function displayProposalDetails()
 			}
 
 			$lastEditedDate = strtotime($proposal['last_edited']);
-			$proposal['last_edited'] = ucfirst(strftime("%A $dayDateFormat %b", $lastEditedDate));
+			$proposal['last_edited'] = ucfirst(strftime("%A ".$platformDateFormat['day']." %b", $lastEditedDate));
 
 			require('view/ProposalDetails.php');
 		}
