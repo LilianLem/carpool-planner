@@ -19,8 +19,8 @@
 			</div>
 		</header>
 
-			<h1>Trajets proposés</h1>
 		<main id="proposal-list">
+			<h1>Trajets proposés</h1>
 
 			<table>
 				<tr>
