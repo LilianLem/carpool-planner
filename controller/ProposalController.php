@@ -185,8 +185,8 @@ function displayProposalDetails()
 			$proposal['user_id'] = str_pad($proposal['user_id'], 3, "0", STR_PAD_LEFT);
 
 			setlocale(LC_ALL, 'fr_FR.utf8','fra');
-			$monthDateFormat = getMonthFormat();
-			$dateFormat = "%A $monthDateFormat %b à %H:%M";
+			$dayDateFormat = getDayFormat();
+			$dateFormat = "%A $dayDateFormat %b à %H:%M";
 
 			$startDate = strtotime($proposal['start_date']);
 			$proposal['start_date'] = ucfirst(strftime($dateFormat, $startDate));
@@ -198,7 +198,7 @@ function displayProposalDetails()
 			}
 
 			$lastEditedDate = strtotime($proposal['last_edited']);
-			$proposal['last_edited'] = ucfirst(strftime("%A $monthDateFormat %b", $lastEditedDate));
+			$proposal['last_edited'] = ucfirst(strftime("%A $dayDateFormat %b", $lastEditedDate));
 
 			require('view/ProposalDetails.php');
 		}
