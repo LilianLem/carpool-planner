@@ -46,7 +46,7 @@ function checkProposalFormData()
 	}
 	else
 	{
-		$_POST['department'] = strtoupper($_POST['department']);
+		$_POST['department'] = str_pad(strtoupper($_POST['department']), 2, "0", STR_PAD_LEFT);
 		$checkCity++;
 	}
 
