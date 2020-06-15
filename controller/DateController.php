@@ -46,14 +46,14 @@ function formatDateTimeForDb($date,$time)
 	return $date.' '.$time.':00';
 }
 
-function getDayFormat()
+function getPlatformFormat()
 {
 	if(strtoupper(substr(PHP_OS, 0, 3)) == 'WIN')
 	{
-		return '%#d';
+		return ['day' => '%#d', 'hour' => '%#H'];
 	}
 	else
 	{
-		return '%e';
+		return ['day' => '%e', 'hour' => '%k'];
 	}
 }

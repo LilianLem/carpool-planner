@@ -185,8 +185,8 @@ function displayProposalDetails()
 			$proposal['user_id'] = str_pad($proposal['user_id'], 3, "0", STR_PAD_LEFT);
 
 			setlocale(LC_ALL, 'fr_FR.utf8','fra');
-			$dayDateFormat = getDayFormat();
-			$dateFormat = "%A $dayDateFormat %b à %H:%M";
+			$platformDateFormat = getPlatformFormat();
+			$dateFormat = "%A ".$platformDateFormat['day']." %b à ".$platformDateFormat['hour'].":%M";
 
 			$startDate = strtotime($proposal['start_date']);
 			$proposal['start_date'] = ucfirst(strftime($dateFormat, $startDate));
