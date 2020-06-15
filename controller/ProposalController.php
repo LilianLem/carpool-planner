@@ -192,7 +192,7 @@ function displayProposalDetails()
 		}
 		else
 		{
-			$proposal['user_id'] = str_pad($proposal['user_id'], 3, "0", STR_PAD_LEFT);
+			$proposal['id'] = str_pad($proposal['id'], 3, "0", STR_PAD_LEFT);
 
 			setlocale(LC_ALL, 'fr_FR.utf8','fra');
 			$platformDateFormat = getPlatformFormat();
