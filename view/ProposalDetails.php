@@ -83,7 +83,7 @@
                 </tr>
 			</table>
 
-			<a id="edit-button" href="index.php?action=editProposal"><p>M</p></a> <!-- Picto de crayon à mettre ici -->
+			<?php if(isset($_SESSION['userId'])){ if($proposal['user_id'] == $_SESSION['userId']) { ?><a id="edit-button" href="index.php?action=editProposal"><p>M</p></a><?php }} ?> <!-- Picto de crayon à mettre ici -->
 		</main>
 
 		<footer>
