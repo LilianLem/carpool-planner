@@ -7,7 +7,7 @@ class ProposalManager extends DatabaseManager
 	{
 		$db = $this->dbConnect();
 
-		$proposals_raw = $db->prepare('SELECT p.start_city, p.start_date, u.username FROM proposal p INNER JOIN user u ON p.user_id = u.id ORDER BY p.id');
+		$proposals_raw = $db->prepare('SELECT p.id, p.start_city, p.start_date, u.username FROM proposal p INNER JOIN user u ON p.user_id = u.id ORDER BY p.id');
 		$proposals_raw->execute();
 		$proposals = $proposals_raw->fetchAll();
 

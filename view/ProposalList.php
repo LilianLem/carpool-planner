@@ -32,7 +32,7 @@
 				<?php
 				foreach($proposals as $proposal)
 				{ ?>
-				<tr>
+				<tr onclick="window.location='index.php?action=showProposal&id=<?=$proposal['id']?>';">
 					<td><?=$proposal['start_city']?></td>
 					<td><?=$proposal['start_date']?></td>
 					<td><?=$proposal['username']?></td>
