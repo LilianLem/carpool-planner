@@ -143,6 +143,34 @@ main h1
 	bottom: 2px;
 }
 
+/* Page des détails de proposition */
+
+#proposal-details table
+{
+	margin: 0 auto;
+	width: 96%;
+	text-align: center;
+	border-spacing: 0px 1px;
+}
+
+#proposal-details table th
+{
+	background-color: #9e34f7;
+	width: 40%
+}
+
+#proposal-details table td
+{
+	background-color: #f8bf4c;
+	color: #1d1d1d;
+	width: 60%
+}
+
+#proposal-details table th, #proposal-details table td
+{
+	padding: 10px 0;
+}
+
 /* Page formulaire ajout trajet */
 
 .basic-form

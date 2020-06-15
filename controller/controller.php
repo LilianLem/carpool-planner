@@ -3,7 +3,7 @@ require_once('model/ProposalManager.php');
 require_once('model/UserManager.php');
 require_once('model/ApiManager.php');
 
-function displayProposalList()
+function displayProposalList($errors = '')
 {
 	$proposalManager = new ProposalManager();
 	$proposals = $proposalManager->getAllProposals();
@@ -321,6 +321,55 @@ function checkLogin()
 
         displayLoginForm("- Vous n'avez pas renseigné tous les champs obligatoires\\n", $prefilledEmail);
     }
+}
+
+function displayProposalDetails()
+{
+	$id = $_GET['id'];
+
+	if(!is_numeric($id))
+	{
+		displayProposalList("- Le format de l'identifiant de proposition indiqué est incorrect\\n");
+	}
+	else
+	{
+		$proposalManager = new ProposalManager();
+		$proposal = $proposalManager->getProposal($id);
+
+		if(empty($proposal))
+		{
+			displayProposalList("- L'identifiant indiqué ne correspond à aucune proposition\\n");
+		}
+		else
+		{
+			$proposal['user_id'] = str_pad($proposal['user_id'], 3, "0", STR_PAD_LEFT);
+
+			setlocale(LC_ALL, 'fr_FR.utf8','fra');
+			if(strtoupper(substr(PHP_OS, 0, 3)) == 'WIN')
+			{
+				$monthDateFormat = '%#d';
+			}
+			else
+			{
+				$monthDateFormat = '%e';
+			}
+			$dateFormat = "%A $monthDateFormat %b à %H:%M";
+
+			$startDate = strtotime($proposal['start_date']);
+			$proposal['start_date'] = ucfirst(strftime($dateFormat, $startDate));
+
+			if($proposal['return'])
+			{
+				$returnDate = strtotime($proposal['return_date']);
+				$proposal['return_date'] = ucfirst(strftime($dateFormat, $returnDate));
+			}
+
+			$lastEditedDate = strtotime($proposal['last_edited']);
+			$proposal['last_edited'] = ucfirst(strftime("%A $monthDateFormat %b", $lastEditedDate));
+
+			require('view/ProposalDetails.php');
+		}
+	}
 }
 
 function checkDateFormat($date)

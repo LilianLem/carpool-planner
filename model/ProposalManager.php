@@ -14,6 +14,17 @@ class ProposalManager extends DatabaseManager
 		return $proposals;
 	}
 
+	public function getProposal($id)
+	{
+		$db = $this->dbConnect();
+
+		$proposal_raw = $db->prepare('SELECT p.id, p.user_id, u.username, p.start_city, p.start_date, p.available_seats, p.max_seats, p.return, p.return_city, p.return_date, p.return_available_seats, p.return_max_seats, p.detour_radius, p.description, p.smoking_allowed, p.free, p.last_edited, p.status FROM proposal p INNER JOIN user u ON p.user_id = u.id WHERE p.id = ? LIMIT 1');
+		$proposal_raw->execute(array($id));
+		$proposal = $proposal_raw->fetch();
+
+		return $proposal;
+	}
+
 	public function insertNewProposal($proposalData)
 	{
 		$db = $this->dbConnect();

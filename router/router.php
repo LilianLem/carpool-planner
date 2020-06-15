@@ -9,6 +9,11 @@ try {
 			displayProposalAddForm();
 		}
 
+		if($_GET['action'] == 'showProposal' AND isset($_GET['id']))
+		{
+			displayProposalDetails();
+		}
+
 		elseif($_GET['action'] == 'newProposal')
 		{
 			checkProposalAdd();
