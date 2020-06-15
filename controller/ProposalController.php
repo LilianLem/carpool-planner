@@ -8,12 +8,12 @@ function displayProposalList($errors = '')
 	$proposalManager = new ProposalManager();
 	$proposals = $proposalManager->getAllProposals();
 
+	setlocale(LC_ALL, 'fr_FR.utf8','fra');
+	$platformDateFormat = getPlatformFormat();
+	$dateFormat = "%A ".$platformDateFormat['day']."/%m à ".$platformDateFormat['hour'].":%M";
+
 	foreach($proposals as &$proposal)
 	{
-		setlocale(LC_ALL, 'fr_FR.utf8','fra');
-		$platformDateFormat = getPlatformFormat();
-		$dateFormat = "%A ".$platformDateFormat['day']."/%m à ".$platformDateFormat['hour'].":%M";
-
 		$startDate = strtotime($proposal['start_date']);
 		$proposal['start_date'] = ucfirst(strftime($dateFormat, $startDate));
 	}
