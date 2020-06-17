@@ -36,7 +36,7 @@ function displayProposalAddForm($errors = '')
 	}
 }
 
-function checkProposalFormData()
+function checkAndFormatProposalFormData()
 {
 	$proposal = [];
 	$errors = '';
@@ -89,14 +89,23 @@ function checkProposalFormData()
 		}
 	}
 
+	$checkStartDate = 0;
+
 	if(!checkDateFormat($_POST['startDate']))
 	{
 		$errors .= "- La date de départ renseignée est incorrecte\\n";
+		$checkStartDate++;
 	}
 
 	if(!checkTime($_POST['startTime']))
 	{
 		$errors .= "- L'heure de départ renseignée est incorrecte\\n";
+		$checkStartDate++;
+	}
+
+	if($checkStartDate = 2)
+	{
+		$proposal['startDate'] = formatDateTimeForDb($_POST['startDate'],$_POST['startTime']);
 	}
 
 	if(isset($_POST['returnDate']))
@@ -125,9 +134,20 @@ function checkProposalFormData()
 					{
 						$errors .= "- L'heure de retour renseignée est incorrecte\\n";
 					}
+					else
+					{
+						$proposal['return'] = true;
+						$proposal['returnDate'] = formatDateTimeForDb($_POST['returnDate'],$_POST['returnTime']);
+					}
 				}
 			}
 		}
+	}
+
+	if(!isset($proposal['return']))
+	{
+		$proposal['return'] = false;
+		$proposal['returnDate'] = NULL;
 	}
 
 	return ['proposal' => $proposal, 'errors' => $errors];
@@ -137,7 +157,7 @@ function checkProposalAdd()
 {
 	if(isset($_POST['startCity']) AND isset($_POST['startDepartment']) AND isset($_POST['startDate']) AND isset($_POST['startTime']))
 	{
-		$checkData = checkProposalFormData();
+		$checkData = checkAndFormatProposalFormData();
 		$newProposal = $checkData['proposal'];
 		$errors = $checkData['errors'];
 
@@ -147,21 +167,6 @@ function checkProposalAdd()
 		}
 		else
 		{
-			setlocale(LC_ALL, 'fr_FR.utf8','fra');
-
-			$newProposal['startDate'] = formatDateTimeForDb($_POST['startDate'],$_POST['startTime']);
-
-			if(!empty($_POST['returnDate']) AND !empty($_POST['returnTime']))
-			{
-				$newProposal['return'] = true;
-				$newProposal['returnDate'] = formatDateTimeForDb($_POST['returnDate'],$_POST['returnTime']);
-			}
-			else
-			{
-				$newProposal['return'] = false;
-				$newProposal['returnDate'] = NULL;
-			}
-
 			$proposalManager = new ProposalManager();
 			$proposalManager->insertNewProposal($newProposal);
 
