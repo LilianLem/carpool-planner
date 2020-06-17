@@ -83,8 +83,8 @@
                 </tr>
 			</table>
 
+			<?php if(isset($_SESSION['userId'])){ if($proposal['userId'] == $_SESSION['userId']) { ?><a title="Modifier mon trajet" id="edit-button" class="basic-thumb-button" href="index.php?action=editProposal&id=<?=$proposal['id']?>"><img src="static/img/icons/pencil.png" alt="Crayon" width="35px"></a><?php }} ?>
 		</main>
-		<?php if(isset($_SESSION['userId'])){ if($proposal['userId'] == $_SESSION['userId']) { ?><a title="Modifier mon trajet" id="edit-button" class="basic-thumb-button" href="index.php?action=editProposal&id=<?=$proposal['id']?>"><img src="static/img/icons/pencil.png" alt="Crayon" width="35px"></a><?php }} ?>
 
 		<footer>
 			<p>© 2020 Carpool Planner - <a href="#">Billetterie de l'évènement</a> - <a href="#">Mentions légales</a> - <a href="#">CGU</a></p>
