@@ -11,14 +11,7 @@ try {
 				displayProposalAddForm();
 				break;
 			case 'showProposal':
-				if(isset($_GET['id']))
-				{
-					displayProposalDetails();
-				}
-				else
-				{
-					$goDefault = 1;
-				}
+				displayProposalDetails();
 				break;
 			case 'newProposal':
 				checkProposalAdd();
