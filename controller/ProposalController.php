@@ -294,3 +294,76 @@ function displayProposalEditForm($errors = '')
 
 	require('view/ProposalEdit.php');
 }
+
+function checkProposalEdit()
+{
+	if(!isset($_POST['id']))
+	{
+		displayProposalList('- Aucun identifiant de proposition n\'a été spécifié\\n');
+		return;
+	}
+
+	$id = $_POST['id'];
+
+	if(!isset($_SESSION['userId']))
+	{
+		displayProposalDetails('- Vous n\'avez pas la permission de modifier cette proposition\\n', $id);
+		return;
+	}
+
+	if(!is_numeric($id))
+	{
+		displayProposalList('- Le format de l\'identifiant de proposition indiqué est incorrect\\n');
+		return;
+	}
+
+	$proposalManager = new ProposalManager();
+
+	$currentProposal = formatArrayKeysInCamelCase($proposalManager->getProposal($id), '_');
+	if(empty($currentProposal))
+	{
+		displayProposalList('- Le format de l\'identifiant de proposition indiqué est incorrect\\n');
+		return;
+	}
+
+	if($currentProposal['userId'] != $_SESSION['userId'])
+	{
+		displayProposalDetails('- Vous n\'avez pas la permission de modifier cette proposition\\n', $id);
+		return;
+	}
+
+	if(isset($_POST['id']) AND isset($_POST['startCity']) AND isset($_POST['startDepartment']) AND isset($_POST['startDate']) AND isset($_POST['startTime']))
+	{
+		$checkData = checkAndFormatProposalFormData();
+		$errors = $checkData['errors'];
+
+		if(!empty($errors))
+		{
+			displayProposalEditForm($errors);
+			return;
+		}
+
+		$editedProposal = $checkData['proposal'];
+
+		foreach($editedProposal as $column => $value)
+		{
+			if($value != $currentProposal[$column])
+			{
+				$updateProposal = 1;
+				break;
+			}
+		}
+
+		if(isset($updateProposal))
+		{
+			$proposalManager->updateProposal($editedProposal, $id);
+		}
+
+		displayProposalDetails('', $id);
+	}
+
+	else
+	{
+		displayProposalEditForm("- Vous n'avez pas renseigné tous les champs obligatoires\\n");
+	}
+}

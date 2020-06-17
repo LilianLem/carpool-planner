@@ -16,6 +16,9 @@ try {
 			case 'editProposal':
 				displayProposalEditForm();
 				break;
+			case 'changeProposal':
+				checkProposalEdit();
+				break;
 			case 'newProposal':
 				checkProposalAdd();
 				break;
