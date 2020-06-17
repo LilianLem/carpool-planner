@@ -232,3 +232,65 @@ function displayProposalDetails($errors = '', $id = '')
 		}
 	}
 }
+
+function displayProposalEditForm($errors = '')
+{
+	if(!isset($_GET['id']))
+	{
+		displayProposalList('- Aucun identifiant de proposition n\'a été spécifié\\n');
+		return;
+	}
+
+	$id = $_GET['id'];
+
+	if(!isset($_SESSION['userId']))
+	{
+		displayProposalDetails('- Vous n\'avez pas la permission de modifier cette proposition\\n', $id);
+		return;
+	}
+
+	if(!is_numeric($id))
+	{
+		displayProposalList("- Le format de l'identifiant de proposition indiqué est incorrect\\n");
+		return;
+	}
+
+	$proposalManager = new ProposalManager();
+	$proposal = formatArrayKeysInCamelCase($proposalManager->getProposal($id), '_');
+
+	if(empty($proposal))
+	{
+		displayProposalList("- L'identifiant indiqué ne correspond à aucune proposition\\n");
+		return;
+	}
+
+	if($proposal['userId'] != $_SESSION['userId'])
+	{
+		displayProposalDetails('- Vous n\'avez pas la permission de modifier cette proposition\\n', $id);
+		return;
+	}
+
+	$proposal['id'] = str_pad($proposal['id'], 3, "0", STR_PAD_LEFT);
+
+	$startDateTime = formatDateForForm($proposal['startDate']);
+	$proposal['startDate'] = $startDateTime['date'];
+	$proposal['startTime'] = $startDateTime['time'];
+
+	if($proposal['return'])
+	{
+		$returnDateTime = formatDateForForm($proposal['returnDate']);
+		$proposal['returnDate'] = $returnDateTime['date'];
+		$proposal['returnTime'] = $returnDateTime['time'];
+	}
+	else
+	{
+		$proposal['returnDate'] = '';
+		$proposal['returnTime'] = '';
+	}
+
+	preg_match("/([A-Za-zàâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ\-' ]+) \(([0-9AB]{2})\)/", $proposal['startCity'], $parsedStartCity);
+	$proposal['startCity'] = $parsedStartCity[1];
+	$proposal['startDepartment'] = $parsedStartCity[2];
+
+	require('view/ProposalEdit.php');
+}

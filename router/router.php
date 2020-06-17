@@ -13,6 +13,9 @@ try {
 			case 'showProposal':
 				displayProposalDetails();
 				break;
+			case 'editProposal':
+				displayProposalEditForm();
+				break;
 			case 'newProposal':
 				checkProposalAdd();
 				break;
