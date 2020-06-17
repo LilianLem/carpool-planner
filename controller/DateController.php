@@ -46,6 +46,13 @@ function formatDateTimeForDb($date,$time)
 	return $date.' '.$time.':00';
 }
 
+function formatDateForForm($date)
+{
+	$time = substr($date, 11, 5);
+	$date = substr($date, 0, 10);
+	return ['date' => $date, 'time' => $time];
+}
+
 function getPlatformFormat()
 {
 	if(strtoupper(substr(PHP_OS, 0, 3)) == 'WIN')
@@ -56,4 +63,23 @@ function getPlatformFormat()
 	{
 		return ['day' => '%e', 'hour' => '%k'];
 	}
+}
+
+function formatArrayKeysInCamelCase(array $array, string $separator)
+{
+	$formattedArray = [];
+
+	foreach($array as $key => $element)
+	{
+		$key_array = explode($separator, $key);
+
+		$newKey_array = array_map('ucfirst', $key_array);
+		$newKey_array[0] = $key_array[0];
+
+		$newKey = implode('', $newKey_array);
+
+		$formattedArray[$newKey] = $element;
+	}
+
+	return $formattedArray;
 }
