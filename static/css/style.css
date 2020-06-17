@@ -8,6 +8,13 @@
 	font-style: normal;
 }
 
+@font-face {
+	font-family:"WeblySleek UI Light";
+	src: url("../fonts/weblysleekuil.ttf") format("truetype");
+	font-weight: normal;
+	font-style: normal;
+}
+
 *
 {
 	margin: 0;
@@ -118,6 +125,109 @@ a.basic-thumb-button
 	height: 70px;
 	background-color: #9e34f7;
 	border-radius: 1000px;
+}
+
+/* Page d'accueil */
+
+#home *
+{
+	font-family: 'WeblySleek UI Light', 'Open Sans', sans-serif;
+}
+
+#home #intro
+{
+	margin: auto 15px;
+}
+
+#home #intro *
+{
+	font-size: 16px;
+	line-height: 1.3rem;
+}
+
+#home #intro h1
+{
+	font-size: 1.6rem;
+	margin-bottom: 20px;
+}
+
+#home #intro p
+{
+	margin-bottom: 10px;
+}
+
+#home #catchers
+{
+	margin: 20px 15px;
+}
+
+#home #catchers .catcher
+{
+	display: flex;
+	width: 100%;
+	margin: 15px auto;
+}
+
+#home .round-bg-image
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 72px;
+	height: 72px;
+	border-radius: 5000px;
+}
+
+#home #catchers .catcher .catcher-image
+{
+	border: 2px solid #9E34F7;
+}
+
+#home #catchers .catcher .catcher-text
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	margin-left: 15px;
+	color: #9E34F7;
+}
+
+#home #catchers .catcher .catcher-text h2
+{
+	font-size: 1.1rem;
+}
+
+#home #pros
+{
+	display: flex;
+	justify-content: space-between;
+	background-color: #F8B64C;
+	width: 100%;
+	height: 128px;
+	padding: 0 20px;
+}
+
+#home #pros .pro
+{
+	display: flex;
+	flex-direction: column;
+	justify-content: center;
+	align-items: center;
+	width: 100px;
+	height: 100%;
+	color: #1d1d1d;
+}
+
+#home #pros .pro div
+{
+	background-color: #1d1d1d;
+}
+
+#home #pros .pro p
+{
+	font-family: 'WeblySleek UI Semibold', 'Open Sans', sans-serif;
+	font-size: 0.9rem;
+	margin-top: 5px;
 }
 
 /* Page liste des propositions */

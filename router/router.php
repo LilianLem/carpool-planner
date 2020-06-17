@@ -2,11 +2,15 @@
 try {
 	require('controller/ProposalController.php');
 	require('controller/UserController.php');
+	require('controller/HomeController.php');
 
 	if(isset($_GET['action']))
 	{
 		switch($_GET['action'])
 		{
+			case 'showProposals':
+				displayProposalList();
+				break;
 			case 'addProposal':
 				displayProposalAddForm();
 				break;
@@ -48,7 +52,7 @@ try {
 	if(isset($goDefault))
 	{
 		// Par défaut si l'action n'est pas reconnue
-		displayProposalList();
+		displayHomePage();
 	}
 }
 
