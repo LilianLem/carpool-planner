@@ -15,7 +15,7 @@ class UserManager extends DatabaseManager
 
 		$newUser = $db->prepare('INSERT INTO user(username, email, password, role, notify_email, notify_discord, last_login, registered, activated) VALUES(:username, :email, :password, 1, 0, 0, NULL, CURRENT_TIMESTAMP, 1)');
 		$newUser->execute(array(
-			'username' => $userData['discord_username'],
+			'username' => $userData['discordUsername'],
 			'email' => $userData['email'],
             'password' => $userData['password']
 		));
@@ -29,7 +29,7 @@ class UserManager extends DatabaseManager
 
 		$user_raw = $db->prepare('SELECT id FROM user WHERE username = :username OR email = :email LIMIT 1');
         $user_raw->execute(array(
-            'username' => $userData['discord_username'],
+            'username' => $userData['discordUsername'],
             'email' => $userData['email']
         ));
 		$user = $user_raw->fetch();

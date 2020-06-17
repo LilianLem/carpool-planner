@@ -14,8 +14,10 @@ function displayProposalList($errors = '')
 
 	foreach($proposals as &$element)
 	{
-		$startDate = strtotime($element['start_date']);
-		$element['start_date'] = ucfirst(strftime($dateFormat, $startDate));
+		$element = formatArrayKeysInCamelCase($element, '_');
+
+		$startDate = strtotime($element['startDate']);
+		$element['startDate'] = ucfirst(strftime($dateFormat, $startDate));
 	}
 
 	require('view/ProposalList.php');
@@ -38,88 +40,88 @@ function checkProposalFormData()
 {
 	$proposal = [];
 	$errors = '';
-	$checkCity = 0;
+	$checkStartCity = 0;
 
-	if(strlen($_POST['department']) > 2 OR (!ctype_digit($_POST['department']) AND strtolower($_POST['department']) != '2a' AND strtolower($_POST['department']) != '2b'))
+	if(strlen($_POST['startDepartment']) > 2 OR (!ctype_digit($_POST['startDepartment']) AND strtolower($_POST['startDepartment']) != '2a' AND strtolower($_POST['startDepartment']) != '2b'))
 	{
 		$errors .= "- Le numéro de département est incorrect. Exemples corrects : 01, 1, 34\\n";
 	}
 	else
 	{
-		$_POST['department'] = str_pad(strtoupper($_POST['department']), 2, "0", STR_PAD_LEFT);
-		$checkCity++;
+		$_POST['startDepartment'] = str_pad(strtoupper($_POST['startDepartment']), 2, "0", STR_PAD_LEFT);
+		$checkStartCity++;
 	}
 
-	if(!ctype_alpha(utf8_decode(str_replace(array(' ','-'), '', $_POST['city']))))
+	if(!ctype_alpha(utf8_decode(str_replace(array(' ','-'), '', $_POST['startCity']))))
 	{
 		$errors .= "- Le format de la ville est incorrect. Exemples corrects : Rouen, Clermont-Ferrand\\n";
 	}
 	else
 	{
-		$checkCity++;
+		$checkStartCity++;
 	}
 
-	if(strlen($_POST['city']) > 45)
+	if(strlen($_POST['startCity']) > 45)
 	{
 		$errors .= "- Le nom de ville renseigné est trop long (supérieur à 45 caractères)\\n";
 	}
 	else
 	{
-		$checkCity++;
+		$checkStartCity++;
 	}
 
-	if($checkCity == 3)
+	if($checkStartCity == 3)
 	{
 		$apiManager = new ApiManager();
-		$cityRawData = $apiManager->checkCity(strip_tags($_POST['city']),strip_tags($_POST['department']));
+		$startCityRawData = $apiManager->checkCity(strip_tags($_POST['startCity']),strip_tags($_POST['startDepartment']));
 
-		if(!$cityRawData)
+		if(!$startCityRawData)
 		{
 			$errors .= "- La ville n'a pas été trouvée dans la base de l'INSEE\\n";
 		}
 		else
 		{
-			$cityData = json_decode($cityRawData);
+			$startCityData = json_decode($startCityRawData);
 
-			$proposal['ville'] = $cityData[0]->nom.' ('.$cityData[0]->codeDepartement.')';
-			$proposal['latitude'] = $cityData[0]->centre->coordinates[1];
-			$proposal['longitude'] = $cityData[0]->centre->coordinates[0];
+			$proposal['startCity'] = $startCityData[0]->nom.' ('.$startCityData[0]->codeDepartement.')';
+			$proposal['startLat'] = $startCityData[0]->centre->coordinates[1];
+			$proposal['startLng'] = $startCityData[0]->centre->coordinates[0];
 		}
 	}
 
-	if(!checkDateFormat($_POST['date']))
+	if(!checkDateFormat($_POST['startDate']))
 	{
 		$errors .= "- La date de départ renseignée est incorrecte\\n";
 	}
 
-	if(!checkTime($_POST['time']))
+	if(!checkTime($_POST['startTime']))
 	{
 		$errors .= "- L'heure de départ renseignée est incorrecte\\n";
 	}
 
-	if(isset($_POST['return-date']))
+	if(isset($_POST['returnDate']))
 	{
-		if(!empty($_POST['return-date']))
+		if(!empty($_POST['returnDate']))
 		{
-			if(!checkDateFormat($_POST['return-date']))
+			if(!checkDateFormat($_POST['returnDate']))
 			{
 				$errors .= "- La date de retour renseignée est incorrecte\\n";
 			}
 
-			if(!isset($_POST['return-time']))
+			if(!isset($_POST['returnTime']))
 			{
 				$errors .= "- Une date de retour est renseignée mais pas une heure de retour\\n";
 			}
 			else
 			{
-				if(empty($_POST['return-time']))
+				if(empty($_POST['returnTime']))
 				{
 					$errors .= "- Une date de retour est renseignée mais pas une heure de retour\\n";
 				}
 
 				else
 				{
-					if(!checkTime($_POST['return-time']))
+					if(!checkTime($_POST['returnTime']))
 					{
 						$errors .= "- L'heure de retour renseignée est incorrecte\\n";
 					}
@@ -133,7 +135,7 @@ function checkProposalFormData()
 
 function checkProposalAdd()
 {
-	if(isset($_POST['city']) AND isset($_POST['department']) AND isset($_POST['date']) AND isset($_POST['time']))
+	if(isset($_POST['startCity']) AND isset($_POST['startDepartment']) AND isset($_POST['startDate']) AND isset($_POST['startTime']))
 	{
 		$checkData = checkProposalFormData();
 		$newProposal = $checkData['proposal'];
@@ -147,17 +149,17 @@ function checkProposalAdd()
 		{
 			setlocale(LC_ALL, 'fr_FR.utf8','fra');
 
-			$newProposal['date_depart'] = formatDateTimeForDb($_POST['date'],$_POST['time']);
+			$newProposal['startDate'] = formatDateTimeForDb($_POST['startDate'],$_POST['startTime']);
 
-			if(!empty($_POST['return-date']) AND !empty($_POST['return-time']))
+			if(!empty($_POST['returnDate']) AND !empty($_POST['returnTime']))
 			{
-				$newProposal['retour'] = true;
-				$newProposal['date_retour'] = formatDateTimeForDb($_POST['return-date'],$_POST['return-time']);
+				$newProposal['return'] = true;
+				$newProposal['returnDate'] = formatDateTimeForDb($_POST['returnDate'],$_POST['returnTime']);
 			}
 			else
 			{
-				$newProposal['retour'] = false;
-				$newProposal['date_retour'] = NULL;
+				$newProposal['return'] = false;
+				$newProposal['returnDate'] = NULL;
 			}
 
 			$proposalManager = new ProposalManager();
@@ -184,7 +186,7 @@ function displayProposalDetails()
 	else
 	{
 		$proposalManager = new ProposalManager();
-		$proposal = $proposalManager->getProposal($id);
+		$proposal = formatArrayKeysInCamelCase($proposalManager->getProposal($id), '_');
 
 		if(empty($proposal))
 		{
@@ -198,17 +200,17 @@ function displayProposalDetails()
 			$platformDateFormat = getPlatformFormat();
 			$dateFormat = "%A ".$platformDateFormat['day']." %b à ".$platformDateFormat['hour'].":%M";
 
-			$startDate = strtotime($proposal['start_date']);
-			$proposal['start_date'] = ucfirst(strftime($dateFormat, $startDate));
+			$startDate = strtotime($proposal['startDate']);
+			$proposal['startDate'] = ucfirst(strftime($dateFormat, $startDate));
 
 			if($proposal['return'])
 			{
-				$returnDate = strtotime($proposal['return_date']);
-				$proposal['return_date'] = ucfirst(strftime($dateFormat, $returnDate));
+				$returnDate = strtotime($proposal['returnDate']);
+				$proposal['returnDate'] = ucfirst(strftime($dateFormat, $returnDate));
 			}
 
-			$lastEditedDate = strtotime($proposal['last_edited']);
-			$proposal['last_edited'] = ucfirst(strftime("%A ".$platformDateFormat['day']." %b", $lastEditedDate));
+			$lastEditedDate = strtotime($proposal['lastEdited']);
+			$proposal['lastEdited'] = ucfirst(strftime("%A ".$platformDateFormat['day']." %b", $lastEditedDate));
 
 			require('view/ProposalDetails.php');
 		}

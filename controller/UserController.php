@@ -1,7 +1,7 @@
 <?php
 require_once('model/UserManager.php');
 
-function displayRegisterForm($errors = '', $prefilledInfos = ['discord_username' => '', 'email' => ''])
+function displayRegisterForm($errors = '', $prefilledInfos = ['discordUsername' => '', 'email' => ''])
 {
 	require('view/AccountRegister.php');
 }
@@ -10,15 +10,15 @@ function checkRegistration()
 {
 	$errors = '';
 
-	if(isset($_POST['discord-username']) AND isset($_POST['email']) AND isset($_POST['password']))
+	if(isset($_POST['discordUsername']) AND isset($_POST['email']) AND isset($_POST['password']))
 	{
-		if(!stristr($_POST['discord-username'], '#'))
+		if(!stristr($_POST['discordUsername'], '#'))
 		{
 			$errors .= "- Le format du pseudo Discord est incorrect. Exemple correct : Pierre#1234\\n";
 		}
 		else
 		{
-			$discordUsername_array = explode('#', $_POST['discord-username']);
+			$discordUsername_array = explode('#', $_POST['discordUsername']);
 
 			if(!ctype_digit($discordUsername_array[1]) OR empty($discordUsername_array[0]) OR strlen($discordUsername_array[1]) < 4)
 			{
@@ -26,7 +26,7 @@ function checkRegistration()
 			}
 		}
 
-		if(strlen($_POST['discord-username']) > 32)
+		if(strlen($_POST['discordUsername']) > 32)
 		{
 			$errors .= "- Le pseudo Discord renseigné est trop long (supérieur à 32 caractères)\\n";
 		}
@@ -66,7 +66,7 @@ function checkRegistration()
 		}
 
 		// Tableau contenant les valeurs du formulaire à préremplir si une erreur survient et que l'application retourne sur la page d'inscription
-		$prefilledInfos = ['discord_username' => strip_tags($_POST['discord-username']), 'email' => strip_tags($_POST['email'])];
+		$prefilledInfos = ['discordUsername' => strip_tags($_POST['discordUsername']), 'email' => strip_tags($_POST['email'])];
 
 		if(!empty($errors))
 		{
@@ -75,7 +75,7 @@ function checkRegistration()
 		else
 		{
 			$newUser['password'] = password_hash($_POST['password'], PASSWORD_BCRYPT);
-			$newUser['discord_username'] = strip_tags($_POST['discord-username']);
+			$newUser['discordUsername'] = strip_tags($_POST['discordUsername']);
 			$newUser['email'] = strip_tags($_POST['email']);
 
 			$userManager = new UserManager();
@@ -99,7 +99,7 @@ function checkRegistration()
 	}
 	else
 	{
-		$prefilledInfos['discord_username'] = isset($_POST['email']) ? strip_tags($_POST['email']) : '';
+		$prefilledInfos['discordUsername'] = isset($_POST['email']) ? strip_tags($_POST['email']) : '';
 		$prefilledInfos['password'] = isset($_POST['password']) ? strip_tags($_POST['password']) : '';
 
 		displayRegisterForm("- Vous n'avez pas renseigné tous les champs obligatoires\\n", $prefilledInfos);

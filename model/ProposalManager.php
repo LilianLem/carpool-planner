@@ -32,12 +32,12 @@ class ProposalManager extends DatabaseManager
 		$newProposal = $db->prepare('INSERT INTO proposal(`user_id`, `start_city`, `start_lat`, `start_lng`, `start_date`, `available_seats`, `max_seats`, `return`, `return_city`, `return_lat`, `return_lng`, `return_date`, `return_available_seats`, `return_max_seats`, `detour_radius`, `description`, `smoking_allowed`, `free`, `created`, `last_edited`, `status`) VALUES(:userId, :city, :lat, :lng, :startDate, 4, 4, :return, :city, :lat, :lng, :returnDate, 4, 4, 10, "Pas de description", 1, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1)');
 		$newProposal->execute(array(
 			'userId' => $_SESSION['userId'],
-			'city' => $proposalData['ville'],
-			'lat' => $proposalData['latitude'],
-			'lng' => $proposalData['longitude'],
-			'startDate' => $proposalData['date_depart'],
-			'return' => $proposalData['retour'],
-			'returnDate' => $proposalData['date_retour']
+			'city' => $proposalData['startCity'],
+			'lat' => $proposalData['startLat'],
+			'lng' => $proposalData['startLng'],
+			'startDate' => $proposalData['startDate'],
+			'return' => $proposalData['return'],
+			'returnDate' => $proposalData['returnDate']
 		));
 	}
 

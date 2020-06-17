@@ -30,46 +30,46 @@
 
                 <tr>
                     <th>Ville de départ</th>
-                    <td><?=$proposal['start_city']?></td>
+                    <td><?=$proposal['startCity']?></td>
                 </tr>
 
                 <tr>
                     <th>Date de départ</th>
-                    <td><?=$proposal['start_date']?></td>
+                    <td><?=$proposal['startDate']?></td>
                 </tr>
 
                 <?php if($proposal['return']) {?>
                 <tr>
                     <th>Ville de retour</th>
-                    <td><?=$proposal['return_city']?></td>
+                    <td><?=$proposal['returnCity']?></td>
                 </tr>
 				<?php } ?>
 
                 <tr>
                     <th>Date de retour</th>
-                    <td><?= $proposal['return'] ? $proposal['return_date'] : 'Pas de retour';?></td>
+                    <td><?= $proposal['return'] ? $proposal['returnDate'] : 'Pas de retour';?></td>
                 </tr>
 
                 <tr>
                     <th>Sièges disponibles<?php if($proposal['return']) {?> à l'aller<?php }?></th>
-                    <td><?=$proposal['available_seats']?> / <?=$proposal['max_seats']?></td>
+                    <td><?=$proposal['availableSeats']?> / <?=$proposal['maxSeats']?></td>
                 </tr>
 
 				<?php if($proposal['return']) {?>
                 <tr>
                     <th>Sièges disponibles au retour</th>
-                    <td><?=$proposal['return_available_seats']?> / <?=$proposal['return_max_seats']?></td>
+                    <td><?=$proposal['returnAvailableSeats']?> / <?=$proposal['returnMaxSeats']?></td>
                 </tr>
 				<?php }?>
 
                 <tr>
                     <th>Détour maximal</th>
-                    <td><?=$proposal['detour_radius']?> km</td>
+                    <td><?=$proposal['detourRadius']?> km</td>
                 </tr>
 
                 <tr>
                     <th>Voiture fumeurs</th>
-                    <td><?=$proposal['smoking_allowed'] ? 'Oui' : 'Non'?></td>
+                    <td><?=$proposal['smokingAllowed'] ? 'Oui' : 'Non'?></td>
                 </tr>
 
                 <tr>
@@ -79,12 +79,12 @@
 
                 <tr>
                     <th>Dernière modification</th>
-                    <td><?=$proposal['last_edited']?></td>
+                    <td><?=$proposal['lastEdited']?></td>
                 </tr>
 			</table>
 
-			<?php if(isset($_SESSION['userId'])){ if($proposal['user_id'] == $_SESSION['userId']) { ?><a title="Modifier mon trajet" id="edit-button" class="basic-thumb-button" href="index.php?action=editProposal"><img src="static/img/icons/pencil.png" alt="Crayon" width="35px"></a><?php }} ?> <!-- Picto de crayon à mettre ici -->
 		</main>
+			<?php if(isset($_SESSION['userId'])){ if($proposal['userId'] == $_SESSION['userId']) { ?><a title="Modifier mon trajet" id="edit-button" class="basic-thumb-button" href="index.php?action=editProposal"><img src="static/img/icons/pencil.png" alt="Crayon" width="35px"></a><?php }} ?> <!-- Picto de crayon à mettre ici -->
 
 		<footer>
 			<p>© 2020 Carpool Planner - <a href="#">Billetterie de l'évènement</a> - <a href="#">Mentions légales</a> - <a href="#">CGU</a></p>
