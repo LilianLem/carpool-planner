@@ -90,5 +90,9 @@
 			<p>© 2020 Carpool Planner - <a href="#">Billetterie de l'évènement</a> - <a href="#">Mentions légales</a> - <a href="#">CGU</a></p>
 		</footer>
 
+		<?php if(!empty($errors)) {
+			echo '<script type="text/javascript">'.'alert("Une ou plusieurs erreurs sont survenues ! Détails :\n'.$errors.'");</script>';
+		} ?>
+
 	</body>
 </html>

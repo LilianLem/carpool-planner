@@ -180,9 +180,20 @@ function checkProposalAdd()
 	}
 }
 
-function displayProposalDetails()
+function displayProposalDetails($errors = '', $id = '')
 {
-	$id = $_GET['id'];
+	if(empty($id))
+	{
+		if(isset($_GET['id']))
+		{
+			$id = $_GET['id'];
+		}
+		else
+		{
+			displayProposalList('- Aucun identifiant de proposition n\'a été spécifié\\n');
+			return;
+		}
+	}
 
 	if(!is_numeric($id))
 	{
