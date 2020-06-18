@@ -9,15 +9,28 @@
 	</head>
 
 	<body>
-		<header>
-			<div id="nav-mobile-open">
-				<img src="static/img/icons/mobile-menu.png" alt="Menu mobile" />
-			</div>
+        <header>
+            <div id="mobile-menu">
+                <input id="mobile-menu-button" type="checkbox" />
+                <div id="mobile-menu-container">
+                    <label id="mobile-menu-icon" for="mobile-menu-button">
+                        <span id="mobile-menu-image"></span>
+                    </label>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.php?action=register">Inscription</a></li>
+                        <li><a href="index.php?action=login">Connexion</a></li>
+                        <li><a href="index.php?action=showProposals">Trajets disponibles</a></li>
+                        <li><a href="index.php?action=showRequests">Demandes de trajet</a></li>
+                    </ul>
+                </nav>
+            </div>
 
-			<div id="logo">
-				<img src="static/img/logo.png" alt="Logo du site Carpool Planner" />
-			</div>
-		</header>
+            <div id="logo">
+                <img src="static/img/logo.png" alt="Logo du site Carpool Planner" />
+            </div>
+        </header>
 
 		<main>
 			<h1>Ajouter un trajet</h1>

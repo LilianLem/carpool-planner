@@ -53,34 +53,169 @@ header
 	position: fixed;
 	top: 0;
 	left: 0;
+	display: flex;
 	width: 100%;
 	height: 10vh;
 	margin: 0 auto;
 	border-bottom: 1px solid #f8b64c;
 }
 
-header #nav-mobile-open
+/* Code issu de JSFiddle et adapté : https://jsfiddle.net/6obpjnzs/5/ */
+header #mobile-menu
 {
-	position: absolute;
-	top: 15px;
-	left: 15px;
+	width: 15%;
+	height: 100%;
 }
 
-header #nav-mobile-open img
+header #mobile-menu-container
 {
-	width: 40px;
+	width: 100%;
+	height: 100%;
+	display: flex;
+	align-items: center;
+	padding-left: 25%;
 }
+
+header #mobile-menu #mobile-menu-container #mobile-menu-icon
+{
+	cursor: pointer;
+	display: inline-block;
+}
+
+header #mobile-menu #mobile-menu-container #mobile-menu-icon #mobile-menu-image
+{
+	background: #fff;
+	display: block;
+	height: 2px;
+	position: relative;
+	transition: background .2s ease-out;
+	width: 18px;
+}
+
+header #mobile-menu #mobile-menu-container #mobile-menu-icon #mobile-menu-image:before, header #mobile-menu #mobile-menu-container #mobile-menu-icon #mobile-menu-image:after
+{
+	background: #fff;
+	content: '';
+	display: block;
+	height: 100%;
+	position: absolute;
+	transition: all .2s ease-out;
+	width: 100%;
+}
+
+header #mobile-menu #mobile-menu-container #mobile-menu-icon #mobile-menu-image:before
+{
+	top: 5px;
+}
+
+header #mobile-menu #mobile-menu-container #mobile-menu-icon #mobile-menu-image:after
+{
+	top: -5px;
+}
+
+header #mobile-menu #mobile-menu-button
+{
+	display: none;
+	width: 100%;
+	height: 100%;
+}
+
+header #mobile-menu #mobile-menu-button:checked ~ nav {
+	max-height: 240px;
+}
+
+header #mobile-menu #mobile-menu-button:checked + #mobile-menu-container #mobile-menu-icon #mobile-menu-image
+{
+	background: transparent;
+}
+
+header #mobile-menu #mobile-menu-button:checked + #mobile-menu-container #mobile-menu-icon #mobile-menu-image:before
+{
+	transform: rotate(-45deg);
+}
+
+header #mobile-menu #mobile-menu-button:checked + #mobile-menu-container #mobile-menu-icon #mobile-menu-image:after
+{
+	transform: rotate(45deg);
+}
+
+header #mobile-menu #mobile-menu-button:checked + #mobile-menu-container #mobile-menu-icon #mobile-menu-image:before, header #mobile-menu #mobile-menu-button:checked + #mobile-menu-container #mobile-menu-icon #mobile-menu-image:after
+{
+	top: 0;
+}
+
+nav
+{
+	position: fixed;
+	top: 10vh;
+	width: 100%;
+	max-height: 0;
+	overflow: hidden;
+	transition: max-height .2s ease-out;
+}
+
+nav ul
+{
+	list-style: none;
+	/*position: relative;*/
+	/*float: left;*/
+	display: block;
+	/*left: 50%;
+	max-width: 1200px;*/
+	margin: 0;
+	padding: 0;
+	/*clear: both;*/
+	/*max-height: 0;*/
+	/* Ajouté à partir du media query JSFiddle : */
+	width: 100%;
+}
+
+nav ul li
+{
+	/*position: relative;*/
+	/*right: 50%;*/
+	/* Ajouté à partir du media query JSFiddle : */
+	border-bottom: 1px solid #000000;
+	color: #000;
+}
+
+/* Ajouté à partir du media query JSFiddle : */
+nav ul li:first-child
+{
+	border-top: 0 solid #000000;
+}
+
+nav ul li a
+{
+	display: block;
+	padding: 1em;
+	text-decoration: none;
+	color: #000000;
+	/* Ajouté à partir du media query JSFiddle : */
+	background-color: #f8bf4c;
+}
+
+nav ul li a:hover
+{
+	background-color: #B5B5B5;
+}
+
+/* ---------------- */
 
 header #logo
 {
-	text-align: center;
+	display: flex;
+	width: 85%;
+	height: 100%;
+	justify-content: center;
+	align-items: center;
+	margin-right: 13.5%;
 }
 
 header #logo img
 {
-	width: 200px;
-	position: relative;
-	top: 15px;
+	width: 250px;
+	height: 25px;
 }
 
 main
