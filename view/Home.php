@@ -8,7 +8,7 @@
 		<meta name="robots" content="noindex"/>
 	</head>
 
-	<body>
+	<body id="body-home">
 		<header>
 			<div id="nav-mobile-open">
 				<img src="static/img/icons/mobile-menu.png" alt="Menu mobile" />
@@ -60,6 +60,11 @@
                     <div class="round-bg-image"><img src="static/img/icons/money.png" width="42px" /></div>
                     <p>Sans frais</p>
                 </div>
+            </div>
+
+            <div id="buttons">
+                <a href="index.php?action=showRequests" class="home-link-button transparent"><p>Demandes</p></a>
+                <a href="index.php?action=showProposals" class="home-link-button"><p>Trajets disponibles</p></a>
             </div>
 		</main>
 

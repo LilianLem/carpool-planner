@@ -129,11 +129,6 @@ a.basic-thumb-button
 
 /* Page d'accueil */
 
-#home *
-{
-	font-family: 'WeblySleek UI Light', 'Open Sans', sans-serif;
-}
-
 #home #intro
 {
 	margin: auto 15px;
@@ -141,6 +136,7 @@ a.basic-thumb-button
 
 #home #intro *
 {
+	font-family: 'WeblySleek UI Light', 'Open Sans', sans-serif;
 	font-size: 16px;
 	line-height: 1.3rem;
 }
@@ -189,6 +185,7 @@ a.basic-thumb-button
 	flex-direction: column;
 	justify-content: center;
 	margin-left: 15px;
+	font-family: 'WeblySleek UI Light', 'Open Sans', sans-serif;
 	color: #9E34F7;
 }
 
@@ -228,6 +225,42 @@ a.basic-thumb-button
 	font-family: 'WeblySleek UI Semibold', 'Open Sans', sans-serif;
 	font-size: 0.9rem;
 	margin-top: 5px;
+}
+
+#home #buttons
+{
+	display: flex;
+	justify-content: space-between;
+	margin: 20px 20px;
+}
+
+#home #buttons .home-link-button
+{
+	display: flex;
+	justify-content: center;
+	align-items: center;
+	width: 160px;
+	height: 54px;
+	background-color: #9e34f7;
+	border-radius: 10px;
+	text-decoration: none;
+}
+
+#home #buttons .home-link-button p
+{
+	font-size: 1rem;
+}
+
+#home #buttons .home-link-button.transparent
+{
+	background-color: rgba(0, 0, 0, 0);
+	border: 2px solid #9e34f7;
+	color: #9e34f7;
+}
+
+#body-home footer
+{
+	border: none;
 }
 
 /* Page liste des propositions */
