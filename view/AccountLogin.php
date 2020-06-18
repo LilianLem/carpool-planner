@@ -9,28 +9,28 @@
 	</head>
 
 	<body>
-    <header>
-        <div id="mobile-menu">
-            <input id="mobile-menu-button" type="checkbox" />
-            <div id="mobile-menu-container">
-                <label id="mobile-menu-icon" for="mobile-menu-button">
-                    <span id="mobile-menu-image"></span>
-                </label>
+        <header>
+            <div id="mobile-menu">
+                <input id="mobile-menu-button" type="checkbox" />
+                <div id="mobile-menu-container">
+                    <label id="mobile-menu-icon" for="mobile-menu-button">
+                        <span id="mobile-menu-image"></span>
+                    </label>
+                </div>
+                <nav>
+                    <ul>
+                        <li><a href="index.php?action=register">Inscription</a></li>
+                        <li><a href="index.php?action=login">Connexion</a></li>
+                        <li><a href="index.php?action=showProposals">Trajets disponibles</a></li>
+                        <li><a href="index.php?action=showRequests">Demandes de trajet</a></li>
+                    </ul>
+                </nav>
             </div>
-            <nav>
-                <ul>
-                    <li><a href="index.php?action=register">Inscription</a></li>
-                    <li><a href="index.php?action=login">Connexion</a></li>
-                    <li><a href="index.php?action=showProposals">Trajets disponibles</a></li>
-                    <li><a href="index.php?action=showRequests">Demandes de trajet</a></li>
-                </ul>
-            </nav>
-        </div>
 
-        <a href="index.php" id="logo">
-            <img src="static/img/logo.png" alt="Logo du site Carpool Planner" />
-        </a>
-    </header>
+            <a href="index.php" id="logo">
+                <img src="static/img/logo.png" alt="Logo du site Carpool Planner" />
+            </a>
+        </header>
 
 		<main>
 			<h1>Connexion</h1>
