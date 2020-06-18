@@ -41,7 +41,7 @@
 
             <div id="catchers">
                 <div class="catcher">
-                    <div class="catcher-image round-bg-image"><img src="static/img/icons/car.png" width="42px" /></div>
+                    <div class="catcher-image round-bg-image"><img src="static/img/icons/car.png" alt="Voiture" width="42px" /></div>
 
                     <div class="catcher-text">
                         <h2>Pour les conducteurs</h2>
@@ -49,7 +49,7 @@
                     </div>
                 </div>
                 <div class="catcher">
-                    <div class="catcher-image round-bg-image"><img src="static/img/icons/pedestrian.png" width="50px" /></div>
+                    <div class="catcher-image round-bg-image"><img src="static/img/icons/pedestrian.png" alt="Piéton" width="50px" /></div>
 
                     <div class="catcher-text">
                         <h2>Pour les passagers</h2>
@@ -60,17 +60,17 @@
 
             <div id="pros">
                 <div class="pro">
-                    <div class="round-bg-image"><img src="static/img/icons/conversation.png" width="42px" /></div>
+                    <div class="round-bg-image"><img src="static/img/icons/conversation.png" alt="Bulles de conversation" width="42px" /></div>
                     <p>Contact simple</p>
                 </div>
 
                 <div class="pro">
-                    <div class="round-bg-image"><img src="static/img/icons/list.png" width="42px" /></div>
+                    <div class="round-bg-image"><img src="static/img/icons/list.png" alt="Bloc notes" width="42px" /></div>
                     <p>Gestion facile</p>
                 </div>
 
                 <div class="pro">
-                    <div class="round-bg-image"><img src="static/img/icons/money.png" width="42px" /></div>
+                    <div class="round-bg-image"><img src="static/img/icons/money.png" alt="Monnaie" width="42px" /></div>
                     <p>Sans frais</p>
                 </div>
             </div>
