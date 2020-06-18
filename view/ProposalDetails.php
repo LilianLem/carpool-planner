@@ -27,9 +27,9 @@
                 </nav>
             </div>
 
-			<div id="logo">
-				<img src="static/img/logo.png" alt="Logo du site Carpool Planner" />
-			</div>
+            <a href="index.php" id="logo">
+                <img src="static/img/logo.png" alt="Logo du site Carpool Planner" />
+            </a>
 		</header>
 
 		<main id="proposal-details">
