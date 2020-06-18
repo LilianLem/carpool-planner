@@ -238,7 +238,7 @@ main table
 	margin: 0 auto;
 	width: 96%;
 	text-align: center;
-	border-spacing: 0px 1px;
+	border-spacing: 0 1px;
 }
 
 main table th, main table td
@@ -427,7 +427,7 @@ a.basic-thumb-button
 	margin: 0 auto;
 	width: 96%;
 	text-align: center;
-	border-spacing: 0px 1px;
+	border-spacing: 0 1px;
 }
 
 #proposal-details table th
