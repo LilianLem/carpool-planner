@@ -439,8 +439,8 @@ a.basic-thumb-button
 #proposal-details table td
 {
 	background-color: #f8bf4c;
-	color: #1d1d1d;
-	width: 60%
+	color: #000;
+	width: 60%;
 }
 
 #proposal-details table th, #proposal-details table td
