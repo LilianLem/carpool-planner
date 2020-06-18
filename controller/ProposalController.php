@@ -103,7 +103,7 @@ function checkAndFormatProposalFormData()
 		$checkStartDate++;
 	}
 
-	if($checkStartDate = 2)
+	if($checkStartDate == 2)
 	{
 		$proposal['startDate'] = formatDateTimeForDb($_POST['startDate'],$_POST['startTime']);
 	}
