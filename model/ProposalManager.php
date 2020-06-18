@@ -56,30 +56,4 @@ class ProposalManager extends DatabaseManager
 			'returnDate' => $proposalData['returnDate']
 		));
 	}
-
-	private function insertNewUser($username,$email,$db)
-	{
-		$transferUser = $db->prepare('INSERT INTO user(username, email, password, role, notify_email, notify_discord, last_login, registered, activated) VALUES(:username, :email, "$2y$10$Qa3JJ/.59hKnApYbzudSD.fvd8mcbBz.TQF167KoTE/Tc5/4mZkqa", 1, 0, 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 0)');
-		$transferUser->execute(array(
-			'username' => $username,
-			'email' => $email
-		));
-
-		return $db->lastInsertId();
-	}
-
-	private function checkUser($username,$db)
-	{
-		$user_raw = $db->prepare('SELECT id FROM user WHERE username = ? LIMIT 1');
-		$user_raw->execute(array($username));
-		$user = $user_raw->fetch();
-		if(empty($user))
-		{
-			return 0;
-		}
-		else
-		{
-			return $user['id'];
-		}
-	}
 }
