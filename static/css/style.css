@@ -313,6 +313,11 @@ a.basic-thumb-button
 	padding: 10px 0;
 }
 
+#proposal-details tr:last-child *
+{
+	font-size: 0.85rem;
+}
+
 #proposal-details #edit-button
 {
 	display: flex;

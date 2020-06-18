@@ -51,13 +51,13 @@
                 </tr>
 
                 <tr>
-                    <th>Sièges disponibles<?php if($proposal['return']) {?> à l'aller<?php }?></th>
+                    <th>Sièges disponibles<?php if($proposal['return']) {?> (aller)<?php }?></th>
                     <td><?=$proposal['availableSeats']?> / <?=$proposal['maxSeats']?></td>
                 </tr>
 
 				<?php if($proposal['return']) {?>
                 <tr>
-                    <th>Sièges disponibles au retour</th>
+                    <th>Sièges disponibles (retour)</th>
                     <td><?=$proposal['returnAvailableSeats']?> / <?=$proposal['returnMaxSeats']?></td>
                 </tr>
 				<?php }?>
