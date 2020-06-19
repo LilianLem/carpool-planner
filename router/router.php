@@ -57,6 +57,9 @@ try {
 			case 'loggingIn':
 				checkLogin();
 				break;
+			case 'logout':
+				logout();
+				break;
 			default:
 				$goDefault = 1;
 				break;

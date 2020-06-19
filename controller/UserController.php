@@ -168,3 +168,20 @@ function checkLogin()
 		displayLoginForm("- Vous n'avez pas renseigné tous les champs obligatoires\\n", $prefilledEmail);
 	}
 }
+
+function logout()
+{
+	session_destroy();
+
+	if(isset($_GET['page']))
+	{
+		$redirectPage = strip_tags($_GET['page']);
+		header("Location: $redirectPage");
+		exit;
+	}
+	else
+	{
+		header("Location: index.php");
+		exit;
+	}
+}
