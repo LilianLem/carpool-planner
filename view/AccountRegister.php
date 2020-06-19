@@ -32,7 +32,7 @@
             </a>
         </header>
 
-		<main>
+		<main class="account">
 			<h1>Inscription</h1>
 
 			<form id="register-form" class="basic-form" method="post" action="index.php?action=registration">
@@ -47,6 +47,8 @@
 
 				<input class="button" type="submit" value="Valider" />
 			</form>
+
+            <a href="index.php?action=login"><p>Déjà inscrit ? Connectez-vous !</p></a>
 		</main>
 
 		<footer>

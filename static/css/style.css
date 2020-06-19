@@ -397,6 +397,19 @@ a.basic-thumb-button
 	border: none;
 }
 
+/* Pages d'inscription et de connexion */
+
+.account a
+{
+	display: block;
+	margin-top: 20px;
+	text-align: center;
+}
+
+.account a p
+{
+	font-size: 1rem;
+}
 
 /* Pages de liste */
 
