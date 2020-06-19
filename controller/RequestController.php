@@ -208,7 +208,7 @@ function displayRequestDetails($errors = '', $id = '')
 	else
 	{
 		$requestManager = new RequestManager();
-		$request = formatArrayKeysInCamelCase($requestManager->getRequest($id), '_');
+		$request = $requestManager->getRequest($id);
 
 		if(empty($request))
 		{
@@ -216,6 +216,8 @@ function displayRequestDetails($errors = '', $id = '')
 		}
 		else
 		{
+			$request = formatArrayKeysInCamelCase($request, '_');
+
 			$request['id'] = str_pad($request['id'], 3, "0", STR_PAD_LEFT);
 
 			setlocale(LC_ALL, 'fr_FR.utf8','fra');
@@ -262,13 +264,15 @@ function displayRequestEditForm($errors = '')
 	}
 
 	$requestManager = new RequestManager();
-	$request = formatArrayKeysInCamelCase($requestManager->getRequest($id), '_');
+	$request = $requestManager->getRequest($id);
 
 	if(empty($request))
 	{
 		displayRequestList("- L'identifiant indiqué ne correspond à aucune demande\\n");
 		return;
 	}
+
+	$request = formatArrayKeysInCamelCase($request, '_');
 
 	if($request['userId'] != $_SESSION['userId'])
 	{
@@ -325,12 +329,14 @@ function checkRequestEdit()
 
 	$requestManager = new RequestManager();
 
-	$currentRequest = formatArrayKeysInCamelCase($requestManager->getRequest($id), '_');
+	$currentRequest = $requestManager->getRequest($id);
 	if(empty($currentRequest))
 	{
 		displayRequestList('- Le format de l\'identifiant de demande indiqué est incorrect\\n');
 		return;
 	}
+
+	$currentRequest = formatArrayKeysInCamelCase($currentRequest, '_');
 
 	if($currentRequest['userId'] != $_SESSION['userId'])
 	{

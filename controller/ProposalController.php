@@ -202,7 +202,7 @@ function displayProposalDetails($errors = '', $id = '')
 	else
 	{
 		$proposalManager = new ProposalManager();
-		$proposal = formatArrayKeysInCamelCase($proposalManager->getProposal($id), '_');
+		$proposal = $proposalManager->getProposal($id);
 
 		if(empty($proposal))
 		{
@@ -210,6 +210,8 @@ function displayProposalDetails($errors = '', $id = '')
 		}
 		else
 		{
+			$proposal = formatArrayKeysInCamelCase($proposal, '_');
+
 			$proposal['id'] = str_pad($proposal['id'], 3, "0", STR_PAD_LEFT);
 
 			setlocale(LC_ALL, 'fr_FR.utf8','fra');
@@ -256,13 +258,15 @@ function displayProposalEditForm($errors = '')
 	}
 
 	$proposalManager = new ProposalManager();
-	$proposal = formatArrayKeysInCamelCase($proposalManager->getProposal($id), '_');
+	$proposal = $proposalManager->getProposal($id);
 
 	if(empty($proposal))
 	{
 		displayProposalList("- L'identifiant indiqué ne correspond à aucune proposition\\n");
 		return;
 	}
+
+	$proposal = formatArrayKeysInCamelCase($proposal, '_');
 
 	if($proposal['userId'] != $_SESSION['userId'])
 	{
@@ -319,12 +323,14 @@ function checkProposalEdit()
 
 	$proposalManager = new ProposalManager();
 
-	$currentProposal = formatArrayKeysInCamelCase($proposalManager->getProposal($id), '_');
+	$currentProposal = $proposalManager->getProposal($id);
 	if(empty($currentProposal))
 	{
 		displayProposalList('- Le format de l\'identifiant de proposition indiqué est incorrect\\n');
 		return;
 	}
+
+	$currentProposal = formatArrayKeysInCamelCase($currentProposal, '_');
 
 	if($currentProposal['userId'] != $_SESSION['userId'])
 	{
