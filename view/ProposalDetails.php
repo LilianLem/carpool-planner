@@ -100,7 +100,19 @@
                 </tr>
 			</table>
 
-			<?php if(isset($_SESSION['userId'])){ if($proposal['userId'] == $_SESSION['userId']) { ?><a title="Modifier mon trajet" id="edit-button" class="basic-thumb-button" href="index.php?action=editProposal&id=<?=$proposal['id']?>"><img src="static/img/icons/pencil.png" alt="Crayon" width="35px"></a><?php }} ?>
+			<?php if(isset($_SESSION['userId'])){ if($proposal['userId'] == $_SESSION['userId']) { ?>
+                <a title="Modifier mon trajet" id="edit-button" class="basic-thumb-button" href="index.php?action=editProposal&id=<?=$proposal['id']?>">
+                    <img src="static/img/icons/pencil.png" alt="Crayon" width="35px">
+                </a>
+            <?php } else { ?>
+                <form class="user-actions">
+                    <input type="submit" href="index.php?action=sendMessageProposal&id=<?=$proposal['id']?>" class="rounded-square-button" value="Je suis intéressé" />
+                </form>
+			<?php }} else { ?>
+                <div class="user-actions">
+                    <a href="index.php?action=register" class="rounded-square-button"><p>Je suis intéressé</p></a>
+                </div>
+            <?php } ?>
 		</main>
 
 		<footer>

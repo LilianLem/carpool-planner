@@ -83,7 +83,19 @@
                 </tr>
 			</table>
 
-			<?php if(isset($_SESSION['userId'])){ if($request['userId'] == $_SESSION['userId']) { ?><a title="Modifier ma demande"id="edit-button"class="basic-thumb-button"href="index.php?action=editRequest&id=<?=$request['id']?>"><img src="static/img/icons/pencil.png" alt="Crayon" width="35px"></a><?php }} ?>
+			<?php if(isset($_SESSION['userId'])){ if($request['userId'] == $_SESSION['userId']) { ?>
+                <a title="Modifier ma demande" id="edit-button" class="basic-thumb-button" href="index.php?action=editRequest&id=<?=$request['id']?>">
+                    <img src="static/img/icons/pencil.png" alt="Crayon" width="35px">
+                </a>
+			<?php } else { ?>
+                <form class="user-actions">
+                    <input type="submit" href="index.php?action=sendMessageRequest&id=<?=$request['id']?>" class="rounded-square-button" value="Envoyer un message" />
+                </form>
+			<?php }} else { ?>
+                <div class="user-actions">
+                    <a href="index.php?action=register" class="rounded-square-button"><p>Envoyer un message</p></a>
+                </div>
+			<?php } ?>
 		</main>
 
 		<footer>
