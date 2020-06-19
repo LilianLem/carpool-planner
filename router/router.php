@@ -27,6 +27,9 @@ try {
 			case 'newProposal':
 				checkProposalAdd();
 				break;
+			case 'sendMessageProposal':
+				checkProposalSendMessage();
+				break;
 			case 'showRequests':
 				displayRequestList();
 				break;

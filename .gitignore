@@ -2,6 +2,7 @@ database/
 vendor/
 wireframes/
 static/img/logo-code.svg
+config.php
 
 # Fichier de test à supprimer plus tard
 session-destroy.php

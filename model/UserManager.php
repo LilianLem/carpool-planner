@@ -69,4 +69,15 @@ class UserManager extends DatabaseManager
             }
         }
     }
+
+    public function getUserContactInfos($userId)
+	{
+		$db = $this->dbConnect();
+
+		$user_raw = $db->prepare('SELECT id, username, email, notify_email, notify_discord FROM user WHERE id = ? LIMIT 1');
+		$user_raw->execute(array($userId));
+		$user = $user_raw->fetch();
+
+		return $user;
+	}
 }

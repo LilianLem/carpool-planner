@@ -56,4 +56,12 @@ class ProposalManager extends DatabaseManager
 			'returnDate' => $proposalData['returnDate']
 		));
 	}
+
+	public function sendMessageToDriver($messageData)
+	{
+		$db = $this->dbConnect();
+
+		$newMessage = $db->prepare('INSERT INTO notification(user_id, user_id_second, proposal_link_id, email_notified, discord_notified, `type`) VALUES(:targetedUser, :sender, :proposalId, :emailNotify, :discordNotify, 7)');
+		$newMessage->execute($messageData);
+	}
 }

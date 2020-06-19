@@ -104,13 +104,30 @@
                 <a title="Modifier mon trajet" id="edit-button" class="basic-thumb-button" href="index.php?action=editProposal&id=<?=$proposal['id']?>">
                     <img src="static/img/icons/pencil.png" alt="Crayon" width="35px">
                 </a>
+            <?php } else {
+            if (isset($_POST['showSendingConfirmationPrompt'])) { ?>
+                <div class="user-actions confirm">
+                    <p>Êtes-vous sûr de vouloir envoyer une demande de contact à <?=$proposal['username']?> ?</p>
+                    <div class="user-actions-buttons">
+                        <a href="index.php?action=showProposal&id=<?=$proposal['id']?>" class="rounded-square-button transparent-button"><p>Annuler</p></a>
+                        <form action="index.php?action=sendMessageProposal&id=<?=$proposal['id']?>" method="post">
+                            <input type="hidden" id="proposal-message-sending-token" name="proposalMessageSendingToken" value="<?=$proposal['id']?>" required="required" />
+                            <input type="submit" class="rounded-square-button" value="Confirmer" />
+                        </form>
+                    </div>
+                </div>
             <?php } else { ?>
-                <form class="user-actions">
-                    <input type="submit" href="index.php?action=sendMessageProposal&id=<?=$proposal['id']?>" class="rounded-square-button" value="Je suis intéressé" />
+                <form action="index.php?action=showProposal&id=<?=$proposal['id']?>" method="post" class="user-actions">
+                    <input type="hidden" id="show-sending-confirmation-prompt" name="showSendingConfirmationPrompt" value="1" required="required" />
+                    <div class="user-actions-buttons">
+                        <input type="submit" class="rounded-square-button" value="Je suis intéressé" />
+                    </div>
                 </form>
-			<?php }} else { ?>
+			<?php }}} else { ?>
                 <div class="user-actions">
-                    <a href="index.php?action=register" class="rounded-square-button"><p>Je suis intéressé</p></a>
+                    <div class="user-actions-buttons">
+                        <a href="index.php?action=register" class="rounded-square-button"><p>Je suis intéressé</p></a>
+                    </div>
                 </div>
             <?php } ?>
 		</main>

@@ -399,6 +399,11 @@ a.basic-thumb-button
 	color: #9e34f7;
 }
 
+.rounded-square-button.extended-button
+{
+	width: 200px;
+}
+
 input.rounded-square-button
 {
 	border: 0;
@@ -484,11 +489,32 @@ input.rounded-square-button
 
 .user-actions
 {
-	display: flex;
-	justify-content: center;
 	margin-top: 50px;
 	width: 100%;
 	height: auto;
+}
+
+.user-actions.confirm
+{
+	margin-top: 35px;
+}
+
+.user-actions > p
+{
+	text-align: center;
+	font-size: 1rem;
+	margin: 0px 20px 20px;
+}
+
+.user-actions .user-actions-buttons
+{
+	display: flex;
+	justify-content: center;
+}
+
+.user-actions .rounded-square-button
+{
+	margin: auto 10px;
 }
 
 /* Page formulaire ajout trajet */
