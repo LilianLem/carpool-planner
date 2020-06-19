@@ -93,7 +93,7 @@ function checkRegistration()
 			}
 			else
 			{
-				displayProposalList(); // À changer pour faire arriver sur la page de connexion
+				displayHomePage();
 			}
 		}
 	}
@@ -156,8 +156,8 @@ function checkLogin()
 			else
 			{
 				$_SESSION['userId'] = $checkCredentials['id'];
-				$_SESSION['username'] = $checkCredentials['username']; // INITIALISER LA SESSION SUR LES VIEWS
-				displayProposalList(); // À changer pour faire arriver sur la page d'où l'utilisateur vient
+				$_SESSION['username'] = $checkCredentials['username'];
+				displayHomePage();
 			}
 		}
 	}
