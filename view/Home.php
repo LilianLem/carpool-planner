@@ -80,8 +80,8 @@
             </div>
 
             <div id="buttons">
-                <a href="index.php?action=showRequests" class="home-link-button transparent"><p>Demandes</p></a>
-                <a href="index.php?action=showProposals" class="home-link-button"><p>Trajets disponibles</p></a>
+                <a href="index.php?action=showRequests" class="rounded-square-button transparent-button"><p>Demandes</p></a>
+                <a href="index.php?action=showProposals" class="rounded-square-button"><p>Trajets disponibles</p></a>
             </div>
 		</main>
 
