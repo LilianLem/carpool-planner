@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
-		<title>Trajets proposés - Carpool Planner</title>
+		<title>Demandes de transport - Carpool Planner</title>
 		<link rel="stylesheet" href="static/css/style.css"/>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
@@ -33,7 +33,7 @@
         </header>
 
 		<main id="proposal-list" class="list">
-			<h1>Trajets proposés</h1>
+			<h1>Demandes de transport</h1>
 
 			<table>
 				<tr>
@@ -43,17 +43,17 @@
 				</tr>
 
 				<?php
-				foreach($proposals as $proposal)
+				foreach($requests as $request)
 				{ ?>
-				<tr onclick="window.location='index.php?action=showProposal&id=<?=$proposal['id']?>';">
-					<td><?=$proposal['startCity']?></td>
-					<td><?=$proposal['startDate']?></td>
-					<td><?=$proposal['username']?></td>
+				<tr onclick="window.location='index.php?action=showRequest&id=<?=$request['id']?>';">
+					<td><?=$request['startCity']?></td>
+					<td><?=$request['startDate']?></td>
+					<td><?=$request['username']?></td>
 				</tr>
 				<?php } ?>
 			</table>
 
-			<a id="add-button" class="basic-thumb-button" href="index.php?action=<?= isset($_SESSION['userId']) ? 'addProposal' : 'register'; ?>"><p>+</p></a>
+			<a id="add-button" class="basic-thumb-button" href="index.php?action=<?= isset($_SESSION['userId']) ? 'addRequest' : 'register'; ?>"><p>+</p></a>
 		</main>
 
 		<footer>

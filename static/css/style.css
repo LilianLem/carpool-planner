@@ -397,21 +397,22 @@ a.basic-thumb-button
 	border: none;
 }
 
-/* Page liste des propositions */
 
-#proposal-list table tr:first-child
+/* Pages de liste */
+
+.list table tr:first-child
 {
 	background-color: #9e34f7;
 }
 
-#proposal-list table tr:not(:first-child)
+.list table tr:not(:first-child)
 {
 	background-color: #f8bf4c;
 	color: #1d1d1d;
 	cursor: pointer;
 }
 
-#proposal-list #add-button p
+.list #add-button p
 {
 	font-size: 2.5rem;
 	text-align: center;
@@ -420,9 +421,9 @@ a.basic-thumb-button
 	bottom: 2px;
 }
 
-/* Page des détails de proposition */
+/* Pages de détails */
 
-#proposal-details table
+.details table
 {
 	margin: 0 auto;
 	width: 96%;
@@ -430,30 +431,30 @@ a.basic-thumb-button
 	border-spacing: 0 1px;
 }
 
-#proposal-details table th
+.details table th
 {
 	background-color: #9e34f7;
 	width: 40%
 }
 
-#proposal-details table td
+.details table td
 {
 	background-color: #f8bf4c;
 	color: #000;
 	width: 60%;
 }
 
-#proposal-details table th, #proposal-details table td
+.details table th, .details table td
 {
 	padding: 10px 0;
 }
 
-#proposal-details tr:last-child *
+.details tr:last-child *
 {
 	font-size: 0.85rem;
 }
 
-#proposal-details #edit-button
+.details #edit-button
 {
 	display: flex;
 	justify-content: center;

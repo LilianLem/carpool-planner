@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
-		<title>Trajets proposés - Carpool Planner</title>
+		<title>Modifier une demande - Carpool Planner</title>
 		<link rel="stylesheet" href="static/css/style.css"/>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
@@ -32,28 +32,32 @@
             </a>
         </header>
 
-		<main id="proposal-list" class="list">
-			<h1>Trajets proposés</h1>
+		<main>
+			<h1>Modifier une demande</h1>
 
-			<table>
-				<tr>
-					<th>Lieu</th>
-					<th>Date de départ</th>
-					<th>Pseudo</th>
-				</tr>
+			<form id="request-edit-form" class="basic-form" method="post" action="index.php?action=changeRequest">
+                <input type="hidden" name="id" id="id" value="<?=$request["id"]?>" required="required" />
 
-				<?php
-				foreach($proposals as $proposal)
-				{ ?>
-				<tr onclick="window.location='index.php?action=showProposal&id=<?=$proposal['id']?>';">
-					<td><?=$proposal['startCity']?></td>
-					<td><?=$proposal['startDate']?></td>
-					<td><?=$proposal['username']?></td>
-				</tr>
-				<?php } ?>
-			</table>
+				<label for="city">Ville de départ</label>
+				<input type="text" name="startCity" id="start-city" value="<?=$request["startCity"]?>" placeholder="Ex : Rouen / Clermont-Ferrand" required="required" maxlength="45" />
 
-			<a id="add-button" class="basic-thumb-button" href="index.php?action=<?= isset($_SESSION['userId']) ? 'addProposal' : 'register'; ?>"><p>+</p></a>
+				<label for="department">Département</label>
+				<input type="text" name="startDepartment" id="start-department" value="<?=$request["startDepartment"]?>" placeholder="Ex : 01 / 1 / 34..." required="required" maxlength="2" />
+
+				<label for="date">Date de départ</label>
+				<input type="date" name="startDate" id="start-date" value="<?=$request["startDate"]?>" required="required" />
+
+				<label for="time">Heure de départ</label>
+				<input type="time" name="startTime" id="start-time" value="<?=$request["startTime"]?>" required="required" step="900" />
+
+				<label for="return-date">Date de retour <span class="i">(facultatif)</span></label>
+				<input type="date" name="returnDate" id="return-date" value="<?=$request["returnDate"]?>" />
+
+				<label for="return-time">Heure de retour <span class="i">(facultatif)</span></label>
+				<input type="time" name="returnTime" id="return-time" value="<?=$request["returnTime"]?>" step="900" />
+
+				<input class="button" type="submit" value="Valider" />
+			</form>
 		</main>
 
 		<footer>
@@ -63,6 +67,5 @@
 		<?php if(!empty($errors)) {
 			echo '<script type="text/javascript">'.'alert("Une ou plusieurs erreurs sont survenues ! Détails :\n'.$errors.'");</script>';
 		} ?>
-
 	</body>
 </html>

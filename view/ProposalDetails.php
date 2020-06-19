@@ -32,7 +32,7 @@
             </a>
 		</header>
 
-		<main id="proposal-details">
+		<main id="proposal-details" class="details">
 			<h1>Trajet #<?=$proposal['id']?></h1>
 
 			<table>

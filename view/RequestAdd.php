@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html lang="fr">
 	<head>
-		<title>Trajets proposés - Carpool Planner</title>
+		<title>Soumettre une demande - Carpool Planner</title>
 		<link rel="stylesheet" href="static/css/style.css"/>
 		<meta charset="utf-8"/>
 		<meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no"/>
@@ -32,28 +32,30 @@
             </a>
         </header>
 
-		<main id="proposal-list" class="list">
-			<h1>Trajets proposés</h1>
+		<main>
+			<h1>Soumettre une demande</h1>
 
-			<table>
-				<tr>
-					<th>Lieu</th>
-					<th>Date de départ</th>
-					<th>Pseudo</th>
-				</tr>
+			<form id="request-submit-form" class="basic-form" method="post" action="index.php?action=newRequest">
+				<label for="city">Ville de départ</label>
+				<input type="text" name="startCity" id="start-city" placeholder="Ex : Rouen / Clermont-Ferrand" required="required" maxlength="45" />
 
-				<?php
-				foreach($proposals as $proposal)
-				{ ?>
-				<tr onclick="window.location='index.php?action=showProposal&id=<?=$proposal['id']?>';">
-					<td><?=$proposal['startCity']?></td>
-					<td><?=$proposal['startDate']?></td>
-					<td><?=$proposal['username']?></td>
-				</tr>
-				<?php } ?>
-			</table>
+				<label for="department">Département<!-- ou pays--></label>
+				<input type="text" name="startDepartment" id="start-department" placeholder="Ex : 01 / 1 / 34..." required="required" maxlength="2" /> <!-- placeholder="Ex : 01 / 1 / 34 / BE / CH..." -->
 
-			<a id="add-button" class="basic-thumb-button" href="index.php?action=<?= isset($_SESSION['userId']) ? 'addProposal' : 'register'; ?>"><p>+</p></a>
+				<label for="date">Date de départ</label>
+				<input type="date" name="startDate" id="start-date" required="required" /> <!--pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}"-->
+
+				<label for="time">Heure de départ</label>
+				<input type="time" name="startTime" id="start-time" required="required" step="900" />
+
+				<label for="return-date">Date de retour <span class="i">(facultatif)</span></label>
+				<input type="date" name="returnDate" id="return-date" /> <!--pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}"-->
+
+				<label for="return-time">Heure de retour <span class="i">(facultatif)</span></label>
+				<input type="time" name="returnTime" id="return-time" step="900" />
+
+				<input class="button" type="submit" value="Soumettre" />
+			</form>
 		</main>
 
 		<footer>
@@ -63,6 +65,5 @@
 		<?php if(!empty($errors)) {
 			echo '<script type="text/javascript">'.'alert("Une ou plusieurs erreurs sont survenues ! Détails :\n'.$errors.'");</script>';
 		} ?>
-
 	</body>
 </html>

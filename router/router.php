@@ -1,6 +1,7 @@
 <?php
 try {
 	require('controller/ProposalController.php');
+	require('controller/RequestController.php');
 	require('controller/UserController.php');
 	require('controller/HomeController.php');
 
@@ -25,6 +26,24 @@ try {
 				break;
 			case 'newProposal':
 				checkProposalAdd();
+				break;
+			case 'showRequests':
+				displayRequestList();
+				break;
+			case 'addRequest':
+				displayRequestAddForm();
+				break;
+			case 'showRequest':
+				displayRequestDetails();
+				break;
+			case 'editRequest':
+				displayRequestEditForm();
+				break;
+			case 'changeRequest':
+				checkRequestEdit();
+				break;
+			case 'newRequest':
+				checkRequestAdd();
 				break;
 			case 'register':
 				displayRegisterForm();
