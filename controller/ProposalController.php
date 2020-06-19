@@ -136,7 +136,7 @@ function checkAndFormatProposalFormData()
 					}
 					else
 					{
-						$proposal['return'] = true;
+						$proposal['isReturn'] = true;
 						$proposal['returnDate'] = formatDateTimeForDb($_POST['returnDate'],$_POST['returnTime']);
 					}
 				}
@@ -144,9 +144,9 @@ function checkAndFormatProposalFormData()
 		}
 	}
 
-	if(!isset($proposal['return']))
+	if(!isset($proposal['isReturn']))
 	{
-		$proposal['return'] = false;
+		$proposal['isReturn'] = false;
 		$proposal['returnDate'] = NULL;
 	}
 
@@ -219,7 +219,7 @@ function displayProposalDetails($errors = '', $id = '')
 			$startDate = strtotime($proposal['startDate']);
 			$proposal['startDate'] = ucfirst(strftime($dateFormat, $startDate));
 
-			if($proposal['return'])
+			if($proposal['isReturn'])
 			{
 				$returnDate = strtotime($proposal['returnDate']);
 				$proposal['returnDate'] = ucfirst(strftime($dateFormat, $returnDate));
@@ -276,7 +276,7 @@ function displayProposalEditForm($errors = '')
 	$proposal['startDate'] = $startDateTime['date'];
 	$proposal['startTime'] = $startDateTime['time'];
 
-	if($proposal['return'])
+	if($proposal['isReturn'])
 	{
 		$returnDateTime = formatDateForForm($proposal['returnDate']);
 		$proposal['returnDate'] = $returnDateTime['date'];

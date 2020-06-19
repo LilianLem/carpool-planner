@@ -51,7 +51,7 @@
                     <td><?=$proposal['startDate']?></td>
                 </tr>
 
-                <?php if($proposal['return']) {?>
+                <?php if($proposal['isReturn']) {?>
                 <tr>
                     <th>Ville de retour</th>
                     <td><?=$proposal['returnCity']?></td>
@@ -60,15 +60,15 @@
 
                 <tr>
                     <th>Date de retour</th>
-                    <td><?= $proposal['return'] ? $proposal['returnDate'] : 'Pas de retour';?></td>
+                    <td><?= $proposal['isReturn'] ? $proposal['returnDate'] : 'Pas de retour';?></td>
                 </tr>
 
                 <tr>
-                    <th>Sièges disponibles<?php if($proposal['return']) {?> (aller)<?php }?></th>
+                    <th>Sièges disponibles<?php if($proposal['isReturn']) {?> (aller)<?php }?></th>
                     <td><?=$proposal['availableSeats']?> / <?=$proposal['maxSeats']?></td>
                 </tr>
 
-				<?php if($proposal['return']) {?>
+				<?php if($proposal['isReturn']) {?>
                 <tr>
                     <th>Sièges disponibles (retour)</th>
                     <td><?=$proposal['returnAvailableSeats']?> / <?=$proposal['returnMaxSeats']?></td>
