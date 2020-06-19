@@ -368,7 +368,14 @@ a.basic-thumb-button
 	margin: 20px 20px;
 }
 
-#home #buttons .home-link-button
+#body-home footer
+{
+	border: none;
+}
+
+/* Boutons rectangles arrondis - Créés pour la page d'accueil et utilisés ailleurs */
+
+.rounded-square-button
 {
 	display: flex;
 	justify-content: center;
@@ -380,21 +387,23 @@ a.basic-thumb-button
 	text-decoration: none;
 }
 
-#home #buttons .home-link-button p
+.rounded-square-button p
 {
 	font-size: 1rem;
 }
 
-#home #buttons .home-link-button.transparent
+.rounded-square-button.transparent-button
 {
 	background-color: rgba(0, 0, 0, 0);
 	border: 2px solid #9e34f7;
 	color: #9e34f7;
 }
 
-#body-home footer
+input.rounded-square-button
 {
-	border: none;
+	border: 0;
+	font-size: 1rem;
+	color: #fff;
 }
 
 /* Pages d'inscription et de connexion */
@@ -471,6 +480,15 @@ a.basic-thumb-button
 {
 	display: flex;
 	justify-content: center;
+}
+
+.user-actions
+{
+	display: flex;
+	justify-content: center;
+	margin-top: 50px;
+	width: 100%;
+	height: auto;
 }
 
 /* Page formulaire ajout trajet */
