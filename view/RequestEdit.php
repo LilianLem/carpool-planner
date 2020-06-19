@@ -22,7 +22,7 @@
                         <li><a href="index.php?action=register">Inscription</a></li>
                         <li><a href="index.php?action=login">Connexion</a></li>
                         <li><a href="index.php?action=showProposals">Trajets disponibles</a></li>
-                        <li><a href="index.php?action=showRequests">Demandes de trajet</a></li>
+                        <li><a href="index.php?action=showRequests">Demandes de transport</a></li>
                     </ul>
                 </nav>
             </div>
