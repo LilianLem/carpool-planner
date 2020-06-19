@@ -93,7 +93,9 @@
                 </form>
 			<?php }} else { ?>
                 <div class="user-actions">
-                    <a href="index.php?action=register" class="rounded-square-button"><p>Envoyer un message</p></a>
+                    <div class="user-actions-buttons">
+                        <a href="index.php?action=register" class="rounded-square-button extended-button"><p>Envoyer un message</p></a>
+                    </div>
                 </div>
 			<?php } ?>
 		</main>
