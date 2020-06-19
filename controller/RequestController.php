@@ -156,8 +156,6 @@ function checkAndFormatRequestFormData()
 		$request['returnDate'] = NULL;
 	}
 
-	var_dump($request);
-
 	return ['request' => $request, 'errors' => $errors];
 }
 
