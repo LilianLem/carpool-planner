@@ -29,7 +29,7 @@ class RequestManager extends DatabaseManager
 	{
 		$db = $this->dbConnect();
 
-		$newRequest = $db->prepare('INSERT INTO request(`user_id`, `start_city`, `start_lat`, `start_lng`, `start_date`, `needed_seats`, `is_return`, `return_city`, `return_lat`, `return_lng`, `return_date`, `description`, `smoker`, `created`, `last_edited`, `status`) VALUES(:userId, :city, :lat, :lng, :startDate, 4, :return, :city, :lat, :lng, :returnDate, "Pas de description", 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1)');
+		$newRequest = $db->prepare('INSERT INTO request(`user_id`, `start_city`, `start_lat`, `start_lng`, `start_date`, `needed_seats`, `is_return`, `return_city`, `return_lat`, `return_lng`, `return_date`, `description`, `smoker`, `created`, `last_edited`, `status`) VALUES(:userId, :city, :lat, :lng, :startDate, 4, :isReturn, :city, :lat, :lng, :returnDate, "Pas de description", 0, CURRENT_TIMESTAMP, CURRENT_TIMESTAMP, 1)');
 		$newRequest->execute(array(
 			'userId' => $_SESSION['userId'],
 			'city' => $requestData['startCity'],
