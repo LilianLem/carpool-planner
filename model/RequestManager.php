@@ -56,4 +56,12 @@ class RequestManager extends DatabaseManager
 			'returnDate' => $requestData['returnDate']
 		));
 	}
+
+	public function sendMessageToRequester($messageData)
+	{
+		$db = $this->dbConnect();
+
+		$newMessage = $db->prepare('INSERT INTO notification(user_id, user_id_second, proposal_link_id, email_notified, discord_notified, `type`) VALUES(:targetedUser, :sender, :requestId, :emailNotify, :discordNotify, 8)');
+		$newMessage->execute($messageData);
+	}
 }

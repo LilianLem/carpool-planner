@@ -48,6 +48,9 @@ try {
 			case 'newRequest':
 				checkRequestAdd();
 				break;
+			case 'sendMessageRequest':
+				checkRequestSendMessage();
+				break;
 			case 'register':
 				displayRegisterForm();
 				break;

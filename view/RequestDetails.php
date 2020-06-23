@@ -87,16 +87,31 @@
                 <a title="Modifier ma demande" id="edit-button" class="basic-thumb-button" href="index.php?action=editRequest&id=<?=$request['id']?>">
                     <img src="static/img/icons/pencil.png" alt="Crayon" width="35px">
                 </a>
-			<?php } else { ?>
-                <form class="user-actions">
-                    <input type="submit" href="index.php?action=sendMessageRequest&id=<?=$request['id']?>" class="rounded-square-button" value="Envoyer un message" />
-                </form>
-			<?php }} else { ?>
-                <div class="user-actions">
-                    <div class="user-actions-buttons">
-                        <a href="index.php?action=register" class="rounded-square-button extended-button"><p>Envoyer un message</p></a>
-                    </div>
+            <?php } else {
+            if (isset($_POST['showSendingConfirmationPrompt'])) { ?>
+            <div class="user-actions confirm">
+                <p>Êtes-vous sûr de vouloir envoyer une proposition de trajet à <?=$request['username']?> ?</p>
+                <div class="user-actions-buttons">
+                    <a href="index.php?action=showRequest&id=<?=$request['id']?>" class="rounded-square-button transparent-button"><p>Annuler</p></a>
+                    <form action="index.php?action=sendMessageRequest&id=<?=$request['id']?>" method="post">
+                        <input type="hidden" id="request-message-sending-token" name="requestMessageSendingToken" value="<?=$request['id']?>" required="required" />
+                        <input type="submit" class="rounded-square-button" value="Confirmer" />
+                    </form>
                 </div>
+            </div>
+			<?php } else { ?>
+            <form action="index.php?action=showRequest&id=<?=$request['id']?>" method="post" class="user-actions">
+                <input type="hidden" id="show-sending-confirmation-prompt" name="showSendingConfirmationPrompt" value="1" required="required" />
+                <div class="user-actions-buttons">
+                    <input type="submit" class="rounded-square-button" value="Je propose des places" />
+                </div>
+            </form>
+            <?php }}} else { ?>
+            <div class="user-actions">
+                <div class="user-actions-buttons">
+                    <a href="index.php?action=register" class="rounded-square-button"><p>Je propose des places</p></a>
+                </div>
+            </div>
 			<?php } ?>
 		</main>
 

@@ -2,6 +2,11 @@
 require_once('controller/UtilsController.php');
 require_once('model/RequestManager.php');
 require_once('model/ApiManager.php');
+require_once('config.php');
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
 
 function displayRequestList($errors = '')
 {
@@ -377,5 +382,132 @@ function checkRequestEdit()
 	else
 	{
 		displayRequestEditForm("- Vous n'avez pas renseigné tous les champs obligatoires\\n");
+	}
+}
+
+function checkRequestSendMessage()
+{
+	if(!isset($_SESSION['userId']))
+	{
+		displayRegisterForm();
+		return;
+	}
+
+	if(!isset($_GET['id']))
+	{
+		displayRequestList('- Aucun identifiant de demande n\'a été spécifié\\n');
+		return;
+	}
+
+	$id = $_GET['id'];
+
+	if(!isset($_SESSION['userId']))
+	{
+		displayRequestDetails('- Vous n\'avez pas la permission de modifier cette demande\\n', $id);
+		return;
+	}
+
+	if(!is_numeric($id))
+	{
+		displayRequestList('- Le format de l\'identifiant de demande indiqué est incorrect\\n');
+		return;
+	}
+
+	$requestManager = new RequestManager();
+	$request = $requestManager->getRequest($id);
+
+	if(empty($request))
+	{
+		displayRequestList("- L'identifiant indiqué ne correspond à aucune demande\\n");
+		return;
+	}
+
+	$request = formatArrayKeysInCamelCase($request, '_');
+
+	if($request['userId'] == $_SESSION['userId'])
+	{
+		displayRequestDetails('- Vous ne pouvez pas envoyer une demande de contact à vous-même\\n', $id);
+		return;
+	}
+
+	if(!isset($_POST['requestMessageSendingToken']))
+	{
+		displayRequestDetails("- La demande de contact est incorrecte. Si ce message persiste, contactez-nous à l'adresse assistance@fakeEmailAddress.com\\n");
+		return;
+	}
+
+	if($_POST['requestMessageSendingToken'] != $id)
+	{
+		displayRequestDetails("- Les données de votre demande de contact sont incorrectes. Si ce message persiste, contactez-nous à l'adresse assistance@fakeEmailAddress.com\\n");
+		return;
+	}
+
+	// Ajouter ici une vérification pour voir si une demande a déjà été faite
+
+	$userManager = new UserManager();
+	$userContactInfos = formatArrayKeysInCamelCase($userManager->getUserContactInfos($request['userId']), '_');
+
+	$notificationData = [
+		'targetedUser' => $request['userId'],
+		'sender' => $_SESSION['userId'],
+		'requestId' => $request['id'],
+		'emailNotify' => $userContactInfos['notifyEmail'],
+		'discordNotify' => $userContactInfos['notifyDiscord']
+	];
+
+	$requestManager->sendMessageToRequester($notificationData);
+
+	if($userContactInfos['email'])
+	{
+		// On récupère le mail de celui qui souhaite proposer un trajet
+		$selfContactInfos = $userManager->getUserContactInfos($_SESSION['userId']);
+
+		require 'vendor/autoload.php';
+
+		$mail = new PHPMailer(true);
+
+		try
+		{
+			//Server settings
+			// $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
+			$mail->isSMTP();                                            // Send using SMTP
+			$mail->Host       = 'plesk1.dyjix.eu';                    // Set the SMTP server to send through
+			$mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+			$mail->Username   = WEBSITE_EMAIL;      // SMTP username
+			$mail->Password   = WEBSITE_EMAIL_PASSWORD;                               // SMTP password
+			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+			$mail->Port       = 25;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+
+			//Recipients
+			$mail->setFrom('carpoolplanner@lilianlemoine.fr', 'Carpool Planner');
+			$mail->addAddress($userContactInfos['email'], $userContactInfos['username']);     // Add a recipient
+			$mail->addReplyTo($selfContactInfos['email'], $_SESSION['username']);
+
+			// Content
+			$mail->isHTML(true);                                  // Set email format to HTML
+			$mail->Subject = 'Proposition de transport sur votre demande';
+			$mail->Body    = '<strong>'.$_SESSION["username"].'</strong> souhaite entrer en contact avec vous pour vous prendre en charge sur <a href="localhost:81/carpoolplanner/index.php?action=showRequest&id='.$request['id'].'">cette demande</a>.<br>Contactez-le via Discord pour plus d\'informations...';
+			$mail->AltBody = $_SESSION["username"].' souhaite entrer en contact avec vous pour vous prendre en charge sur la demande à l\'adresse suivante : localhost:81/carpoolplanner/index.php?action=showRequest&id='.$request['id'].' Contactez-le via Discord pour plus d\'informations...';
+
+			$mail->send();
+			$mailSuccess = true;
+		}
+
+		catch (Exception $e) {
+			$mailSuccess = false;
+		}
+	}
+
+	displayRequestDetails('', $id);
+	if(isset($mailSuccess))
+	{
+		if($mailSuccess)
+		{
+			echo '<script type="text/javascript">console.log("Email envoyé")</script>';
+		}
+		else
+		{
+			echo '<script type="text/javascript">console.log("Le message ne peut pas être envoyé. Erreur : '.$mail->ErrorInfo.'")</script>';
+		}
 	}
 }
