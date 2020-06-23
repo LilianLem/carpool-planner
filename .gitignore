@@ -3,6 +3,7 @@ vendor/
 wireframes/
 static/img/logo-code.svg
 config.php
+database-content-import.json
 
 # Fichier de test à supprimer plus tard
 session-destroy.php
