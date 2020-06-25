@@ -36,7 +36,8 @@ function displayRequestAddForm($errors = '')
 	}
 	else
 	{
-		displayRegisterForm('', '', urlencode($_SERVER['REQUEST_URI']));
+		$_GET['page'] = urlencode(basename($_SERVER['REQUEST_URI']));
+		displayRegisterForm('', '');
 		return;
 	}
 }
@@ -389,7 +390,8 @@ function checkRequestSendMessage()
 {
 	if(!isset($_SESSION['userId']))
 	{
-		displayRegisterForm('', '', urlencode($_SERVER['REQUEST_URI']));
+		$_GET['page'] = urlencode(basename($_SERVER['REQUEST_URI']));
+		displayRegisterForm('', '');
 		return;
 	}
 

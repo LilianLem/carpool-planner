@@ -39,7 +39,7 @@
 		<main class="account">
 			<h1>Inscription</h1>
 
-			<form id="register-form" class="basic-form" method="post" action="index.php?action=registration<?=!empty($redirectPage) ? '&page='.$redirectPage : ''?>">
+			<form id="register-form" class="basic-form" method="post" action="index.php?action=registration<?=isset($_GET['page']) ? '&page='.urlencode(strip_tags($_GET['page'])) : ''?>">
                 <label for="email">E-mail</label>
                 <input type="email" name="email" id="email" placeholder="Ex : pierre.dupont@gmail.com" required="required" minlength="6" maxlength="128" value="<?=$prefilledInfos['email']?>" />
 
@@ -52,7 +52,7 @@
 				<input class="button" type="submit" value="Valider" />
 			</form>
 
-            <a href="index.php?action=login"><p>Déjà inscrit ? Connectez-vous !</p></a>
+            <a href="index.php?action=login<?=isset($_GET['page']) ? '&page='.urlencode(strip_tags($_GET['page'])) : ''?>"><p>Déjà inscrit ? Connectez-vous !</p></a>
 		</main>
 
 		<footer>

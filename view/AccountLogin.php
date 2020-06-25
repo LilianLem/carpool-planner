@@ -49,7 +49,7 @@
 				<input class="button" type="submit" value="Valider" />
 			</form>
 
-            <a href="index.php?action=register"><p>Pas encore de compte ? Inscrivez-vous !</p></a>
+            <a href="index.php?action=register<?=isset($_GET['page']) ? '&page='.urlencode(strip_tags($_GET['page'])) : ''?>"><p>Pas encore de compte ? Inscrivez-vous !</p></a>
 		</main>
 
 		<footer>
