@@ -58,7 +58,7 @@ function checkAndFormatProposalFormData()
 		$checkStartCity++;
 	}
 
-	if(!ctype_alpha(utf8_decode(str_replace(array(' ','-'), '', $_POST['startCity']))))
+	if(!ctype_alpha(utf8_decode(str_replace(array(' ','-','\''), '', $_POST['startCity']))))
 	{
 		$errors .= "- Le format de la ville est incorrect. Exemples corrects : Rouen, Clermont-Ferrand\\n";
 	}
