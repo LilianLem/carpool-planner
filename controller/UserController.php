@@ -157,7 +157,7 @@ function checkLogin()
 			{
 				$_SESSION['userId'] = $checkCredentials['id'];
 				$_SESSION['username'] = $checkCredentials['username'];
-				displayHomePage();
+				redirect($_GET['page'] ?? '');
 			}
 		}
 	}
@@ -173,15 +173,18 @@ function logout()
 {
 	session_destroy();
 
-	if(isset($_GET['page']))
+	redirect($_GET['page'] ?? '');
+}
+
+function redirect(string $page)
+{
+	if(!empty($page))
 	{
-		$redirectPage = strip_tags($_GET['page']);
+		$redirectPage = strip_tags($page);
 		header("Location: $redirectPage");
-		exit;
 	}
 	else
 	{
 		header("Location: index.php");
-		exit;
 	}
 }

@@ -21,9 +21,9 @@
                     <ul>
                         <?php if(!isset($_SESSION['userId'])) { ?>
                         <li><a href="index.php?action=register">Inscription</a></li>
-                        <li><a href="index.php?action=login">Connexion</a></li>
+                        <li><a href="index.php?action=login&page=<?=urlencode(basename($_SERVER['REQUEST_URI']))?>">Connexion</a></li>
                         <?php } else { ?>
-                        <li><a href="index.php?action=logout&page=<?=str_replace("&","%26",basename($_SERVER['REQUEST_URI']))?>">Déconnexion</a></li>
+                        <li><a href="index.php?action=logout&page=<?=urlencode(basename($_SERVER['REQUEST_URI']))?>">Déconnexion</a></li>
                         <?php } ?>
                         <li><a href="index.php?action=showProposals">Trajets disponibles</a></li>
                         <li><a href="index.php?action=showRequests">Demandes de transport</a></li>
@@ -39,7 +39,7 @@
 		<main class="account">
 			<h1>Connexion</h1>
 
-			<form id="login-form" class="basic-form" method="post" action="index.php?action=loggingIn">
+			<form id="login-form" class="basic-form" method="post" action="index.php?action=loggingIn<?=isset($_GET['page']) ? '&page='.urlencode(strip_tags($_GET['page'])) : ''?>">
                 <label for="email">E-mail</label>
                 <input type="email" name="email" id="email" required="required" maxlength="128" value="<?=$prefilledEmail?>" />
 
