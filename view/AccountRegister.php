@@ -20,8 +20,8 @@
                 <nav>
                     <ul>
                         <?php if(!isset($_SESSION['userId'])) { ?>
-                        <li><a href="index.php?action=register">Inscription</a></li>
-                        <li><a href="index.php?action=login&page=<?=urlencode(basename($_SERVER['REQUEST_URI']))?>">Connexion</a></li>
+                        <li><a href="index.php?action=register&page=<?=urlencode(strip_tags($_GET['page'] ?? basename($_SERVER['REQUEST_URI'])))?>">Inscription</a></li>
+                        <li><a href="index.php?action=login&page=<?=urlencode(strip_tags($_GET['page'] ?? basename($_SERVER['REQUEST_URI'])))?>">Connexion</a></li>
                         <?php } else { ?>
                         <li><a href="index.php?action=logout&page=<?=urlencode(basename($_SERVER['REQUEST_URI']))?>">Déconnexion</a></li>
                         <?php } ?>
@@ -39,7 +39,7 @@
 		<main class="account">
 			<h1>Inscription</h1>
 
-			<form id="register-form" class="basic-form" method="post" action="index.php?action=registration">
+			<form id="register-form" class="basic-form" method="post" action="index.php?action=registration<?=!empty($redirectPage) ? '&page='.$redirectPage : ''?>">
                 <label for="email">E-mail</label>
                 <input type="email" name="email" id="email" placeholder="Ex : pierre.dupont@gmail.com" required="required" minlength="6" maxlength="128" value="<?=$prefilledInfos['email']?>" />
 

@@ -1,8 +1,13 @@
 <?php
 require_once('model/UserManager.php');
 
-function displayRegisterForm($errors = '', $prefilledInfos = ['discordUsername' => '', 'email' => ''])
+function displayRegisterForm($errors = '', $prefilledInfos = ['discordUsername' => '', 'email' => ''], $redirectPage = '')
 {
+	if(!is_array($prefilledInfos))
+	{
+		$prefilledInfos = ['discordUsername' => '', 'email' => ''];
+	}
+	
 	require('view/AccountRegister.php');
 }
 
@@ -70,7 +75,7 @@ function checkRegistration()
 
 		if(!empty($errors))
 		{
-			displayRegisterForm($errors, $prefilledInfos);
+			displayRegisterForm($errors, $prefilledInfos, (isset($_GET['page']) ? urlencode(strip_tags($_GET['page'])) : ''));
 		}
 		else
 		{
@@ -84,16 +89,16 @@ function checkRegistration()
 			if($checkNewUser == 'existingUser')
 			{
 				$errors .= "- Un utilisateur existe déjà avec ce nom d'utilisateur ou cette adresse mail\\n";
-				displayRegisterForm($errors, $prefilledInfos);
+				displayRegisterForm($errors, $prefilledInfos, (isset($_GET['page']) ? urlencode(strip_tags($_GET['page'])) : ''));
 			}
 			elseif(empty($checkNewUser))
 			{
 				$errors .= "- Nous avons rencontré un problème lors de l'enregistrement de votre compte, veuillez réessayer. Si ce message persiste, contactez-nous à l'adresse assistance@fakeEmailAddress.com\\n";
-				displayRegisterForm($errors, $prefilledInfos);
+				displayRegisterForm($errors, $prefilledInfos, (isset($_GET['page']) ? urlencode(strip_tags($_GET['page'])) : ''));
 			}
 			else
 			{
-				displayHomePage();
+				displayLoginForm();
 			}
 		}
 	}
@@ -102,7 +107,7 @@ function checkRegistration()
 		$prefilledInfos['discordUsername'] = isset($_POST['email']) ? strip_tags($_POST['email']) : '';
 		$prefilledInfos['password'] = isset($_POST['password']) ? strip_tags($_POST['password']) : '';
 
-		displayRegisterForm("- Vous n'avez pas renseigné tous les champs obligatoires\\n", $prefilledInfos);
+		displayRegisterForm("- Vous n'avez pas renseigné tous les champs obligatoires\\n", $prefilledInfos, (isset($_GET['page']) ? urlencode(strip_tags($_GET['page'])) : ''));
 	}
 }
 

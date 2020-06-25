@@ -52,7 +52,7 @@ try {
 				checkRequestSendMessage();
 				break;
 			case 'register':
-				displayRegisterForm();
+				displayRegisterForm('', '', (isset($_GET['page']) ? urlencode(strip_tags($_GET['page'])) : ''));
 				break;
 			case 'registration':
 				checkRegistration();
