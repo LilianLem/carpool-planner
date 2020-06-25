@@ -158,7 +158,7 @@ function checkAndFormatRequestFormData()
 
 	if(!isset($request['isReturn']))
 	{
-		$request['isReturn'] = false;
+		$request['isReturn'] = 0;
 		$request['returnDate'] = NULL;
 	}
 

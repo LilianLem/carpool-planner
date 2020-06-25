@@ -158,7 +158,7 @@ function checkAndFormatProposalFormData()
 
 	if(!isset($proposal['isReturn']))
 	{
-		$proposal['isReturn'] = false;
+		$proposal['isReturn'] = 0;
 		$proposal['returnDate'] = NULL;
 	}
 
