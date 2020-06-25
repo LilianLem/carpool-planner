@@ -7,7 +7,7 @@ class RequestManager extends DatabaseManager
 	{
 		$db = $this->dbConnect();
 
-		$requests_raw = $db->prepare('SELECT r.id, r.start_city, r.start_date, u.username FROM request r INNER JOIN user u ON r.user_id = u.id ORDER BY r.id');
+		$requests_raw = $db->prepare('SELECT r.id, city.name AS start_city, city.department AS start_department, r.start_date, u.username FROM (request r INNER JOIN ext_city city ON r.start_city = city.id) INNER JOIN user u ON r.user_id = u.id ORDER BY r.id');
 		$requests_raw->execute();
 		$requests = $requests_raw->fetchAll();
 
@@ -18,7 +18,7 @@ class RequestManager extends DatabaseManager
 	{
 		$db = $this->dbConnect();
 
-		$request_raw = $db->prepare('SELECT r.id, r.user_id, u.username, r.start_city, r.start_lat, r.start_lng, r.start_date, r.needed_seats, r.is_return, r.return_city, r.return_lat, r.return_lng, r.return_date, r.description, r.smoker, r.last_edited, r.status FROM request r INNER JOIN user u ON r.user_id = u.id WHERE r.id = ? LIMIT 1');
+		$request_raw = $db->prepare('SELECT r.id, r.user_id, u.username, city.name AS start_city, city.department AS start_department, r.start_lat, r.start_lng, r.start_date, r.needed_seats, r.is_return, city.name AS return_city, city.department AS return_department, r.return_lat, r.return_lng, r.return_date, r.description, r.smoker, r.last_edited, r.status FROM (request r INNER JOIN ext_city city ON r.start_city = city.id) INNER JOIN user u ON r.user_id = u.id WHERE r.id = ? LIMIT 1');
 		$request_raw->execute(array($id));
 		$request = $request_raw->fetch();
 

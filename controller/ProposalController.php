@@ -89,7 +89,7 @@ function checkAndFormatProposalFormData()
 		{
 			$startCityData = json_decode($startCityRawData);
 
-			$proposal['startCity'] = $startCityData[0]->nom.' ('.$startCityData[0]->codeDepartement.')';
+			$proposal['startCity'] = $startCityData[0]->code;
 			$proposal['startLat'] = $startCityData[0]->centre->coordinates[1];
 			$proposal['startLng'] = $startCityData[0]->centre->coordinates[0];
 		}
@@ -303,10 +303,6 @@ function displayProposalEditForm($errors = '')
 		$proposal['returnDate'] = '';
 		$proposal['returnTime'] = '';
 	}
-
-	preg_match("/([A-Za-zàâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ\-' ]+) \(([0-9AB]{2})\)/", $proposal['startCity'], $parsedStartCity);
-	$proposal['startCity'] = $parsedStartCity[1];
-	$proposal['startDepartment'] = $parsedStartCity[2];
 
 	require('view/ProposalEdit.php');
 }

@@ -47,7 +47,7 @@
 
                 <tr>
                     <th>Ville de départ</th>
-                    <td><?=$proposal['startCity']?></td>
+                    <td><?=$proposal['startCity'].' ('.$proposal['startDepartment'].')'?></td>
                 </tr>
 
                 <tr>
@@ -58,7 +58,7 @@
                 <?php if($proposal['isReturn']) {?>
                 <tr>
                     <th>Ville de retour</th>
-                    <td><?=$proposal['returnCity']?></td>
+                    <td><?=$proposal['returnCity'].' ('.$proposal['returnDepartment'].')'?></td>
                 </tr>
 				<?php } ?>
 

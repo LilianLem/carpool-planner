@@ -89,7 +89,7 @@ function checkAndFormatRequestFormData()
 		{
 			$startCityData = json_decode($startCityRawData);
 
-			$request['startCity'] = $startCityData[0]->nom.' ('.$startCityData[0]->codeDepartement.')';
+			$request['startCity'] = $startCityData[0]->code;
 			$request['startLat'] = $startCityData[0]->centre->coordinates[1];
 			$request['startLng'] = $startCityData[0]->centre->coordinates[0];
 		}
@@ -303,10 +303,6 @@ function displayRequestEditForm($errors = '')
 		$request['returnDate'] = '';
 		$request['returnTime'] = '';
 	}
-
-	preg_match("/([A-Za-zàâäèéêëîïôœùûüÿçÀÂÄÈÉÊËÎÏÔŒÙÛÜŸÇ\-' ]+) \(([0-9AB]{2})\)/", $request['startCity'], $parsedStartCity);
-	$request['startCity'] = $parsedStartCity[1];
-	$request['startDepartment'] = $parsedStartCity[2];
 
 	require('view/RequestEdit.php');
 }
