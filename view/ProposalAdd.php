@@ -51,22 +51,36 @@
 
 				<label for="start-time">Heure de départ</label>
 				<input type="time" name="startTime" id="start-time" required="required" step="900" />
+                
+                <label for="max-seats">Nombre de sièges proposés à l'aller</label>
+                <input type="number" name="maxSeats" id="max-seats" placeholder="Min. 1 / Max. 8" required="required" min="1" max="8" step="1" />
 
+                <label for="available-seats">Nombre de sièges libres à l'aller</label>
+                <input type="number" name="availableSeats" id="available-seats" placeholder="Min. 1 / Max. 8" required="required" min="1" max="8" step="1" />
+                
+                <label for="detour-radius">Détour maximum</label>
+                <input type="number" name="detourRadius" id="detour-radius" placeholder="Max. 50km" required="required" min="0" max="50" step="1" />
+                
 				<label for="return-date">Date de retour <span class="i">(facultatif)</span></label>
 				<input type="date" name="returnDate" id="return-date" /> <!--pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}"-->
 
 				<label for="return-time">Heure de retour <span class="i">(facultatif)</span></label>
 				<input type="time" name="returnTime" id="return-time" step="900" />
 
-<!--                <label for="smoking-allowed">Fumeurs admis</label>
-                <div class="switch">
-                    <input type="checkbox" name="smokingAllowed" id="smoking-allowed" />
-                    <span class="slider round"></span>
-                </div>-->
+                <label for="return-max-seats">Nombre de sièges proposés au retour <span class="i">(facultatif)</span></label>
+                <input type="number" name="returnMaxSeats" id="return-max-seats" placeholder="Min. 1 / Max. 8" required="required" min="1" max="8" step="1" />
+
+                <label for="return-available-seats">Nombre de sièges libres au retour <span class="i">(facultatif)</span></label>
+                <input type="number" name="returnAvailableSeats" id="return-available-seats" placeholder="Min. 1 / Max. 8" required="required" min="1" max="8" step="1" />
+
+                <label for="description">Description libre <span class="i">(facultatif)</span></label>
+                <textarea name="description" id="description" placeholder="Max. 500 caractères" maxlength="500"></textarea>
+                
                 <label for="smoking-allowed">Fumeurs admis</label>
-                <div class="switch">
-                    <input type="checkbox" name="smokingAllowed" id="smoking-allowed" />
-                </div>
+                <input type="checkbox" name="smokingAllowed" id="smoking-allowed" />
+
+                <label for="free">Participation financière obligatoire</label>
+                <input type="checkbox" name="free" id="free" />
                 
 				<input class="button" type="submit" value="Ajouter" />
 			</form>

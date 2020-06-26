@@ -54,12 +54,21 @@
 				<label for="start-time">Heure de départ</label>
 				<input type="time" name="startTime" id="start-time" value="<?=$request["startTime"]?>" required="required" step="900" />
 
+                <label for="needed-seats">Nombre de sièges nécessaires</label>
+                <input type="number" name="neededSeats" id="needed-seats" placeholder="Min. 1 / Max. 8" required="required" min="1" max="8" step="1" />
+                
 				<label for="return-date">Date de retour <span class="i">(facultatif)</span></label>
 				<input type="date" name="returnDate" id="return-date" value="<?=$request["returnDate"]?>" />
 
 				<label for="return-time">Heure de retour <span class="i">(facultatif)</span></label>
 				<input type="time" name="returnTime" id="return-time" value="<?=$request["returnTime"]?>" step="900" />
 
+                <label for="description">Description libre <span class="i">(facultatif)</span></label>
+                <textarea name="description" id="description" placeholder="Max. 500 caractères" maxlength="500"></textarea>
+
+                <label for="smoker">Passager fumeur</label>
+                <input type="checkbox" name="smoker" id="smoker" />
+                
 				<input class="button" type="submit" value="Valider" />
 			</form>
 		</main>
