@@ -58,6 +58,16 @@
 				<label for="return-time">Heure de retour <span class="i">(facultatif)</span></label>
 				<input type="time" name="returnTime" id="return-time" step="900" />
 
+<!--                <label for="smoking-allowed">Fumeurs admis</label>
+                <div class="switch">
+                    <input type="checkbox" name="smokingAllowed" id="smoking-allowed" />
+                    <span class="slider round"></span>
+                </div>-->
+                <label for="smoking-allowed">Fumeurs admis</label>
+                <div class="switch">
+                    <input type="checkbox" name="smokingAllowed" id="smoking-allowed" />
+                </div>
+                
 				<input class="button" type="submit" value="Ajouter" />
 			</form>
 		</main>
