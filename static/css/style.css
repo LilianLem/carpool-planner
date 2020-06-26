@@ -530,7 +530,7 @@ input.rounded-square-button
 	margin-bottom: 5px;
 }
 
-.basic-form input
+.basic-form input, .basic-form textarea
 {
 	display: block;
 	margin: 5px auto 15px;
@@ -545,7 +545,7 @@ input.rounded-square-button
 	-webkit-transition: all .35s ease-in-out;
 }
 
-.basic-form input:hover:not(:last-child)
+.basic-form input:hover:not(:last-child), .basic-form textarea:hover
 {
 	-webkit-transform: scale(1.02);
 	-webkit-transition: all .35s ease-in-out;
@@ -571,84 +571,33 @@ input.rounded-square-button
 	/*background-color: A définir;*/
 }
 
-.basic-form input::-webkit-input-placeholder
+.basic-form input.button:last-child
+{
+	margin-bottom: 15px;
+}
+
+.basic-form input::-webkit-input-placeholder, .basic-form textarea::-webkit-input-placeholder
 {
 	font-size: 1.25rem;
 	color: gray;
 }
 
-/* Formulaire - Checkbox switch - https://codepen.io/sohibovaziz/pen/dyoYYNq */
-
-.basic-form .switch {
-	position: relative;
-	display: inline-block;
-	width: 60px;
-	height: 34px;
-	margin-left: 10px;
+.basic-form textarea {
+	height: 6em;
+	padding: 10px;
+	line-height: 1.5rem;
+	resize: vertical;
 }
 
-.basic-form .switch, .basic-form .switch-label
+.basic-form input[type="checkbox"]
 {
-	vertical-align: middle;
-}
-
-/*.basic-form .switch input {
-	opacity: 0;
-	width: 0;
-	height: 0;
-}*/
-
-.basic-form .switch input /*.slider*/ {
-	position: absolute;
-	cursor: pointer;
-	top: 0;
-	left: 0;
-	right: 0;
-	bottom: 0;
-	background-color: #ccc;
-	-webkit-transition: .4s;
-	transition: .4s;
-	-webkit-appearance: none;
-}
-
-.basic-form .switch input:before /*.slider:before*/ {
-	position: absolute;
-	content: "";
-	height: 26px;
-	width: 26px;
-	left: 4px;
-	bottom: 4px;
-	background-color: white;
-	-webkit-transition: .4s;
-	transition: .4s;
-}
-
-.basic-form .switch input:checked /*+ .slider*/ {
-	background-color: #2196F3;
-}
-
-.basic-form .switch input:focus /*+ .slider*/ {
-	box-shadow: 0 0 1px #2196F3;
-}
-
-.basic-form .switch input:before:checked /*input:checked + .slider:before*/ {
-	-webkit-transform: translateX(26px);
-	-ms-transform: translateX(26px);
-	transform: translateX(26px);
-}
-
-/* Rounded sliders */
-.basic-form .switch input /*.slider.round*/ {
-	border-radius: 34px;
-}
-
-.basic-form .switch input /*.slider.round:before*/ {
-	border-radius: 50%;
+	width: 30px;
+	margin: 0 0 5px;
 }
 
 /* Media query mobile à venir V */
 
-.button, .basic-form input
+.button, .basic-form input, .basic-form textarea
 {
 	width: 100% /*!important*/;
 }
