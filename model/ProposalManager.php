@@ -50,6 +50,8 @@ class ProposalManager extends DatabaseManager
 			'smokingAllowed' => $proposalData['smokingAllowed'],
 			'free' => $proposalData['free']
 		));
+		
+		return $db->lastInsertId();
 	}
 
 	public function updateProposal($proposalData, $id)

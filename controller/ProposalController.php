@@ -360,9 +360,9 @@ function checkProposalAdd()
 		else
 		{
 			$proposalManager = new ProposalManager();
-			$proposalManager->insertNewProposal($newProposal);
+			$id = $proposalManager->insertNewProposal($newProposal);
 
-			displayProposalList();
+			displayProposalDetails('', $id);
 		}
 	}
 
