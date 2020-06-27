@@ -57,7 +57,7 @@
 				<?php } ?>
 			</table>
 
-			<a id="add-button" class="basic-thumb-button" href="index.php?action=<?= isset($_SESSION['userId']) ? 'addRequest' : 'register'; ?>"><p>+</p></a>
+			<a id="add-button" class="basic-thumb-button" href="index.php?action=addRequest"><p>+</p></a>
 		</main>
 
 		<footer>

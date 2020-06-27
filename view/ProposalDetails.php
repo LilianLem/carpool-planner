@@ -131,7 +131,7 @@
 			<?php }}} else { ?>
                 <div class="user-actions">
                     <div class="user-actions-buttons">
-                        <a href="index.php?action=register" class="rounded-square-button"><p>Je suis intéressé</p></a>
+                        <a href="index.php?action=register&page=<?=urlencode('index.php?action=showProposal&id='.$proposal['id'])?>"" class="rounded-square-button"><p>Je suis intéressé</p></a>
                     </div>
                 </div>
             <?php } ?>
