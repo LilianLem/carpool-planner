@@ -36,7 +36,7 @@ function displayProposalAddForm($errors = '')
 	}
 	else
 	{
-		$_GET['page'] = urlencode(basename($_SERVER['REQUEST_URI']));
+		$_GET['page'] = basename($_SERVER['REQUEST_URI']);
 		displayRegisterForm('', '');
 		return;
 	}
@@ -566,7 +566,7 @@ function checkProposalSendMessage()
 {
 	if(!isset($_SESSION['userId']))
 	{
-		$_GET['page'] = urlencode(basename($_SERVER['REQUEST_URI']));
+		$_GET['page'] = basename($_SERVER['REQUEST_URI']);
 		displayRegisterForm('', '');
 		return;
 	}
