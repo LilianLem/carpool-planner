@@ -96,7 +96,7 @@
                 
                 <tr>
                     <th>Description</th>
-                    <td><?=$proposal['description']?></td>
+                    <td><?=(!empty($proposal['description']) ? $proposal['description'] : 'Pas de description')?></td>
                 </tr>
 
                 <tr>

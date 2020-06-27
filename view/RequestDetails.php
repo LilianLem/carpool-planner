@@ -79,7 +79,7 @@
 
                 <tr>
                     <th>Description</th>
-                    <td><?=$request['description']?></td>
+                    <td><?=(!empty($request['description']) ? $request['description'] : 'Pas de description')?></td>
                 </tr>
 
                 <tr>
