@@ -46,53 +46,47 @@ function checkAndFormatRequestFormData()
 {
 	$request = [];
 	$errors = '';
-	$checkStartCity = 0;
+	
+	$result = checkAndFormatRequestCityData($request, $errors, 'start');
+	$request = $result['request'];
+	$errors = $result['errors'];
 
-	if(strlen($_POST['startDepartment']) > 2 OR (!ctype_digit($_POST['startDepartment']) AND strtolower($_POST['startDepartment']) != '2a' AND strtolower($_POST['startDepartment']) != '2b'))
+	if(!ctype_digit($_POST['neededSeats']))
 	{
-		$errors .= "- Le numéro de département est incorrect. Exemples corrects : 01, 1, 34\\n";
+		$errors .= "- Le format du nombre de sièges nécessaires est incorrect\\n";
+	}
+	elseif($_POST['neededSeats'] < 1 OR $_POST['neededSeats'] > 8)
+	{
+		$errors .= "- Le nombre de sièges nécessaires est incorrect (minimum 1 / maximum 8)\\n";
 	}
 	else
 	{
-		$_POST['startDepartment'] = str_pad(strtoupper($_POST['startDepartment']), 2, "0", STR_PAD_LEFT);
-		$checkStartCity++;
+		$request['neededSeats'] = $_POST['neededSeats'];
 	}
 
-	if(!ctype_alpha(utf8_decode(str_replace(array(' ','-','\''), '', $_POST['startCity']))))
+	if(isset($_POST['description']))
 	{
-		$errors .= "- Le format de la ville est incorrect. Exemples corrects : Rouen, Clermont-Ferrand\\n";
-	}
-	else
-	{
-		$checkStartCity++;
-	}
-
-	if(strlen($_POST['startCity']) > 45)
-	{
-		$errors .= "- Le nom de ville renseigné est trop long (supérieur à 45 caractères)\\n";
-	}
-	else
-	{
-		$checkStartCity++;
-	}
-
-	if($checkStartCity == 3)
-	{
-		$apiManager = new ApiManager();
-		$startCityRawData = $apiManager->checkCity(strip_tags($_POST['startCity']),strip_tags($_POST['startDepartment']));
-
-		if(!$startCityRawData)
+		if(strlen($_POST['description']) > 500)
 		{
-			$errors .= "- La ville n'a pas été trouvée dans la base de l'INSEE\\n";
+			$errors .= "- La description est trop longue\\n";
 		}
 		else
 		{
-			$startCityData = json_decode($startCityRawData);
-
-			$request['startCity'] = $startCityData[0]->code;
-			$request['startLat'] = $startCityData[0]->centre->coordinates[1];
-			$request['startLng'] = $startCityData[0]->centre->coordinates[0];
+			$request['description'] = strip_tags($_POST['description']);
 		}
+	}
+	else
+	{
+		$request['description'] = NULL;
+	}
+
+	if(isset($_POST['smoker']))
+	{
+		$request['smoker'] = 1;
+	}
+	else
+	{
+		$request['smoker'] = 0;
 	}
 
 	$checkStartDate = 0;
@@ -119,6 +113,8 @@ function checkAndFormatRequestFormData()
 	{
 		$request['startDate'] = formatDateTimeForDb($_POST['startDate'],$_POST['startTime']);
 	}
+	
+	$checkReturn = 0;
 
 	if(isset($_POST['returnDate']))
 	{
@@ -148,18 +144,103 @@ function checkAndFormatRequestFormData()
 					}
 					else
 					{
-						$request['isReturn'] = true;
-						$request['returnDate'] = formatDateTimeForDb($_POST['returnDate'],$_POST['returnTime']);
+						$checkReturn++;
 					}
 				}
 			}
 		}
 	}
 
-	if(!isset($request['isReturn']))
+	if(isset($_POST['returnCity']) OR isset($_POST['returnDepartment']))
+	{
+		if(isset($_POST['returnCity']) AND isset($_POST['returnDepartment']))
+		{
+			$result = checkAndFormatRequestCityData($request, $errors, 'return');
+			$request = $result['request'];
+			$errors = $result['errors'];
+
+			if(isset($request['returnCity']))
+			{
+				$checkReturn++;
+			}
+		}
+		else
+		{
+			$errors .= "- La ville ou le département de retour est manquant\\n";
+		}
+	}
+
+	if($checkReturn == 2)
+	{
+		$request['isReturn'] = true;
+		$request['returnDate'] = formatDateTimeForDb($_POST['returnDate'],$_POST['returnTime']);
+	}
+	else
 	{
 		$request['isReturn'] = 0;
+		$request['returnCity'] = NULL;
+		$request['returnLat'] = NULL;
+		$request['returnLng'] = NULL;
 		$request['returnDate'] = NULL;
+	}
+	
+	if($checkReturn > 0 AND $checkReturn < 2)
+	{
+		$errors .= "- Tous les champs nécessaires pour le retour ne sont pas remplis\\n";
+	}
+
+	return ['request' => $request, 'errors' => $errors];
+}
+
+function checkAndFormatRequestCityData($request, $errors, $variablePart)
+{
+	$checkCity = 0;
+
+	if(strlen($_POST[$variablePart.'Department']) > 2 OR (!ctype_digit($_POST[$variablePart.'Department']) AND strtolower($_POST[$variablePart.'Department']) != '2a' AND strtolower($_POST[$variablePart.'Department']) != '2b'))
+	{
+		$errors .= "- Un numéro de département est incorrect. Exemples corrects : 01, 1, 34\\n";
+	}
+	else
+	{
+		$_POST[$variablePart.'Department'] = str_pad(strtoupper($_POST[$variablePart.'Department']), 2, "0", STR_PAD_LEFT);
+		$checkCity++;
+	}
+
+	if(!ctype_alpha(utf8_decode(str_replace(array(' ','-','\''), '', $_POST[$variablePart.'City']))))
+	{
+		$errors .= "- Le format de la ville est incorrect. Exemples corrects : Rouen, Clermont-Ferrand\\n";
+	}
+	else
+	{
+		$checkCity++;
+	}
+
+	if(strlen($_POST[$variablePart.'City']) > 45)
+	{
+		$errors .= "- Le nom de ville renseigné est trop long (supérieur à 45 caractères)\\n";
+	}
+	else
+	{
+		$checkCity++;
+	}
+
+	if($checkCity == 3)
+	{
+		$apiManager = new ApiManager();
+		$cityRawData = $apiManager->checkCity(strip_tags($_POST[$variablePart.'City']),strip_tags($_POST[$variablePart.'Department']));
+
+		if(!$cityRawData)
+		{
+			$errors .= "- La ville n'a pas été trouvée dans la base de l'INSEE\\n";
+		}
+		else
+		{
+			$cityData = json_decode($cityRawData);
+
+			$request[$variablePart.'City'] = $cityData[0]->code;
+			$request[$variablePart.'Lat'] = $cityData[0]->centre->coordinates[1];
+			$request[$variablePart.'Lng'] = $cityData[0]->centre->coordinates[0];
+		}
 	}
 
 	return ['request' => $request, 'errors' => $errors];
@@ -167,7 +248,7 @@ function checkAndFormatRequestFormData()
 
 function checkRequestAdd()
 {
-	if(isset($_POST['startCity']) AND isset($_POST['startDepartment']) AND isset($_POST['startDate']) AND isset($_POST['startTime']))
+	if(isset($_POST['startCity']) AND isset($_POST['startDepartment']) AND isset($_POST['startDate']) AND isset($_POST['startTime']) AND isset($_POST['neededSeats']))
 	{
 		$checkData = checkAndFormatRequestFormData();
 		$newRequest = $checkData['request'];

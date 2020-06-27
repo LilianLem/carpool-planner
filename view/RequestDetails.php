@@ -78,6 +78,11 @@
                 </tr>
 
                 <tr>
+                    <th>Description</th>
+                    <td><?=$request['description']?></td>
+                </tr>
+
+                <tr>
                     <th>Dernière modification</th>
                     <td><?=$request['lastEdited']?></td>
                 </tr>

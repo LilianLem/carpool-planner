@@ -55,6 +55,12 @@
                 <label for="needed-seats">Nombre de sièges nécessaires</label>
                 <input type="number" name="neededSeats" id="needed-seats" placeholder="Min. 1 / Max. 8" required="required" min="1" max="8" step="1" />
 
+                <label for="return-city">Ville de retour <span class="i">(facultatif)</span></label>
+                <input type="text" name="returnCity" id="return-city" placeholder="Ex : Rouen / Clermont-Ferrand" maxlength="45" />
+
+                <label for="return-department">Département <span class="i">(facultatif)</span></label>
+                <input type="text" name="returnDepartment" id="return-department" placeholder="Ex : 01 / 1 / 34..." maxlength="2" />
+                
 				<label for="return-date">Date de retour <span class="i">(facultatif)</span></label>
 				<input type="date" name="returnDate" id="return-date" /> <!--pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}"-->
 
