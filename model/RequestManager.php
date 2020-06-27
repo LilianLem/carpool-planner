@@ -18,9 +18,21 @@ class RequestManager extends DatabaseManager
 	{
 		$db = $this->dbConnect();
 
-		$request_raw = $db->prepare('SELECT r.id, r.user_id, u.username, city.name AS start_city, city.department AS start_department, r.start_lat, r.start_lng, r.start_date, r.needed_seats, r.is_return, city2.name AS return_city, city2.department AS return_department, r.return_lat, r.return_lng, r.return_date, r.description, r.smoker, r.last_edited, r.status FROM (request r INNER JOIN ext_city city ON r.start_city = city.id INNER JOIN ext_city city2 ON r.return_city = city2.id) INNER JOIN user u ON r.user_id = u.id WHERE r.id = ? LIMIT 1');
+		$request_raw = $db->prepare('SELECT r.id, r.user_id, u.username, city.name AS start_city, city.department AS start_department, r.start_lat, r.start_lng, r.start_date, r.needed_seats, r.is_return, r.return_lat, r.return_lng, r.return_date, r.description, r.smoker, r.last_edited, r.status FROM (request r INNER JOIN ext_city city ON r.start_city = city.id) INNER JOIN user u ON r.user_id = u.id WHERE r.id = ? LIMIT 1');
 		$request_raw->execute(array($id));
 		$request = $request_raw->fetch();
+
+		if(!empty($request))
+		{
+			if($request['is_return'])
+			{
+				$returnGeoData_raw = $db->prepare('SELECT city.name AS return_city, city.department AS return_department FROM request r INNER JOIN ext_city city ON r.return_city = city.id WHERE r.id = ? LIMIT 1');
+				$returnGeoData_raw->execute(array($id));
+				$returnGeoData = $returnGeoData_raw->fetch();
+				$request['return_city'] = $returnGeoData['return_city'];
+				$request['return_department'] = $returnGeoData['return_department'];
+			}
+		}
 
 		return $request;
 	}

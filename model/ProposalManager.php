@@ -18,9 +18,21 @@ class ProposalManager extends DatabaseManager
 	{
 		$db = $this->dbConnect();
 
-		$proposal_raw = $db->prepare('SELECT p.id, p.user_id, u.username, city.name AS start_city, city.department AS start_department, p.start_lat, p.start_lng, p.start_date, p.available_seats, p.max_seats, p.is_return, city2.name AS return_city, city2.department AS return_department, p.return_lat, p.return_lng, p.return_date, p.return_available_seats, p.return_max_seats, p.detour_radius, p.description, p.smoking_allowed, p.free, p.last_edited, p.status FROM (proposal p INNER JOIN ext_city city ON p.start_city = city.id INNER JOIN ext_city city2 ON p.return_city = city2.id) INNER JOIN user u ON p.user_id = u.id WHERE p.id = ? LIMIT 1');
+		$proposal_raw = $db->prepare('SELECT p.id, p.user_id, u.username, city.name AS start_city, city.department AS start_department, p.start_lat, p.start_lng, p.start_date, p.available_seats, p.max_seats, p.is_return, p.return_lat, p.return_lng, p.return_date, p.return_available_seats, p.return_max_seats, p.detour_radius, p.description, p.smoking_allowed, p.free, p.last_edited, p.status FROM (proposal p INNER JOIN ext_city city ON p.start_city = city.id) INNER JOIN user u ON p.user_id = u.id WHERE p.id = ? LIMIT 1');
 		$proposal_raw->execute(array($id));
 		$proposal = $proposal_raw->fetch();
+		
+		if(!empty($proposal))
+		{
+			if($proposal['is_return'])
+			{
+				$returnGeoData_raw = $db->prepare('SELECT city.name AS return_city, city.department AS return_department FROM proposal p INNER JOIN ext_city city ON p.return_city = city.id WHERE p.id = ? LIMIT 1');
+				$returnGeoData_raw->execute(array($id));
+				$returnGeoData = $returnGeoData_raw->fetch();
+				$proposal['return_city'] = $returnGeoData['return_city'];
+				$proposal['return_department'] = $returnGeoData['return_department'];
+			}
+		}
 
 		return $proposal;
 	}
