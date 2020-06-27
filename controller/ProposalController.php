@@ -46,53 +46,67 @@ function checkAndFormatProposalFormData()
 {
 	$proposal = [];
 	$errors = '';
-	$checkStartCity = 0;
+	
+	$result = checkAndFormatProposalCityData($proposal, $errors, 'start');
+	$proposal = $result['proposal'];
+	$errors = $result['errors'];
 
-	if(strlen($_POST['startDepartment']) > 2 OR (!ctype_digit($_POST['startDepartment']) AND strtolower($_POST['startDepartment']) != '2a' AND strtolower($_POST['startDepartment']) != '2b'))
+	$result = checkAndFormatProposalSeats($proposal, $errors);
+	$proposal = $result['proposal'];
+	$errors = $result['errors'];
+	
+	if(isset($_POST['description']))
 	{
-		$errors .= "- Le numéro de département est incorrect. Exemples corrects : 01, 1, 34\\n";
-	}
-	else
-	{
-		$_POST['startDepartment'] = str_pad(strtoupper($_POST['startDepartment']), 2, "0", STR_PAD_LEFT);
-		$checkStartCity++;
-	}
-
-	if(!ctype_alpha(utf8_decode(str_replace(array(' ','-','\''), '', $_POST['startCity']))))
-	{
-		$errors .= "- Le format de la ville est incorrect. Exemples corrects : Rouen, Clermont-Ferrand\\n";
-	}
-	else
-	{
-		$checkStartCity++;
-	}
-
-	if(strlen($_POST['startCity']) > 45)
-	{
-		$errors .= "- Le nom de ville renseigné est trop long (supérieur à 45 caractères)\\n";
-	}
-	else
-	{
-		$checkStartCity++;
-	}
-
-	if($checkStartCity == 3)
-	{
-		$apiManager = new ApiManager();
-		$startCityRawData = $apiManager->checkCity(strip_tags($_POST['startCity']),strip_tags($_POST['startDepartment']));
-
-		if(!$startCityRawData)
+		if(strlen($_POST['description']) > 500)
 		{
-			$errors .= "- La ville n'a pas été trouvée dans la base de l'INSEE\\n";
+			$errors .= "- La description est trop longue\\n";
 		}
 		else
 		{
-			$startCityData = json_decode($startCityRawData);
-
-			$proposal['startCity'] = $startCityData[0]->code;
-			$proposal['startLat'] = $startCityData[0]->centre->coordinates[1];
-			$proposal['startLng'] = $startCityData[0]->centre->coordinates[0];
+			$proposal['description'] = strip_tags($_POST['description']);
 		}
+	}
+	else
+	{
+		$proposal['description'] = NULL;
+	}
+
+	if(!isset($_POST['detourRadius']))
+	{
+		$errors .= "- Le détour autorisé n'a pas été renseigné\\n";
+	}
+	elseif(!ctype_digit($_POST['detourRadius']))
+	{
+		$errors .= "- Le format du détour autorisé est incorrect\\n";
+	}
+	else
+	{
+		if($_POST['detourRadius'] < 1 OR $_POST['detourRadius'] > 50)
+		{
+			$errors .= "- La distance de détour autorisé est incorrecte (minimum 1km / maximum 50km)\\n";
+		}
+		else
+		{
+			$proposal['detourRadius'] = $_POST['detourRadius'];
+		}
+	}
+	
+	if(isset($_POST['smokingAllowed']))
+	{
+		$proposal['smokingAllowed'] = 1;
+	}
+	else
+	{
+		$proposal['smokingAllowed'] = 0;
+	}
+
+	if(isset($_POST['free']))
+	{
+		$proposal['free'] = 0;
+	}
+	else
+	{
+		$proposal['free'] = 1;
 	}
 
 	$checkStartDate = 0;
@@ -119,6 +133,8 @@ function checkAndFormatProposalFormData()
 	{
 		$proposal['startDate'] = formatDateTimeForDb($_POST['startDate'],$_POST['startTime']);
 	}
+	
+	$checkReturn = 0;
 
 	if(isset($_POST['returnDate']))
 	{
@@ -148,26 +164,190 @@ function checkAndFormatProposalFormData()
 					}
 					else
 					{
-						$proposal['isReturn'] = true;
-						$proposal['returnDate'] = formatDateTimeForDb($_POST['returnDate'],$_POST['returnTime']);
+						$checkReturn++;
 					}
 				}
 			}
 		}
 	}
 
-	if(!isset($proposal['isReturn']))
+	if(isset($_POST['returnCity']) OR isset($_POST['returnDepartment']))
+	{
+		if(isset($_POST['returnCity']) AND isset($_POST['returnDepartment']))
+		{
+			$result = checkAndFormatProposalCityData($proposal, $errors, 'return');
+			$proposal = $result['proposal'];
+			$errors = $result['errors'];
+
+			if(isset($proposal['returnCity']))
+			{
+				$checkReturn++;
+			}
+		}
+		else
+		{
+			$errors .= "- La ville ou le département de retour est manquant\\n";
+		}
+	}
+	
+	if(isset($_POST['returnAvailableSeats']) OR isset($_POST['returnMaxSeats']))
+	{
+		if(isset($_POST['returnAvailableSeats']) AND isset($_POST['returnMaxSeats']))
+		{
+			$result = checkAndFormatProposalSeats($proposal, $errors, 'return');
+			$proposal = $result['proposal'];
+
+			if($errors != $result['errors'])
+			{
+				$errors = $result['errors'];
+			}
+			else
+			{
+				$checkReturn++;
+			}
+		}
+		else
+		{
+			$errors .= "- Le nombre de sièges proposés ou libres au retour est manquant\\n";
+		}
+	}
+	
+	if($checkReturn == 3)
+	{
+		$proposal['isReturn'] = true;
+		$proposal['returnDate'] = formatDateTimeForDb($_POST['returnDate'],$_POST['returnTime']);
+	}
+	else
 	{
 		$proposal['isReturn'] = 0;
+		$proposal['returnCity'] = NULL;
+		$proposal['returnLat'] = NULL;
+		$proposal['returnLng'] = NULL;
 		$proposal['returnDate'] = NULL;
+		$proposal['returnAvailableSeats'] = NULL;
+		$proposal['returnMaxSeats'] = NULL;
+	}
+	
+	if($checkReturn > 0 AND $checkReturn < 3)
+	{
+		$errors .= "- Tous les champs nécessaires pour le retour ne sont pas remplis\\n";
 	}
 
 	return ['proposal' => $proposal, 'errors' => $errors];
 }
 
+function checkAndFormatProposalCityData($proposal, $errors, $variablePart)
+{
+	$checkCity = 0;
+
+	if(strlen($_POST[$variablePart.'Department']) > 2 OR (!ctype_digit($_POST[$variablePart.'Department']) AND strtolower($_POST[$variablePart.'Department']) != '2a' AND strtolower($_POST[$variablePart.'Department']) != '2b'))
+	{
+		$errors .= "- Un numéro de département est incorrect. Exemples corrects : 01, 1, 34\\n";
+	}
+	else
+	{
+		$_POST[$variablePart.'Department'] = str_pad(strtoupper($_POST[$variablePart.'Department']), 2, "0", STR_PAD_LEFT);
+		$checkCity++;
+	}
+
+	if(!ctype_alpha(utf8_decode(str_replace(array(' ','-','\''), '', $_POST[$variablePart.'City']))))
+	{
+		$errors .= "- Le format de la ville est incorrect. Exemples corrects : Rouen, Clermont-Ferrand\\n";
+	}
+	else
+	{
+		$checkCity++;
+	}
+
+	if(strlen($_POST[$variablePart.'City']) > 45)
+	{
+		$errors .= "- Le nom de ville renseigné est trop long (supérieur à 45 caractères)\\n";
+	}
+	else
+	{
+		$checkCity++;
+	}
+
+	if($checkCity == 3)
+	{
+		$apiManager = new ApiManager();
+		$cityRawData = $apiManager->checkCity(strip_tags($_POST[$variablePart.'City']),strip_tags($_POST[$variablePart.'Department']));
+
+		if(!$cityRawData)
+		{
+			$errors .= "- La ville n'a pas été trouvée dans la base de l'INSEE\\n";
+		}
+		else
+		{
+			$cityData = json_decode($cityRawData);
+
+			$proposal[$variablePart.'City'] = $cityData[0]->code;
+			$proposal[$variablePart.'Lat'] = $cityData[0]->centre->coordinates[1];
+			$proposal[$variablePart.'Lng'] = $cityData[0]->centre->coordinates[0];
+		}
+	}
+	
+	return ['proposal' => $proposal, 'errors' => $errors];
+}
+
+function checkAndFormatProposalSeats($proposal, $errors, $variablePart = '')
+{
+	$available = "available";
+	$max = "max";
+	
+	if(!empty($variablePart))
+	{
+		$available = ucfirst($available);
+		$max = ucfirst($max);
+	}
+	
+	$checkSeats = 0;
+	
+	if(!ctype_digit($_POST[$variablePart.$max.'Seats']))
+	{
+		$errors .= "- Le format du nombre de sièges proposés est incorrect\\n";
+	}
+	else
+	{
+		$checkSeats++;
+		if($_POST[$variablePart.$max.'Seats'] < 1 OR $_POST[$variablePart.$max.'Seats'] > 8)
+		{
+			$errors .= "- Le nombre de sièges proposés est incorrect (minimum 1 / maximum 8)\\n";
+		}
+	}
+	
+	if(!ctype_digit($_POST[$variablePart.$available.'Seats']))
+	{
+		$errors .= "- Le format du nombre de sièges libres est incorrect\\n";
+	}
+	else
+	{
+		$checkSeats++;
+		if($_POST[$variablePart.$available.'Seats'] < 1 OR $_POST[$variablePart.$available.'Seats'] > 8)
+		{
+			$errors .= "- Le nombre de sièges libres est incorrect (minimum 1 / maximum 8)\\n";
+		}
+	}
+	
+	if($checkSeats == 2)
+	{
+		if($_POST[$variablePart.$available.'Seats'] > $_POST[$variablePart.$max.'Seats'])
+		{
+			$errors .= "- Le format de l'identifiant de proposition indiqué est incorrect\\n";
+		}
+		else
+		{
+			$proposal[$variablePart.$available.'Seats'] = $_POST[$variablePart.$available.'Seats'];
+			$proposal[$variablePart.$max.'Seats'] = $_POST[$variablePart.$max.'Seats'];
+		}
+	}
+	
+	return ['proposal' => $proposal, 'errors' => $errors];
+}
+
 function checkProposalAdd()
 {
-	if(isset($_POST['startCity']) AND isset($_POST['startDepartment']) AND isset($_POST['startDate']) AND isset($_POST['startTime']))
+	if(isset($_POST['startCity']) AND isset($_POST['startDepartment']) AND isset($_POST['startDate']) AND isset($_POST['startTime']) AND isset($_POST['availableSeats']) AND isset($_POST['maxSeats']) AND isset($_POST['detourRadius']))
 	{
 		$checkData = checkAndFormatProposalFormData();
 		$newProposal = $checkData['proposal'];
@@ -346,7 +526,7 @@ function checkProposalEdit()
 		return;
 	}
 
-	if(isset($_POST['id']) AND isset($_POST['startCity']) AND isset($_POST['startDepartment']) AND isset($_POST['startDate']) AND isset($_POST['startTime']))
+	if(isset($_POST['id']) AND isset($_POST['startCity']) AND isset($_POST['startDepartment']) AND isset($_POST['startDate']) AND isset($_POST['startTime']) AND isset($_POST['availableSeats']) AND isset($_POST['maxSeats']) AND isset($_POST['detourRadius']))
 	{
 		$checkData = checkAndFormatProposalFormData();
 		$errors = $checkData['errors'];

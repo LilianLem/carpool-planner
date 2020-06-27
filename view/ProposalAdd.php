@@ -60,6 +60,12 @@
                 
                 <label for="detour-radius">Détour maximum</label>
                 <input type="number" name="detourRadius" id="detour-radius" placeholder="Max. 50km" required="required" min="0" max="50" step="1" />
+
+                <label for="return-city">Ville de retour <span class="i">(facultatif)</span></label>
+                <input type="text" name="returnCity" id="return-city" placeholder="Ex : Rouen / Clermont-Ferrand" maxlength="45" />
+
+                <label for="return-department">Département <span class="i">(facultatif)</span></label>
+                <input type="text" name="returnDepartment" id="return-department" placeholder="Ex : 01 / 1 / 34..." maxlength="2" />
                 
 				<label for="return-date">Date de retour <span class="i">(facultatif)</span></label>
 				<input type="date" name="returnDate" id="return-date" /> <!--pattern="[0-9]{2}/[0-9]{2}/[0-9]{4}"-->
@@ -68,10 +74,10 @@
 				<input type="time" name="returnTime" id="return-time" step="900" />
 
                 <label for="return-max-seats">Nombre de sièges proposés au retour <span class="i">(facultatif)</span></label>
-                <input type="number" name="returnMaxSeats" id="return-max-seats" placeholder="Min. 1 / Max. 8" required="required" min="1" max="8" step="1" />
+                <input type="number" name="returnMaxSeats" id="return-max-seats" placeholder="Min. 1 / Max. 8" min="1" max="8" step="1" />
 
                 <label for="return-available-seats">Nombre de sièges libres au retour <span class="i">(facultatif)</span></label>
-                <input type="number" name="returnAvailableSeats" id="return-available-seats" placeholder="Min. 1 / Max. 8" required="required" min="1" max="8" step="1" />
+                <input type="number" name="returnAvailableSeats" id="return-available-seats" placeholder="Min. 1 / Max. 8" min="1" max="8" step="1" />
 
                 <label for="description">Description libre <span class="i">(facultatif)</span></label>
                 <textarea name="description" id="description" placeholder="Max. 500 caractères" maxlength="500"></textarea>

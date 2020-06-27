@@ -93,6 +93,11 @@
                     <th>Coût du trajet</th>
                     <td><?=$proposal['free'] ? '<abbr title="Aucune contrepartie monétaire n\'est demandée pour monter à bord, mais le conducteur et vous pouvez tout de même négocier une participation sous une autre forme (nourriture, hébergement sur place...)">Gratuit</abbr>' : '<abbr title="Le conducteur est susceptible de vous demander une participation financière, qui ne peut pas dépasser les frais d\'essence ou de péage. Vous pouvez également lui proposer une contrepartie sous une autre forme (nourriture, hébergement sur place...), qu\'il n\'est cependant pas tenu d\'accepter.">Payant</abbr>'?></td>
                 </tr>
+                
+                <tr>
+                    <th>Description</th>
+                    <td><?=$proposal['description']?></td>
+                </tr>
 
                 <tr>
                     <th>Dernière modification</th>
