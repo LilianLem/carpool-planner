@@ -171,9 +171,9 @@ function checkAndFormatProposalFormData()
 		}
 	}
 
-	if(isset($_POST['returnCity']) OR isset($_POST['returnDepartment']))
+	if(!empty($_POST['returnCity']) OR !empty($_POST['returnDepartment']))
 	{
-		if(isset($_POST['returnCity']) AND isset($_POST['returnDepartment']))
+		if(!empty($_POST['returnCity']) AND !empty($_POST['returnDepartment']))
 		{
 			$result = checkAndFormatProposalCityData($proposal, $errors, 'return');
 			$proposal = $result['proposal'];
