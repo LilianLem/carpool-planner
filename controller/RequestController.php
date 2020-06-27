@@ -328,15 +328,20 @@ function displayRequestDetails($errors = '', $id = '')
 	}
 }
 
-function displayRequestEditForm($errors = '')
+function displayRequestEditForm($errors = '', $id = '')
 {
-	if(!isset($_GET['id']))
+	if(empty($id))
 	{
-		displayRequestList('- Aucun identifiant de demande n\'a été spécifié\\n');
-		return;
+		if(isset($_GET['id']))
+		{
+			$id = $_GET['id'];
+		}
+		else
+		{
+			displayRequestList('- Aucun identifiant de demande n\'a été spécifié\\n');
+			return;
+		}
 	}
-
-	$id = $_GET['id'];
 
 	if(!isset($_SESSION['userId']))
 	{
@@ -434,7 +439,7 @@ function checkRequestEdit()
 
 		if(!empty($errors))
 		{
-			displayRequestEditForm($errors);
+			displayRequestEditForm($errors, $id);
 			return;
 		}
 
@@ -459,7 +464,7 @@ function checkRequestEdit()
 
 	else
 	{
-		displayRequestEditForm("- Vous n'avez pas renseigné tous les champs obligatoires\\n");
+		displayRequestEditForm("- Vous n'avez pas renseigné tous les champs obligatoires\\n", $id);
 	}
 }
 
