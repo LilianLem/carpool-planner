@@ -174,6 +174,14 @@ function checkAndFormatRequestFormData()
 	{
 		$request['isReturn'] = true;
 		$request['returnDate'] = formatDateTimeForDb($_POST['returnDate'],$_POST['returnTime']);
+
+        if($checkStartDate == 2)
+        {
+            if($request['returnDate'] <= $request['startDate'])
+            {
+                $errors .= "- La date de retour est antérieure à la date de départ\\n";
+            }
+        }
 	}
 	else
 	{

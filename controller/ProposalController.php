@@ -216,6 +216,14 @@ function checkAndFormatProposalFormData()
 	{
 		$proposal['isReturn'] = true;
 		$proposal['returnDate'] = formatDateTimeForDb($_POST['returnDate'],$_POST['returnTime']);
+
+		if($checkStartDate == 2)
+        {
+            if($proposal['returnDate'] <= $proposal['startDate'])
+            {
+                $errors .= "- La date de retour est antérieure à la date de départ\\n";
+            }
+        }
 	}
 	else
 	{
