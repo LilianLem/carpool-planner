@@ -333,7 +333,7 @@ function checkAndFormatProposalSeats($proposal, $errors, $variablePart = '')
 	{
 		if($_POST[$variablePart.$available.'Seats'] > $_POST[$variablePart.$max.'Seats'])
 		{
-			$errors .= "- Le format de l'identifiant de proposition indiqué est incorrect\\n";
+			$errors .= "- Le nombre de sièges libres ne peut pas être supérieur au nombre de sièges proposés\\n";
 		}
 		else
 		{
