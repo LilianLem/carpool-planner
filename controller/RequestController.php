@@ -261,9 +261,9 @@ function checkRequestAdd()
 		else
 		{
 			$requestManager = new RequestManager();
-			$requestManager->insertNewRequest($newRequest);
+			$id = $requestManager->insertNewRequest($newRequest);
 
-			displayRequestList();
+			displayRequestDetails('', $id);
 		}
 	}
 

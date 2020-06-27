@@ -45,6 +45,8 @@ class RequestManager extends DatabaseManager
 			'description' => $requestData['description'],
 			'smoker' => $requestData['smoker']
 		));
+		
+		return $db->lastInsertId();
 	}
 
 	public function updateRequest($requestData, $id)
