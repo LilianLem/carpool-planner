@@ -63,10 +63,10 @@
                 <label for="return-department">Département <span class="i">(facultatif)</span></label>
                 <input type="text" name="returnDepartment" id="return-department" value="<?=$request["returnDepartment"]?>" placeholder="Ex : 01 / 1 / 34..." maxlength="2" />
                 
-				<label for="return-date">Date de retour <span class="i">(facultatif)</span></label>
+				<label for="return-date">Date de retour <span class="i">(facultatif)</span></label> <p>| <span>Réinitialiser</span></p>
 				<input type="date" name="returnDate" id="return-date" value="<?=$request["returnDate"]?>" />
 
-				<label for="return-time">Heure de retour <span class="i">(facultatif)</span></label>
+				<label for="return-time">Heure de retour <span class="i">(facultatif)</span></label> <p>| <span>Réinitialiser</span></p>
 				<input type="time" name="returnTime" id="return-time" value="<?=$request["returnTime"]?>" step="900" />
 
                 <label for="description">Description libre <span class="i">(facultatif)</span></label>

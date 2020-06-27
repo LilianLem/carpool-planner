@@ -69,10 +69,10 @@
                 <label for="return-department">Département <span class="i">(facultatif)</span></label>
                 <input type="text" name="returnDepartment" id="return-department" value="<?=$proposal["returnDepartment"]?>" placeholder="Ex : 01 / 1 / 34..." maxlength="2" />
                 
-                <label for="return-date">Date de retour <span class="i">(facultatif)</span></label>
+                <label for="return-date">Date de retour <span class="i">(facultatif)</span></label> <p>| <span>Réinitialiser</span></p>
 				<input type="date" name="returnDate" id="return-date" value="<?=$proposal["returnDate"]?>" />
 
-				<label for="return-time">Heure de retour <span class="i">(facultatif)</span></label>
+				<label for="return-time">Heure de retour <span class="i">(facultatif)</span></label> <p>| <span>Réinitialiser</span></p>
 				<input type="time" name="returnTime" id="return-time" value="<?=$proposal["returnTime"]?>" step="900" />
 
                 <label for="return-max-seats">Nombre de sièges proposés au retour <span class="i">(facultatif)</span></label>
@@ -98,6 +98,7 @@
 			<p>© 2020 Carpool Planner - <a href="#">Billetterie de l'évènement</a> - <a href="#">Mentions légales</a> - <a href="#">CGU</a></p>
 		</footer>
 
+        <script type="text/javascript" src="static/js/functions.js"></script>
 		<?php if(!empty($errors)) {
 			echo '<script type="text/javascript">'.'alert("Une ou plusieurs erreurs sont survenues ! Détails :\n'.$errors.'");</script>';
 		} ?>

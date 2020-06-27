@@ -530,6 +530,23 @@ input.rounded-square-button
 	margin-bottom: 5px;
 }
 
+.basic-form label + p
+{
+	display: inline-block;
+	margin-left: 2px;
+}
+
+.basic-form label + p span
+{
+	text-decoration: underline;
+}
+
+.basic-form label + p span:hover
+{
+	text-decoration: none;
+	cursor: pointer;
+}
+
 .basic-form input, .basic-form textarea
 {
 	display: block;
