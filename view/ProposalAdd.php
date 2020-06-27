@@ -85,7 +85,7 @@
                 <label for="smoking-allowed">Fumeurs admis</label>
                 <input type="checkbox" name="smokingAllowed" id="smoking-allowed" />
 
-                <label for="free">Participation financière obligatoire</label>
+                <label for="free">Participation financière facultative</label>
                 <input type="checkbox" name="free" id="free" />
                 
 				<input class="button" type="submit" value="Ajouter" />

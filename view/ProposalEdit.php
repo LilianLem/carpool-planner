@@ -87,7 +87,7 @@
                 <label for="smoking-allowed">Fumeurs admis</label>
                 <input type="checkbox" name="smokingAllowed" id="smoking-allowed" value="<?=$proposal["smokingAllowed"]?>" />
 
-                <label for="free">Participation financière obligatoire</label>
+                <label for="free">Participation financière facultative</label>
                 <input type="checkbox" name="free" id="free" value="<?=$proposal["free"]?>" />
                 
 				<input class="button" type="submit" value="Valider" />
