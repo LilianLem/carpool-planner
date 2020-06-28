@@ -1,6 +1,7 @@
 database/
 vendor/
 wireframes/
+trash-files/
 static/img/logo-code.svg
 config.php
 database-content-import.json
