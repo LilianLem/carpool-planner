@@ -86,4 +86,4 @@ ob_start(); ?>
 </main>
 
 <?php $mainContent = ob_get_clean();
-require_once('GeneralTemplate.php'); ?>
+require_once('template/GeneralTemplate.php'); ?>

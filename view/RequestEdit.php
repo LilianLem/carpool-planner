@@ -6,5 +6,5 @@ $formType = "edit";
 $formId = "request-edit-form";
 $formAction = "changeRequest";
 $formSubmitValue = "Valider";
-require_once('RequestFormTemplate.php');
+require_once('template/RequestFormTemplate.php');
 ?>

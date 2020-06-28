@@ -6,5 +6,5 @@ $formType = "add";
 $formId = "request-submit-form";
 $formAction = "newRequest";
 $formSubmitValue = "Soumettre";
-require_once('RequestFormTemplate.php');
+require_once('template/RequestFormTemplate.php');
 ?>

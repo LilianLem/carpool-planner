@@ -6,5 +6,5 @@ $formType = "add";
 $formId = "carpool-add-form";
 $formAction = "newProposal";
 $formSubmitValue = "Ajouter";
-require_once('ProposalFormTemplate.php');
+require_once('template/ProposalFormTemplate.php');
 ?>

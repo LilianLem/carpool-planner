@@ -6,5 +6,5 @@ $formType = "edit";
 $formId = "carpool-edit-form";
 $formAction = "changeProposal";
 $formSubmitValue = "Valider";
-require_once('ProposalFormTemplate.php');
+require_once('template/ProposalFormTemplate.php');
 ?>
