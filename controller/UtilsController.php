@@ -65,6 +65,29 @@ function getPlatformFormat()
 	}
 }
 
+function getDateDisplayFormat($formatType)
+{
+	$platformFormat = getPlatformFormat();
+	
+	switch($formatType)
+	{
+		case 'list-fullDateMonthReduced':
+			$dateFormat = "%A ".$platformFormat['day']."/%m à ".$platformFormat['hour'].":%M";
+			break;
+			
+		case 'details-lastEdit':
+			$dateFormat = "%A ".$platformFormat['day']." %b";
+			break;
+
+		case 'details-fullDate':
+		default:
+			$dateFormat = "%A ".$platformFormat['day']." %b à ".$platformFormat['hour'].":%M";
+			break;
+	}
+	
+	return $dateFormat;
+}
+
 function formatArrayKeysInCamelCase(array $array, string $separator)
 {
 	$formattedArray = [];

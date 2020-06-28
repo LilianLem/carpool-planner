@@ -13,8 +13,7 @@ function displayRequestList($errors = '')
 	$requestManager = new RequestManager();
 	$requests = $requestManager->getAllRequests();
 	
-	$platformDateFormat = getPlatformFormat();
-	$dateFormat = "%A ".$platformDateFormat['day']."/%m à ".$platformDateFormat['hour'].":%M";
+	$dateFormat = getDateDisplayFormat('list-fullDateMonthReduced');
 
 	foreach($requests as &$element)
 	{
@@ -314,8 +313,7 @@ function displayRequestDetails($errors = '', $id = '')
 
 			$request['id'] = str_pad($request['id'], 3, "0", STR_PAD_LEFT);
 			
-			$platformDateFormat = getPlatformFormat();
-			$dateFormat = "%A ".$platformDateFormat['day']." %b à ".$platformDateFormat['hour'].":%M";
+			$dateFormat = getDateDisplayFormat('details-fullDate');
 
 			$startDate = strtotime($request['startDate']);
 			$request['startDate'] = ucfirst(strftime($dateFormat, $startDate));
@@ -327,7 +325,7 @@ function displayRequestDetails($errors = '', $id = '')
 			}
 
 			$lastEditedDate = strtotime($request['lastEdited']);
-			$request['lastEdited'] = ucfirst(strftime("%A ".$platformDateFormat['day']." %b", $lastEditedDate));
+			$request['lastEdited'] = ucfirst(strftime(getDateDisplayFormat('details-lastEdit'), $lastEditedDate));
 
 			require('view/RequestDetails.php');
 		}

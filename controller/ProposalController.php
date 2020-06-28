@@ -13,8 +13,7 @@ function displayProposalList($errors = '')
 	$proposalManager = new ProposalManager();
 	$proposals = $proposalManager->getAllProposals();
 	
-	$platformDateFormat = getPlatformFormat();
-	$dateFormat = "%A ".$platformDateFormat['day']."/%m à ".$platformDateFormat['hour'].":%M";
+	$dateFormat = getDateDisplayFormat('list-fullDateMonthReduced');
 
 	foreach($proposals as &$element)
 	{
@@ -413,8 +412,7 @@ function displayProposalDetails($errors = '', $id = '')
 
 			$proposal['id'] = str_pad($proposal['id'], 3, "0", STR_PAD_LEFT);
 			
-			$platformDateFormat = getPlatformFormat();
-			$dateFormat = "%A ".$platformDateFormat['day']." %b à ".$platformDateFormat['hour'].":%M";
+			$dateFormat = getDateDisplayFormat('details-fullDate');
 
 			$startDate = strtotime($proposal['startDate']);
 			$proposal['startDate'] = ucfirst(strftime($dateFormat, $startDate));
@@ -426,7 +424,7 @@ function displayProposalDetails($errors = '', $id = '')
 			}
 
 			$lastEditedDate = strtotime($proposal['lastEdited']);
-			$proposal['lastEdited'] = ucfirst(strftime("%A ".$platformDateFormat['day']." %b", $lastEditedDate));
+			$proposal['lastEdited'] = ucfirst(strftime(getDateDisplayFormat('details-lastEdit'), $lastEditedDate));
 
 			require('view/ProposalDetails.php');
 		}
