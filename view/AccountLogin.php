@@ -18,4 +18,4 @@ ob_start(); ?>
 </main>
 
 <?php $mainContent = ob_get_clean();
-require_once('generalTemplate.php'); ?>
+require_once('GeneralTemplate.php'); ?>
