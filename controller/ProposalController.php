@@ -10,11 +10,14 @@ use PHPMailer\PHPMailer\Exception;
 
 function displayProposalList($errors = '')
 {
+	// On récupère toutes les propositions de trajet dans la DB
 	$proposalManager = new ProposalManager();
 	$proposals = $proposalManager->getAllProposals();
 	
+	// On récupère un format de date pour pouvoir afficher correctement les dates des propositions dans la liste
 	$dateFormat = getDateDisplayFormat('list-fullDateMonthReduced');
 
+	// On prépare les données pour la vue, notamment en formatant la date
 	foreach($proposals as &$element)
 	{
 		$element = formatArrayKeysInCamelCase($element, '_');
@@ -34,6 +37,7 @@ function displayProposalAddForm($errors = '')
 	}
 	else
 	{
+		// Si l'utilisateur n'est pas connecté, on le redirige sur l'inscription
 		$_GET['page'] = basename($_SERVER['REQUEST_URI']);
 		displayRegisterForm('', '');
 		return;
@@ -107,6 +111,7 @@ function checkAndFormatProposalFormData()
 		$proposal['free'] = 0;
 	}
 
+	// On initialise une variable permettant de déterminer si toutes les conditions sont réunies pour que la date de départ soit correcte
 	$checkStartDate = 0;
 
 	if(!checkDateFormat($_POST['startDate']))
@@ -131,7 +136,8 @@ function checkAndFormatProposalFormData()
 	{
 		$proposal['startDate'] = formatDateTimeForDb($_POST['startDate'],$_POST['startTime']);
 	}
-	
+
+	// On initialise une variable permettant de déterminer si toutes les conditions sont réunies pour que les informations de retour soient correctes
 	$checkReturn = 0;
 
 	if(isset($_POST['returnDate']))
@@ -195,6 +201,7 @@ function checkAndFormatProposalFormData()
 			$result = checkAndFormatProposalSeats($proposal, $errors, 'return');
 			$proposal = $result['proposal'];
 
+			// Si les erreurs récupérées sont identiques à celles qui étaient déjà définies avant, alors la vérification a réussi
 			if($errors != $result['errors'])
 			{
 				$errors = $result['errors'];
@@ -223,6 +230,7 @@ function checkAndFormatProposalFormData()
             }
         }
 	}
+	// Comme le retour n'est pas obligatoire, on initialise quand même les variables correspondantes pour l'insertion en DB plus tard
 	else
 	{
 		$proposal['isReturn'] = 0;
@@ -244,6 +252,7 @@ function checkAndFormatProposalFormData()
 
 function checkAndFormatProposalCityData($proposal, $errors, $variablePart)
 {
+	// On initialise une variable permettant de déterminer si toutes les conditions sont réunies pour que la ville soit théoriquement correcte, avant de faire appel à l'API Géo
 	$checkCity = 0;
 
 	if(strlen($_POST[$variablePart.'Department']) > 2 OR (!ctype_digit($_POST[$variablePart.'Department']) AND strtolower($_POST[$variablePart.'Department']) != '2a' AND strtolower($_POST[$variablePart.'Department']) != '2b'))
@@ -306,7 +315,8 @@ function checkAndFormatProposalSeats($proposal, $errors, $variablePart = '')
 		$available = ucfirst($available);
 		$max = ucfirst($max);
 	}
-	
+
+	// On initialise une variable permettant de déterminer si toutes les conditions sont réunies pour que les nombres de sièges proposés et libres soient corrects
 	$checkSeats = 0;
 	
 	if(!ctype_digit($_POST[$variablePart.$max.'Seats']))
@@ -355,16 +365,19 @@ function checkProposalAdd()
 {
 	if(isset($_POST['startCity']) AND isset($_POST['startDepartment']) AND isset($_POST['startDate']) AND isset($_POST['startTime']) AND isset($_POST['availableSeats']) AND isset($_POST['maxSeats']) AND isset($_POST['detourRadius']))
 	{
+		// Si tous les champs obligatoires sont définis, on appelle la fonction de vérification et de formatage des données
 		$checkData = checkAndFormatProposalFormData();
 		$newProposal = $checkData['proposal'];
 		$errors = $checkData['errors'];
 
 		if(!empty($errors))
 		{
+			// S'il y a des erreurs, on retourne sur le formulaire d'ajout et on les affiche...
 			displayProposalAddForm($errors);
 		}
 		else
 		{
+			// ..., sinon on insère la proposition en DB et on affiche la page avec les données ajoutées à l'instant
 			$proposalManager = new ProposalManager();
 			$id = $proposalManager->insertNewProposal($newProposal);
 
@@ -382,6 +395,7 @@ function displayProposalDetails($errors = '', $id = '')
 {
 	if(empty($id))
 	{
+		// La fonction peut être appelée par d'autres fonctions du programme qui spécifient elle-mêmes l'ID de la proposition, ou par des liens sur le site où l'ID est inclus en paramètre GET
 		if(isset($_GET['id']))
 		{
 			$id = $_GET['id'];
@@ -408,6 +422,7 @@ function displayProposalDetails($errors = '', $id = '')
 		}
 		else
 		{
+			// Si la proposition existe, on formate toutes les données pour la vue, puis on affiche la page de la proposition
 			$proposal = formatArrayKeysInCamelCase($proposal, '_');
 
 			$proposal['id'] = str_pad($proposal['id'], 3, "0", STR_PAD_LEFT);
@@ -462,6 +477,8 @@ function displayProposalEditForm($errors = '')
 		return;
 	}
 
+	// Si la proposition avec l'ID spécifié existe (donc si le if précédent est faux), on formate les données pour afficher le formulaire d'édition
+	
 	$proposal = formatArrayKeysInCamelCase($proposal, '_');
 
 	if($proposal['userId'] != $_SESSION['userId'])
@@ -532,6 +549,7 @@ function checkProposalEdit()
 
 	if(isset($_POST['id']) AND isset($_POST['startCity']) AND isset($_POST['startDepartment']) AND isset($_POST['startDate']) AND isset($_POST['startTime']) AND isset($_POST['availableSeats']) AND isset($_POST['maxSeats']) AND isset($_POST['detourRadius']))
 	{
+		// Si tous les champs obligatoires sont définis, on vérifie les données et on les formate pour la modification
 		$checkData = checkAndFormatProposalFormData();
 		$errors = $checkData['errors'];
 
@@ -543,6 +561,7 @@ function checkProposalEdit()
 
 		$editedProposal = $checkData['proposal'];
 
+		// S'il n'y a pas eu d'erreurs, on vérifie si toutes les données sont identiques à celles déjà en base. Si c'est le cas, on ne fait pas d'UPDATE, sinon on met à jour
 		foreach($editedProposal as $column => $value)
 		{
 			if($value != $currentProposal[$column])
@@ -568,6 +587,7 @@ function checkProposalEdit()
 
 function checkProposalSendMessage()
 {
+	// On vérifie si toutes les conditions sont remplies pour que l'utilisateur puisse envoyer un message à celui qui a fait la proposition
 	if(!isset($_SESSION['userId']))
 	{
 		$_GET['page'] = basename($_SERVER['REQUEST_URI']);
@@ -624,7 +644,7 @@ function checkProposalSendMessage()
 		return;
 	}
 
-	// Ajouter ici une vérification pour voir si une demande a déjà été faite
+	// Fonctionnalité non réalisée qui aurait dû être ici : vérification pour voir si une demande de contact a déjà été faite
 
 	$userManager = new UserManager();
 	$userContactInfos = formatArrayKeysInCamelCase($userManager->getUserContactInfos($proposal['userId']), '_');
@@ -639,6 +659,7 @@ function checkProposalSendMessage()
 
 	$proposalManager->notifyDriver($notificationData);
 
+	// Si le destinataire de la demande de contact souhaite être contacté par mail (activé pour tous dans la version actuelle du projet), on envoie un mail à l'adresse renseignée en base
 	if($userContactInfos['email'])
 	{
 		$subject = 'Demande de contact sur votre trajet';

@@ -3,6 +3,7 @@ require_once('model/UserManager.php');
 
 function displayRegisterForm($errors = '', $prefilledInfos = ['discordUsername' => '', 'email' => ''])
 {
+	// La fonction prend en charge l'autocomplétion si l'inscription a déjà été tentée mais qu'il y a eu des erreurs à la vérification. Si ces données ne sont pas remplies, on réinitialise un tableau avec les valeurs de clés vides
 	if(!is_array($prefilledInfos))
 	{
 		$prefilledInfos = ['discordUsername' => '', 'email' => ''];
@@ -79,6 +80,7 @@ function checkRegistration()
 		}
 		else
 		{
+			// S'il n'y a pas eu d'erreurs, on prépare les données à insérer en base, en hashant le MDP en BCrypt notamment
 			$newUser['password'] = password_hash($_POST['password'], PASSWORD_BCRYPT);
 			$newUser['discordUsername'] = strip_tags($_POST['discordUsername']);
 			$newUser['email'] = strip_tags($_POST['email']);

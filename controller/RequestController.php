@@ -10,11 +10,14 @@ use PHPMailer\PHPMailer\Exception;
 
 function displayRequestList($errors = '')
 {
+	// On récupère toutes les demandes de transport dans la DB
 	$requestManager = new RequestManager();
 	$requests = $requestManager->getAllRequests();
-	
+
+	// On récupère un format de date pour pouvoir afficher correctement les dates des demandes dans la liste
 	$dateFormat = getDateDisplayFormat('list-fullDateMonthReduced');
 
+	// On prépare les données pour la vue, notamment en formatant la date
 	foreach($requests as &$element)
 	{
 		$element = formatArrayKeysInCamelCase($element, '_');
@@ -34,6 +37,7 @@ function displayRequestAddForm($errors = '')
 	}
 	else
 	{
+		// Si l'utilisateur n'est pas connecté, on le redirige sur l'inscription
 		$_GET['page'] = basename($_SERVER['REQUEST_URI']);
 		displayRegisterForm('', '');
 		return;
@@ -87,6 +91,7 @@ function checkAndFormatRequestFormData()
 		$request['smoker'] = 0;
 	}
 
+	// On initialise une variable permettant de déterminer si toutes les conditions sont réunies pour que la date de départ soit correcte
 	$checkStartDate = 0;
 
 	if(!checkDateFormat($_POST['startDate']))
@@ -111,7 +116,8 @@ function checkAndFormatRequestFormData()
 	{
 		$request['startDate'] = formatDateTimeForDb($_POST['startDate'],$_POST['startTime']);
 	}
-	
+
+	// On initialise une variable permettant de déterminer si toutes les conditions sont réunies pour que les informations de retour soient correctes
 	$checkReturn = 0;
 
 	if(isset($_POST['returnDate']))
@@ -181,6 +187,7 @@ function checkAndFormatRequestFormData()
             }
         }
 	}
+	// Comme le retour n'est pas obligatoire, on initialise quand même les variables correspondantes pour l'insertion en DB plus tard
 	else
 	{
 		$request['isReturn'] = 0;
@@ -200,6 +207,7 @@ function checkAndFormatRequestFormData()
 
 function checkAndFormatRequestCityData($request, $errors, $variablePart)
 {
+	// On initialise une variable permettant de déterminer si toutes les conditions sont réunies pour que la ville soit théoriquement correcte, avant de faire appel à l'API Géo
 	$checkCity = 0;
 
 	if(strlen($_POST[$variablePart.'Department']) > 2 OR (!ctype_digit($_POST[$variablePart.'Department']) AND strtolower($_POST[$variablePart.'Department']) != '2a' AND strtolower($_POST[$variablePart.'Department']) != '2b'))
@@ -256,16 +264,19 @@ function checkRequestAdd()
 {
 	if(isset($_POST['startCity']) AND isset($_POST['startDepartment']) AND isset($_POST['startDate']) AND isset($_POST['startTime']) AND isset($_POST['neededSeats']))
 	{
+		// Si tous les champs obligatoires sont définis, on appelle la fonction de vérification et de formatage des données
 		$checkData = checkAndFormatRequestFormData();
 		$newRequest = $checkData['request'];
 		$errors = $checkData['errors'];
 
 		if(!empty($errors))
 		{
+			// S'il y a des erreurs, on retourne sur le formulaire d'ajout et on les affiche...
 			displayRequestAddForm($errors);
 		}
 		else
 		{
+			// ..., sinon on insère la demande en DB et on affiche la page avec les données ajoutées à l'instant
 			$requestManager = new RequestManager();
 			$id = $requestManager->insertNewRequest($newRequest);
 
@@ -283,6 +294,7 @@ function displayRequestDetails($errors = '', $id = '')
 {
 	if(empty($id))
 	{
+		// La fonction peut être appelée par d'autres fonctions du programme qui spécifient elle-mêmes l'ID de la demande, ou par des liens sur le site où l'ID est inclus en paramètre GET
 		if(isset($_GET['id']))
 		{
 			$id = $_GET['id'];
@@ -309,6 +321,7 @@ function displayRequestDetails($errors = '', $id = '')
 		}
 		else
 		{
+			// Si la demande existe, on formate toutes les données pour la vue, puis on affiche la page de la demande
 			$request = formatArrayKeysInCamelCase($request, '_');
 
 			$request['id'] = str_pad($request['id'], 3, "0", STR_PAD_LEFT);
@@ -367,6 +380,8 @@ function displayRequestEditForm($errors = '', $id = '')
 		displayRequestList("- L'identifiant indiqué ne correspond à aucune demande\\n");
 		return;
 	}
+
+	// Si la demande avec l'ID spécifié existe (donc si le if précédent est faux), on formate les données pour afficher le formulaire d'édition
 
 	$request = formatArrayKeysInCamelCase($request, '_');
 
@@ -438,6 +453,7 @@ function checkRequestEdit()
 
 	if(isset($_POST['id']) AND isset($_POST['startCity']) AND isset($_POST['startDepartment']) AND isset($_POST['startDate']) AND isset($_POST['startTime']))
 	{
+		// Si tous les champs obligatoires sont définis, on vérifie les données et on les formate pour la modification
 		$checkData = checkAndFormatRequestFormData();
 		$errors = $checkData['errors'];
 
@@ -449,6 +465,7 @@ function checkRequestEdit()
 
 		$editedRequest = $checkData['request'];
 
+		// S'il n'y a pas eu d'erreurs, on vérifie si toutes les données sont identiques à celles déjà en base. Si c'est le cas, on ne fait pas d'UPDATE, sinon on met à jour
 		foreach($editedRequest as $column => $value)
 		{
 			if($value != $currentRequest[$column])
@@ -474,6 +491,7 @@ function checkRequestEdit()
 
 function checkRequestSendMessage()
 {
+	// On vérifie si toutes les conditions sont remplies pour que l'utilisateur puisse envoyer un message à celui qui a fait la demande
 	if(!isset($_SESSION['userId']))
 	{
 		$_GET['page'] = basename($_SERVER['REQUEST_URI']);
@@ -530,7 +548,7 @@ function checkRequestSendMessage()
 		return;
 	}
 
-	// Ajouter ici une vérification pour voir si une demande a déjà été faite
+	// Fonctionnalité non réalisée qui aurait dû être ici : vérification pour voir si une demande de contact a déjà été faite
 
 	$userManager = new UserManager();
 	$userContactInfos = formatArrayKeysInCamelCase($userManager->getUserContactInfos($request['userId']), '_');
@@ -545,6 +563,7 @@ function checkRequestSendMessage()
 
 	$requestManager->notifyRequester($notificationData);
 
+	// Si le destinataire de la demande de contact souhaite être contacté par mail (activé pour tous dans la version actuelle du projet), on envoie un mail à l'adresse renseignée en base
 	if($userContactInfos['email'])
 	{
 		$subject = 'Proposition de transport sur votre demande';

@@ -60,6 +60,7 @@ function formatDateForForm($date)
 	return ['date' => $date, 'time' => $time];
 }
 
+// Récupère le format du jour et de l'heure spécifique à la plateforme (différent sous Windows)
 function getPlatformFormat()
 {
 	if(strtoupper(substr(PHP_OS, 0, 3)) == 'WIN')
@@ -72,6 +73,7 @@ function getPlatformFormat()
 	}
 }
 
+// Récupère un format de date spécifique à son utilisation sur le site
 function getDateDisplayFormat($formatType)
 {
 	$platformFormat = getPlatformFormat();
@@ -95,6 +97,7 @@ function getDateDisplayFormat($formatType)
 	return $dateFormat;
 }
 
+// Fonction permettant de formater les clés de tableaux dont les mots sont séparés par un caractère en camel case (utilisé pour les views notamment)
 function formatArrayKeysInCamelCase(array $array, string $separator)
 {
 	$formattedArray = [];
