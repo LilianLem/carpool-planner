@@ -138,7 +138,7 @@ function sendEmail($recipient, $subject, $htmlBody, $textBody)
 		$mail->Port       = WEBSITE_EMAIL_PORT;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
 
 		//Recipients
-		$mail->setFrom('carpoolplanner@lilianlemoine.fr', 'Carpool Planner');
+		$mail->setFrom(WEBSITE_EMAIL, 'Carpool Planner');
 		$mail->addAddress($recipient['email'], $recipient['username']);     // Add a recipient
 		$mail->addReplyTo($selfContactInfos['email'], $_SESSION['username']);
 
