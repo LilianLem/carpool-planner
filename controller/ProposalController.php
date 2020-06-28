@@ -102,11 +102,11 @@ function checkAndFormatProposalFormData()
 
 	if(isset($_POST['free']))
 	{
-		$proposal['free'] = 0;
+		$proposal['free'] = 1;
 	}
 	else
 	{
-		$proposal['free'] = 1;
+		$proposal['free'] = 0;
 	}
 
 	$checkStartDate = 0;
