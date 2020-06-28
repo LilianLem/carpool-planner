@@ -93,7 +93,7 @@ class ProposalManager extends DatabaseManager
 		));
 	}
 
-	public function sendMessageToDriver($messageData)
+	public function notifyDriver($messageData)
 	{
 		$db = $this->dbConnect();
 

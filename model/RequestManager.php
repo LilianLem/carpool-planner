@@ -83,7 +83,7 @@ class RequestManager extends DatabaseManager
 		));
 	}
 
-	public function sendMessageToRequester($messageData)
+	public function notifyRequester($messageData)
 	{
 		$db = $this->dbConnect();
 

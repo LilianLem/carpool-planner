@@ -543,7 +543,7 @@ function checkRequestSendMessage()
 		'discordNotify' => $userContactInfos['notifyDiscord']
 	];
 
-	$requestManager->sendMessageToRequester($notificationData);
+	$requestManager->notifyRequester($notificationData);
 
 	if($userContactInfos['email'])
 	{

@@ -637,7 +637,7 @@ function checkProposalSendMessage()
 		'discordNotify' => $userContactInfos['notifyDiscord']
 	];
 
-	$proposalManager->sendMessageToDriver($notificationData);
+	$proposalManager->notifyDriver($notificationData);
 
 	if($userContactInfos['email'])
 	{
