@@ -12,8 +12,7 @@ function displayRequestList($errors = '')
 {
 	$requestManager = new RequestManager();
 	$requests = $requestManager->getAllRequests();
-
-	setlocale(LC_ALL, 'fr_FR.utf8','fra');
+	
 	$platformDateFormat = getPlatformFormat();
 	$dateFormat = "%A ".$platformDateFormat['day']."/%m à ".$platformDateFormat['hour'].":%M";
 
@@ -314,8 +313,7 @@ function displayRequestDetails($errors = '', $id = '')
 			$request = formatArrayKeysInCamelCase($request, '_');
 
 			$request['id'] = str_pad($request['id'], 3, "0", STR_PAD_LEFT);
-
-			setlocale(LC_ALL, 'fr_FR.utf8','fra');
+			
 			$platformDateFormat = getPlatformFormat();
 			$dateFormat = "%A ".$platformDateFormat['day']." %b à ".$platformDateFormat['hour'].":%M";
 

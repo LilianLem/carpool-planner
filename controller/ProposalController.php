@@ -12,8 +12,7 @@ function displayProposalList($errors = '')
 {
 	$proposalManager = new ProposalManager();
 	$proposals = $proposalManager->getAllProposals();
-
-	setlocale(LC_ALL, 'fr_FR.utf8','fra');
+	
 	$platformDateFormat = getPlatformFormat();
 	$dateFormat = "%A ".$platformDateFormat['day']."/%m à ".$platformDateFormat['hour'].":%M";
 
@@ -413,8 +412,7 @@ function displayProposalDetails($errors = '', $id = '')
 			$proposal = formatArrayKeysInCamelCase($proposal, '_');
 
 			$proposal['id'] = str_pad($proposal['id'], 3, "0", STR_PAD_LEFT);
-
-			setlocale(LC_ALL, 'fr_FR.utf8','fra');
+			
 			$platformDateFormat = getPlatformFormat();
 			$dateFormat = "%A ".$platformDateFormat['day']." %b à ".$platformDateFormat['hour'].":%M";
 

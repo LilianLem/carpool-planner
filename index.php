@@ -1,4 +1,5 @@
 <?php session_start();
+setlocale(LC_ALL, 'fr_FR.utf8','fra');
 try {
 	// if(isset($_GET['action']))
 	// {
