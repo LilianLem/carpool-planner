@@ -1,4 +1,11 @@
 <?php
+require_once('model/ProposalManager.php');
+require_once('model/RequestManager.php');
+
+use PHPMailer\PHPMailer\PHPMailer;
+use PHPMailer\PHPMailer\SMTP;
+use PHPMailer\PHPMailer\Exception;
+
 function checkDateFormat($date)
 {
 	if (strtotime($date) === false)
@@ -105,4 +112,55 @@ function formatArrayKeysInCamelCase(array $array, string $separator)
 	}
 
 	return $formattedArray;
+}
+
+function sendEmail($recipient, $subject, $htmlBody, $textBody)
+{
+	// On récupère le mail de celui qui a fait la demande
+	$userManager = new UserManager();
+	$selfContactInfos = $userManager->getUserContactInfos($_SESSION['userId']);
+
+	require_once 'vendor/autoload.php';
+	require_once 'config.php' ;
+
+	$mail = new PHPMailer(true);
+
+	try
+	{
+		//Server settings
+		// $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
+		$mail->isSMTP();                                            // Send using SMTP
+		$mail->Host       = WEBSITE_EMAIL_HOST;                    // Set the SMTP server to send through
+		$mail->SMTPAuth   = true;                                   // Enable SMTP authentication
+		$mail->Username   = WEBSITE_EMAIL;      // SMTP username
+		$mail->Password   = WEBSITE_EMAIL_PASSWORD;                               // SMTP password
+		$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
+		$mail->Port       = WEBSITE_EMAIL_PORT;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
+
+		//Recipients
+		$mail->setFrom('carpoolplanner@lilianlemoine.fr', 'Carpool Planner');
+		$mail->addAddress($recipient['email'], $recipient['username']);     // Add a recipient
+		$mail->addReplyTo($selfContactInfos['email'], $_SESSION['username']);
+
+		// Content
+		$mail->isHTML(true);                                  // Set email format to HTML
+		$mail->Subject = $subject;
+		$mail->Body    = $htmlBody;
+		$mail->AltBody = $textBody;
+
+		$mail->send();
+		$mailSent = [
+			'success' => true,
+			'error' => ''
+		];
+	}
+
+	catch (Exception $e) {
+		$mailSent = [
+			'success' => false,
+			'error' => $mail->ErrorInfo
+		];
+	}
+	
+	return $mailSent;
 }

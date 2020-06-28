@@ -547,55 +547,23 @@ function checkRequestSendMessage()
 
 	if($userContactInfos['email'])
 	{
-		// On récupère le mail de celui qui souhaite proposer un trajet
-		$selfContactInfos = $userManager->getUserContactInfos($_SESSION['userId']);
+		$subject = 'Proposition de transport sur votre demande';
+		$htmlBody    = '<strong>'.$_SESSION["username"].'</strong> souhaite entrer en contact avec vous pour vous prendre en charge sur <a href="localhost:81/carpoolplanner/index.php?action=showRequest&id='.$request['id'].'">cette demande</a>.<br>Contactez-le via Discord pour plus d\'informations...';
+		$textBody = $_SESSION["username"].' souhaite entrer en contact avec vous pour vous prendre en charge sur la demande à l\'adresse suivante : localhost:81/carpoolplanner/index.php?action=showRequest&id='.$request['id'].' Contactez-le via Discord pour plus d\'informations...';
 
-		require 'vendor/autoload.php';
-
-		$mail = new PHPMailer(true);
-
-		try
-		{
-			//Server settings
-			// $mail->SMTPDebug = SMTP::DEBUG_SERVER;                      // Enable verbose debug output
-			$mail->isSMTP();                                            // Send using SMTP
-			$mail->Host       = 'plesk1.dyjix.eu';                    // Set the SMTP server to send through
-			$mail->SMTPAuth   = true;                                   // Enable SMTP authentication
-			$mail->Username   = WEBSITE_EMAIL;      // SMTP username
-			$mail->Password   = WEBSITE_EMAIL_PASSWORD;                               // SMTP password
-			$mail->SMTPSecure = PHPMailer::ENCRYPTION_STARTTLS;         // Enable TLS encryption; `PHPMailer::ENCRYPTION_SMTPS` encouraged
-			$mail->Port       = 25;                                    // TCP port to connect to, use 465 for `PHPMailer::ENCRYPTION_SMTPS` above
-
-			//Recipients
-			$mail->setFrom('carpoolplanner@lilianlemoine.fr', 'Carpool Planner');
-			$mail->addAddress($userContactInfos['email'], $userContactInfos['username']);     // Add a recipient
-			$mail->addReplyTo($selfContactInfos['email'], $_SESSION['username']);
-
-			// Content
-			$mail->isHTML(true);                                  // Set email format to HTML
-			$mail->Subject = 'Proposition de transport sur votre demande';
-			$mail->Body    = '<strong>'.$_SESSION["username"].'</strong> souhaite entrer en contact avec vous pour vous prendre en charge sur <a href="localhost:81/carpoolplanner/index.php?action=showRequest&id='.$request['id'].'">cette demande</a>.<br>Contactez-le via Discord pour plus d\'informations...';
-			$mail->AltBody = $_SESSION["username"].' souhaite entrer en contact avec vous pour vous prendre en charge sur la demande à l\'adresse suivante : localhost:81/carpoolplanner/index.php?action=showRequest&id='.$request['id'].' Contactez-le via Discord pour plus d\'informations...';
-
-			$mail->send();
-			$mailSuccess = true;
-		}
-
-		catch (Exception $e) {
-			$mailSuccess = false;
-		}
+		$result = sendEmail($userContactInfos, $subject, $htmlBody, $textBody);
 	}
 
 	displayRequestDetails('', $id);
-	if(isset($mailSuccess))
+	if(isset($result))
 	{
-		if($mailSuccess)
+		if($result['success'])
 		{
 			echo '<script type="text/javascript">console.log("Email envoyé")</script>';
 		}
 		else
 		{
-			echo '<script type="text/javascript">console.log("Le message ne peut pas être envoyé. Erreur : '.$mail->ErrorInfo.'")</script>';
+			echo '<script type="text/javascript">console.log("Le message ne peut pas être envoyé. Erreur : '.$result['error'].'")</script>';
 		}
 	}
 }
